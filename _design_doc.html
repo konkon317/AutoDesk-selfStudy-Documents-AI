@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>設計ドキュメント — Autodesk 学習ガイド</title>
+  <style>
+    :root {
+      --text: #e2e8f0;
+      --text-sub: #94a3b8;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-code: #0d1117;
+      --border: #334155;
+      --accent: #38bdf8;
+      --accent2: #a78bfa;
+      --green: #4ade80;
+      --amber: #fbbf24;
+      --red: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+
+    /* header */
+    .doc-header {
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.5rem;
+      background: var(--bg-card);
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 2.5rem;
+    }
+    .doc-header h1 { font-size: 1.4rem; color: var(--accent); margin-bottom: .3rem; }
+    .doc-header .meta { font-size: .85rem; color: var(--text-sub); }
+
+    /* section */
+    h2 {
+      font-size: 1.15rem;
+      color: var(--accent2);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: .4rem;
+      margin: 2.5rem 0 1rem;
+    }
+    h3 { font-size: 1rem; color: var(--amber); margin: 1.5rem 0 .5rem; }
+    h4 { font-size: .9rem; color: var(--text-sub); margin: 1rem 0 .3rem; }
+    p { margin-bottom: .8rem; }
+    ul, ol { margin: .5rem 0 .8rem 1.4rem; }
+    li { margin-bottom: .3rem; }
+    strong { color: var(--text); }
+
+    /* code */
+    code {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      padding: .1em .45em;
+      border-radius: 4px;
+      font-family: 'Consolas', monospace;
+      font-size: .88em;
+      color: var(--green);
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: .8rem 0;
+    }
+    pre code { background: none; border: none; padding: 0; color: var(--text); }
+
+    /* card */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .card .card-title {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: .5rem;
+    }
+
+    /* file table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: .8rem 0 1.2rem;
+      font-size: .9rem;
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-sub);
+      font-weight: 600;
+      padding: .5rem .8rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: .45rem .8rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    td code { font-size: .85em; }
+
+    /* tag */
+    .tag {
+      display: inline-block;
+      padding: .1em .6em;
+      border-radius: 4px;
+      font-size: .78em;
+      font-weight: 600;
+      margin-right: .3rem;
+    }
+    .tag-mb  { background: #1a3a2a; color: #4ade80; }
+    .tag-maya { background: #1a2a3a; color: #38bdf8; }
+    .tag-col  { background: #2a2a1a; color: #fbbf24; }
+    .tag-plan { background: #2a1a2a; color: #a78bfa; }
+    .tag-idx  { background: #1a1a2a; color: #94a3b8; }
+
+    /* note box */
+    .note {
+      background: #1a2a1a;
+      border: 1px solid #2d4a2d;
+      border-radius: 8px;
+      padding: .8rem 1rem;
+      margin: .8rem 0;
+      font-size: .9rem;
+      color: #86efac;
+    }
+    .warn {
+      background: #2a1a1a;
+      border: 1px solid #4a2d2d;
+      border-radius: 8px;
+      padding: .8rem 1rem;
+      margin: .8rem 0;
+      font-size: .9rem;
+      color: #fca5a5;
+    }
+
+    /* resource list */
+    .res-group { margin-bottom: 1.5rem; }
+    .res-group h4 { color: var(--accent); }
+    .res-item {
+      display: flex;
+      gap: .8rem;
+      align-items: baseline;
+      padding: .3rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .88rem;
+    }
+    .res-item:last-child { border-bottom: none; }
+    .res-name { color: var(--amber); min-width: 200px; flex-shrink: 0; }
+    .res-url  { color: var(--text-sub); word-break: break-all; font-family: 'Consolas', monospace; font-size: .82em; }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: .8rem;
+      color: var(--text-sub);
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="doc-header">
+    <h1>設計ドキュメント — Autodesk 学習ガイド（MB / Maya）</h1>
+    <div class="meta">
+      このファイルは学習ガイド本体とは別に、AI再利用時の読み込み用として作成された設計メモです。<br>
+      「なぜこう作ったか」「どういう基準でリソースを選んだか」「後で調整するときに何を変えればよいか」を記録しています。
+    </div>
+  </div>
+
+
+  <!-- ========== 1. プロジェクト概要 ========== -->
+  <h2>1. プロジェクト概要</h2>
+
+  <p>Autodesk の <strong>MotionBuilder（MB）</strong> と <strong>Maya</strong> を実務で使うための自習用 HTML 資料集。
+  ブラウザで開くスタンドアロンな静的 HTML であり、外部サーバー・フレームワーク不使用。</p>
+
+  <h3>制約条件（設計判断に強く影響）</h3>
+  <div class="card">
+    <ul>
+      <li>Autodesk 従量課金プランの最低量トークン。<strong>1日・ソフトごとの起動回数に上限あり</strong>、残り合計 15 回前後。</li>
+      <li>1 回の勉強セッション = <strong>4〜6 時間</strong> が目安。</li>
+      <li>MB は仕事で使うため実践寄り。Maya は MB 経験者が入門する想定。</li>
+      <li>資料はソフト起動前に読めるよう設計する（トークンを使わず事前学習）。</li>
+    </ul>
+  </div>
+
+
+  <!-- ========== 2. ファイル構成 ========== -->
+  <h2>2. ファイル構成</h2>
+
+  <table>
+    <tr>
+      <th>ファイル</th>
+      <th>タグ表示</th>
+      <th>テーマカラー</th>
+      <th>内容</th>
+    </tr>
+    <tr>
+      <td><code>index.html</code></td>
+      <td><span class="tag tag-idx">INDEX</span></td>
+      <td>—</td>
+      <td>カードグリッドのランディングページ。各ページへのナビ起点。</td>
+    </tr>
+    <tr>
+      <td><code>mb_overview.html</code></td>
+      <td><span class="tag tag-mb">MotionBuilder · 01</span></td>
+      <td>グリーン (#4ade80)</td>
+      <td>MB 概要・UI・Characterize・Retarget・Story ウィンドウ。</td>
+    </tr>
+    <tr>
+      <td><code>mb_control_rig.html</code></td>
+      <td><span class="tag tag-mb">MotionBuilder · 02</span></td>
+      <td>グリーン (#4ade80)</td>
+      <td>Control Rig 全体。FK/IK・エフェクター・Reach・Pinning・Floor Contact・Plot。</td>
+    </tr>
+    <tr>
+      <td><code>mb_animation.html</code></td>
+      <td><span class="tag tag-mb">MotionBuilder · 03</span></td>
+      <td>グリーン (#4ade80)</td>
+      <td>MB でのアニメーション制作（Mocap修正 vs ゼロから制作）。FCurve・Animation Layers。</td>
+    </tr>
+    <tr>
+      <td><code>maya_basics.html</code></td>
+      <td><span class="tag tag-maya">Maya · 01</span></td>
+      <td>スカイブルー (#38bdf8)</td>
+      <td>Maya 入門。UI・キーフレーム・Graph Editor・FBX パイプライン。MB 経験者向け差分比較あり。</td>
+    </tr>
+    <tr>
+      <td><code>industry.html</code></td>
+      <td><span class="tag tag-col">コラム</span></td>
+      <td>アンバー (#fbbf24)</td>
+      <td>業界別 MB の立ち位置・納品形態・ファイル形式・担当職種。コラム形式。</td>
+    </tr>
+    <tr>
+      <td><code>study_plan.html</code></td>
+      <td><span class="tag tag-plan">PLAN</span></td>
+      <td>パープル (#a78bfa)</td>
+      <td>15 セッション学習プラン。フェーズ別セッション一覧・ゴール・作業リスト・参考リンク。</td>
+    </tr>
+    <tr>
+      <td><code>common.css</code></td>
+      <td>—</td>
+      <td>—</td>
+      <td>全ページ共通スタイル。各 HTML の <code>&lt;head&gt;</code> から <code>&lt;link&gt;</code> で読み込む。</td>
+    </tr>
+    <tr>
+      <td><code>_design_doc.html</code></td>
+      <td>—</td>
+      <td>—</td>
+      <td>このファイル。AI 読み込み用の設計メモ。本体ページには含まない。</td>
+    </tr>
+  </table>
+
+
+  <!-- ========== 3. 教育フレームワーク ========== -->
+  <h2>3. 教育フレームワーク — 「目的 → 機能 → 理屈」</h2>
+
+  <p>ユーザーの学習スタイルの傾向として、<strong>「何のためにあるか → どの機能で達成するか → なぜその機能で達成できるか」</strong>
+  という構造で説明されると理解しやすい。これを全ページ共通の概念マップ（<code>.concept-map</code>）として実装している。</p>
+
+  <div class="card">
+    <div class="card-title">概念マップの構造（HTML）</div>
+    <pre><code>&lt;div class="concept-map"&gt;
+  &lt;!-- ヘッダー行 --&gt;
+  &lt;div class="concept-row header"&gt;
+    &lt;div class="concept-cell goal"&gt;目的（何をしたい）&lt;/div&gt;
+    &lt;div class="concept-arrow"&gt;→&lt;/div&gt;
+    &lt;div class="concept-cell feature"&gt;機能（何を使う）&lt;/div&gt;
+    &lt;div class="concept-arrow"&gt;→&lt;/div&gt;
+    &lt;div class="concept-cell logic"&gt;理屈（なぜ効く）&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- データ行 --&gt;
+  &lt;div class="concept-row"&gt;
+    &lt;div class="concept-cell goal"&gt;...&lt;/div&gt;
+    ...
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <p>各ページのトップに配置し、「この章で何を学ぶか」のマップとして機能させている。セクション内でも個別に挿入可能。</p>
+
+
+  <!-- ========== 4. CSS 設計 ========== -->
+  <h2>4. CSS 設計</h2>
+
+  <h3>common.css の役割</h3>
+  <p>全ページ共通のリセット・変数・レイアウト・コンポーネントを集約。ページ固有のスタイルは各 HTML の <code>&lt;style&gt;</code> タグに記述する。</p>
+
+  <h3>主要 CSS カスタムプロパティ（共通変数）</h3>
+  <table>
+    <tr><th>変数名</th><th>値</th><th>用途</th></tr>
+    <tr><td><code>--bg</code></td><td>#0f172a</td><td>ページ背景</td></tr>
+    <tr><td><code>--bg-card</code></td><td>#1e293b</td><td>カード・テーブル背景</td></tr>
+    <tr><td><code>--text</code></td><td>#e2e8f0</td><td>本文テキスト</td></tr>
+    <tr><td><code>--text-sub</code></td><td>#94a3b8</td><td>サブテキスト</td></tr>
+    <tr><td><code>--border</code></td><td>#334155</td><td>罫線・区切り</td></tr>
+    <tr><td><code>--accent</code></td><td>ページごとに上書き</td><td>テーマカラー（見出し・ハイライト）</td></tr>
+  </table>
+
+  <p>各ページは <code>:root</code> で <code>--accent</code> を上書きすることでテーマカラーを変える。</p>
+
+  <h3>共通コンポーネント一覧</h3>
+  <table>
+    <tr><th>クラス</th><th>説明</th></tr>
+    <tr><td><code>.ref-box</code></td><td>参考リンクブロック。<code>.ref-title</code> + <code>.ref-links</code> の2層構造。リンクは <code>class="doc"</code>（公式）/ <code>"ext"</code>（外部）/ <code>"yt"</code>（YouTube）で色分け。</td></tr>
+    <tr><td><code>.concept-map</code></td><td>目的→機能→理屈の3列マップ。<code>.concept-row</code>・<code>.concept-cell.goal</code>/<code>.feature</code>/<code>.logic</code>・<code>.concept-arrow</code>。</td></tr>
+    <tr><td><code>.callout</code></td><td>注釈ボックス。<code>.tip</code>（水色）/<code>.note</code>（パープル）/<code>.warn</code>（アンバー）/<code>.try</code>（グリーン）。</td></tr>
+    <tr><td><code>.cards-2</code></td><td>2カラムカードグリッド。<code>.card</code> を子に持つ。</td></tr>
+    <tr><td><code>.pipeline</code></td><td>横並びフロー図。<code>.pipe-step</code> + <code>.pipe-arrow</code> の繰り返し。</td></tr>
+    <tr><td><code>.page-tag</code></td><td>ページ右上のラベル（"MotionBuilder · 01" など）。</td></tr>
+    <tr><td><code>.toc</code></td><td>ページ内目次。<code>.toc-list</code> + <code>.toc-item</code>。</td></tr>
+    <tr><td><code>.next-link</code></td><td>ページ末尾の「次のページ」ナビゲーション。</td></tr>
+  </table>
+
+  <h3>ページ固有コンポーネント（主なもの）</h3>
+  <table>
+    <tr><th>ファイル</th><th>クラス</th><th>説明</th></tr>
+    <tr><td><code>mb_animation.html</code></td><td><code>.compare-wrap</code>, <code>.compare-col</code></td><td>Mocap修正 vs ゼロ制作の2列比較レイアウト。</td></tr>
+    <tr><td><code>mb_animation.html</code></td><td><code>.common-band</code>, <code>.cb-flow</code>, <code>.cb-step</code></td><td>共通フロー帯（Characterize→CR→Plot→FBX）。</td></tr>
+    <tr><td><code>mb_animation.html</code></td><td><code>.wf-step</code>, <code>.wf-diff.same</code>/<code>.diff</code></td><td>ステップワークフロー + 「同じ」「違う」バッジ。</td></tr>
+    <tr><td><code>industry.html</code></td><td><code>.position-box</code></td><td>MB のパイプライン上の立ち位置フロー図。</td></tr>
+    <tr><td><code>industry.html</code></td><td><code>.industry-grid</code>, <code>.industry-card</code></td><td>4業界カードグリッド（ゲーム/映像/バーチャル/広告）。</td></tr>
+    <tr><td><code>maya_basics.html</code></td><td><code>.tool-row</code>, <code>.tool-btn</code></td><td>Q/W/E/R ツールボタン表示。</td></tr>
+    <tr><td><code>study_plan.html</code></td><td><code>.session</code>, <code>.phase</code></td><td>セッションカード・フェーズコンテナ。<code>.session-num</code> で MB/Maya/合同を色分け。</td></tr>
+  </table>
+
+
+  <!-- ========== 5. 参考リンクの選定基準 ========== -->
+  <h2>5. 参考リンクの選定基準</h2>
+
+  <div class="note">
+    基準：日本語ページまたは Autodesk の公式ページに限定。英語・リンク切れリソースは除外。
+  </div>
+
+  <h3>優先順位</h3>
+  <ol>
+    <li><strong>AREA JAPAN（area.autodesk.jp）</strong> — Autodesk 公式の日本語サイト。動画チュートリアル・コラム・製品情報。最も信頼度が高い。</li>
+    <li><strong>Autodesk ナレッジネットワーク 日本語版（knowledge.autodesk.com/ja）</strong> — 公式テクニカルリファレンス。深い仕様確認に使う。</li>
+    <li><strong>Autodesk ヘルプ 日本語版（help.autodesk.com/cloudhelp/20XX/JPN）</strong> — オンラインヘルプの日本語版。</li>
+    <li><strong>業界ブログ・備忘録系</strong> — 会社またはデザイナーが実務経験をもとに書いたもの、または学習中のユーザーが備忘録として残したもの。初学者が順を追って学べる構成を優先。</li>
+  </ol>
+
+  <h3>採用したリソース一覧</h3>
+
+  <div class="res-group">
+    <h4>AREA JAPAN — MotionBuilder</h4>
+    <div class="res-item"><span class="res-name">MB 製品情報</span><span class="res-url">https://area.autodesk.jp/product/motionbuilder/</span></div>
+    <div class="res-item"><span class="res-name">MB 初心者チュートリアル</span><span class="res-url">https://area.autodesk.jp/information/motionbuilder-beginner-tutorial/</span></div>
+    <div class="res-item"><span class="res-name">UI ムービー</span><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/01-user-interface.html</span></div>
+    <div class="res-item"><span class="res-name">Characterize &amp; Control Rig ムービー</span><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/02-characterize-control-rig.html</span></div>
+    <div class="res-item"><span class="res-name">Control Rig 操作ムービー</span><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/03-control-rig.html</span></div>
+    <div class="res-item"><span class="res-name">Retarget ムービー</span><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/07-character-animation-retarget.html</span></div>
+    <div class="res-item"><span class="res-name">カットシーン第2回（Mocap修正）</span><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/02-mocap/</span></div>
+    <div class="res-item"><span class="res-name">カットシーン第4回（Story ウィンドウ）</span><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/04-how-to-use-story/</span></div>
+    <div class="res-item"><span class="res-name">カットシーン第6回（アニメーション応用）</span><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/06-character-animation/</span></div>
+    <div class="res-item"><span class="res-name">MB + Maya 連携コラム</span><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder/cooperate_with_maya/</span></div>
+    <div class="res-item"><span class="res-name">HumanIK パイプライン解説</span><span class="res-url">https://area.autodesk.jp/column/trend_tech/nextmedia_m_and_e/pipeline/</span></div>
+  </div>
+
+  <div class="res-group">
+    <h4>AREA JAPAN — Maya</h4>
+    <div class="res-item"><span class="res-name">Start@Maya 入門ムービー</span><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/22.html</span></div>
+    <div class="res-item"><span class="res-name">Maya Graph Editor ムービー</span><span class="res-url">https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html</span></div>
+  </div>
+
+  <div class="res-group">
+    <h4>Autodesk KN JPN / Help JPN</h4>
+    <div class="res-item"><span class="res-name">MB ヘルプ日本語版 チュートリアル目次（2024）</span><span class="res-url">https://help.autodesk.com/cloudhelp/2024/JPN/MotionBuilder/files/GUID-17E2AD49-708B-4E99-84A0-210890B09948.htm</span></div>
+    <div class="res-item"><span class="res-name">MB Plot（KN JPN）</span><span class="res-url">https://knowledge.autodesk.com/ja/support/motionbuilder/.../GUID-FFC123CA-62D6-440E-93F8-D9027C0D1B42-htm.html</span></div>
+    <div class="res-item"><span class="res-name">Maya Graph Editor（KN JPN）</span><span class="res-url">https://knowledge.autodesk.com/ja/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2020/JPN/Maya-Animation/files/GUID-6D38EAEA-6032-471E-BD0E-54A74D4443C0-htm.html</span></div>
+  </div>
+
+  <div class="res-group">
+    <h4>GUNCY'S（Zenn 連載）</h4>
+    <p style="font-size:.85rem;color:var(--text-sub);margin-bottom:.5rem;">「MotionBuilder超入門」連載。実務ユーザーによる段階的な解説。</p>
+    <div class="res-item"><span class="res-name">第0回 — MBってどんなソフト？</span><span class="res-url">https://zenn.dev/guncys_blog/articles/69f219d4ca77f6</span></div>
+    <div class="res-item"><span class="res-name">第1回</span><span class="res-url">https://zenn.dev/guncys_blog/articles/6538b0eeb55959</span></div>
+    <div class="res-item"><span class="res-name">第2回</span><span class="res-url">https://zenn.dev/guncys/articles/a3f53202aab5ca</span></div>
+    <div class="res-item"><span class="res-name">第4回 — Story ウィンドウ</span><span class="res-url">https://zenn.dev/guncys/articles/349c159d34062a</span></div>
+    <div class="res-item"><span class="res-name">第5回</span><span class="res-url">https://zenn.dev/guncys/articles/a62226e4a16d3a</span></div>
+    <div class="res-item"><span class="res-name">第6回 — FCurve</span><span class="res-url">https://zenn.dev/guncys/articles/31d4510faefa3a</span></div>
+    <div class="res-item"><span class="res-name">第7回</span><span class="res-url">https://zenn.dev/guncys/articles/363883ae075b90</span></div>
+  </div>
+
+  <div class="res-group">
+    <h4>スプリングギルド（win-graphic.com）</h4>
+    <p style="font-size:.85rem;color:var(--text-sub);margin-bottom:.5rem;">実務者による MB チュートリアル連載。No. 番号で順を追って学べる。</p>
+    <div class="res-item"><span class="res-name">記事一覧</span><span class="res-url">https://win-graphic.com/home/categories/motionbuilder</span></div>
+    <div class="res-item"><span class="res-name">No.01 — UI 入門</span><span class="res-url">https://win-graphic.com/home/motionbuilder-no01</span></div>
+    <div class="res-item"><span class="res-name">No.05 — Control Rig とエフェクター</span><span class="res-url">https://win-graphic.com/home/motionbuilder-no05</span></div>
+    <div class="res-item"><span class="res-name">No.13 — アニメーション修正の実践</span><span class="res-url">https://win-graphic.com/home/motionbuilder-no13</span></div>
+  </div>
+
+  <div class="res-group">
+    <h4>その他ブログ・備忘録</h4>
+    <div class="res-item"><span class="res-name">もふもふテック — MB Retarget</span><span class="res-url">https://mohumohu-tech.com/2024/07/10/motionbuilder%E3%81%A7%E3%83%AA%E3%82%BF%E3%83%BC%E3%82%B2%E3%83%83%E3%83%88%E3%82%92%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/</span></div>
+    <div class="res-item"><span class="res-name">LOGIC&amp;MAGIC — Characterize &amp; Control Rig</span><span class="res-url">https://note.com/logic_magic/n/n7db6305dc56c</span></div>
+    <div class="res-item"><span class="res-name">アニもぐCG — Maya 基本操作【前編】</span><span class="res-url">https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/</span></div>
+    <div class="res-item"><span class="res-name">アニもぐCG — Maya 基本操作【後編】</span><span class="res-url">https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%BE%8C%E7%B7%A8/</span></div>
+    <div class="res-item"><span class="res-name">アニログ — Maya Graph Editor 基礎</span><span class="res-url">https://3dcg.comaroku.com/maya-grapheditor/</span></div>
+    <div class="res-item"><span class="res-name">ThanksToToday — Graph Editor 基礎1</span><span class="res-url">https://thankstotoday.com/maya-animation-grapheditor-basic1/</span></div>
+    <div class="res-item"><span class="res-name">akamarupro — Maya FBX エクスポートガイド</span><span class="res-url">https://akamarupro.com/maya-fbx-export-guide-error-fix-settings/</span></div>
+  </div>
+
+
+  <!-- ========== 6. ナビゲーション構造 ========== -->
+  <h2>6. ナビゲーション構造</h2>
+
+  <p>全ページ共通の <code>&lt;nav&gt;</code> バーを持ち、全ページへのリンクを含む。
+  新ページを追加した場合は <strong>全 HTML ファイルの <code>&lt;nav&gt;</code> を更新する必要がある</strong>。</p>
+
+  <div class="warn">
+    注意：common.css に nav の <em>スタイル</em> は含まれているが、nav の <em>HTML</em> は各ファイルにコピーで持つ（SSI・JSなし）。
+    ページを追加・削除したら 7 ファイル全ての nav を手動更新すること。
+  </div>
+
+  <h3>現在のナビゲーションリンク順</h3>
+  <pre><code>🏠 TOP → MB概要 → Control Rig → MB アニメ → Maya基礎 → 業界 → 学習プラン</code></pre>
+
+
+  <!-- ========== 7. 今後の調整ポイント ========== -->
+  <h2>7. 今後の調整ポイント（拡張・変更の候補）</h2>
+
+  <h3>内容面</h3>
+  <ul>
+    <li><strong>mb_overview.html</strong> — Story ウィンドウのセクションは現状簡易。実際に使い始めたらより詳しい解説を追加可能。</li>
+    <li><strong>mb_control_rig.html</strong> — Auxiliary Effectors（膝・肘の補正）の説明が薄め。実務で使ったタイミングで補完できる。</li>
+    <li><strong>maya_basics.html</strong> — Playblast（プレビュー動画の書き出し）はタスクリストに記載のみ。実践後に専用セクション追加の余地あり。</li>
+    <li><strong>industry.html</strong> — バーチャル制作（Vtuber 等）のセクションは概要のみ。業界詳細が必要なら拡張する。</li>
+    <li><strong>study_plan.html</strong> — フェーズ3以降（S11〜S15）の Maya セッションは入門レベルで止めている。深堀りが必要になったら Maya 専用ページを追加。</li>
+  </ul>
+
+  <h3>構造・スタイル面</h3>
+  <ul>
+    <li>現状 MB ページが3つあり index のカードが増えている。ページ数が増えるなら index にカテゴリ別グルーピングを入れると見やすくなる。</li>
+    <li>参考リンクはセクション直下の <code>.ref-box</code> に配置しているが、将来的に「リソース一覧ページ」として切り出すことも可能。</li>
+    <li><code>common.css</code> のコンポーネントは現状 MB/Maya 寄りに作られている。まったく別ソフト（例：Houdini）を追加するなら変数の色セットを増やすだけで対応できる。</li>
+  </ul>
+
+
+  <!-- ========== 8. AI 再利用時の注意 ========== -->
+  <h2>8. AI 再利用時のコンテキスト補足</h2>
+
+  <div class="card">
+    <div class="card-title">ファイルを読み込んで調整作業をする場合のポイント</div>
+    <ul>
+      <li>CSS は <code>common.css</code> を先に確認すること。コンポーネントのベーススタイルはそちらにある。</li>
+      <li>ページ固有スタイルは各 HTML の <code>&lt;style&gt;</code> タグ内に記述されている。</li>
+      <li><code>study_plan.html</code> のみ ref-box 内のインデントが <strong>4 スペース</strong>（他ファイルは 2 スペース）。Edit ツール使用時は既存インデントに合わせること。</li>
+      <li>参考リンクのクラスは <code>class="doc"</code>（公式・青）/ <code>class="ext"</code>（外部・グリーン）/ <code>class="yt"</code>（YouTube・赤）の 3 種。アイコン絵文字もセットで使う（📄 / 📖 / ▶）。</li>
+      <li>日本語を含む URL は <strong>パーセントエンコーディング済みの形</strong>で href に書くこと（ブラウザが解釈できるが、確実性のため）。</li>
+      <li>nav は全ファイルを更新する必要があるため、ページ追加・削除時は 7 ファイル全部を確認すること。</li>
+    </ul>
+  </div>
+
+  <h3>ユーザーの設計傾向（調整提案をする際に参考にする）</h3>
+  <ul>
+    <li>「なぜこの機能があるのか（理屈）」を理解してから使いたい学習スタイル。</li>
+    <li>図解・視覚的な構造整理を好む。テキスト説明だけより概念マップ・フロー図が有効。</li>
+    <li>実務に直結する情報を優先。理論だけで終わらず「で、実際どう操作するか」まで含める。</li>
+    <li>トークン制約があるため、ソフト起動前に読める分量・構成にする。</li>
+  </ul>
+
+</div>
+
+<footer class="wrap">
+  設計ドキュメント — Autodesk 学習ガイド（MB / Maya）| このファイルは本体ガイドのナビゲーションに含まれません
+</footer>
+</body>
+</html>
