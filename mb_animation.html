@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MB アニメーション制作 | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--green); }
+  .page-hero .tag { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: var(--green); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(16,185,129,0.1), transparent); }
+  h3 { color: var(--green); }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--green); }
+
+  .compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+  .compare-col { padding: 1.2rem 1.4rem; }
+  .compare-col.mocap { background: rgba(139,92,246,0.05); border-right: 1px solid var(--border); }
+  .compare-col.scratch { background: rgba(16,185,129,0.05); }
+  .compare-col h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  .compare-col h4.mc { color: var(--accent); }
+  .compare-col h4.sc { color: var(--green); }
+  .compare-col ul { padding-left: 0; list-style: none; }
+  .compare-col li { font-size: 0.82rem; padding: 0.3rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem; }
+  .compare-col li:last-child { border-bottom: none; }
+  .compare-col li .ci { color: var(--muted); font-size: 0.78rem; width: 5.5rem; flex-shrink: 0; }
+  .compare-col li .cv { color: var(--text); font-size: 0.82rem; }
+  @media(max-width:580px){ .compare-wrap { grid-template-columns: 1fr; } .compare-col.mocap { border-right: none; border-bottom: 1px solid var(--border); } }
+
+  .common-band { background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.22); border-radius: var(--radius); padding: 1rem 1.4rem; margin-bottom: 1.5rem; }
+  .common-band .cb-label { font-size: 0.72rem; color: var(--amber); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .common-band .cb-flow { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; font-size: 0.87rem; }
+  .cb-step { background: var(--surface); border: 1px solid rgba(245,158,11,0.3); border-radius: 6px; padding: 0.3rem 0.75rem; font-weight: 700; color: var(--text); }
+  .cb-arr { color: var(--amber); font-size: 1rem; }
+
+  .wf-step { display: flex; gap: 1rem; margin-bottom: 0.9rem; }
+  .wf-num { width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: white; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.15rem; }
+  .wf-body { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; flex: 1; font-size: 0.85rem; }
+  .wf-body h4 { font-size: 0.87rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .wf-body p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+  .wf-body .wf-diff { display: inline-block; font-size: 0.72rem; margin-top: 0.3rem; padding: 0.15rem 0.55rem; border-radius: 4px; }
+  .wf-diff.same { background: rgba(34,211,238,0.1); color: var(--accent-2); }
+  .wf-diff.diff { background: rgba(16,185,129,0.1); color: var(--green); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="mb_animation.html" class="active">MB アニメ</a>
+  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">MotionBuilder · 03</div>
+  <h1>MB <span>アニメーション制作</span></h1>
+  <p>Mocap修正とゼロから制作の「何が同じで何が違うか」。Control Rigはどちらでも同じように機能する。</p>
+  <div class="session-info">🪙 参考セッション：MB × 8〜10（応用）</div>
+</div>
+
+<div class="content">
+
+  <div class="toc">
+    <h4>このページの内容</h4>
+    <ol>
+      <li><a href="#compare">Mocap修正 vs ゼロ制作 — 何が同じで何が違うか</a></li>
+      <li><a href="#why">やりたいこと → 機能 → 理屈のマップ</a></li>
+      <li><a href="#fkik">FK / IK の選び方（ゼロ制作視点）</a></li>
+      <li><a href="#fcurve">FCurveエディタ（MBのGraph Editor）</a></li>
+      <li><a href="#workflow">ゼロ制作ワークフロー（ステップ解説）</a></li>
+      <li><a href="#hybrid">Mocapと手付けアニメの組み合わせ</a></li>
+    </ol>
+  </div>
+
+  <!-- ① 比較 -->
+  <h2 id="compare">① Mocap修正 vs ゼロ制作 — 何が同じで何が違うか</h2>
+
+  <div class="compare-wrap">
+    <div class="compare-col mocap">
+      <h4 class="mc">🎥 Mocap修正</h4>
+      <ul>
+        <li><span class="ci">入力データ</span><span class="cv">Mocapデータあり（骨格キーフレームの塊）</span></li>
+        <li><span class="ci">Control Rig</span><span class="cv">Reach &lt; 100%でMocapと合成（上書き強度を調整）</span></li>
+        <li><span class="ci">作業量</span><span class="cv">比較的少ない。問題箇所だけ直す</span></li>
+        <li><span class="ci">向く場面</span><span class="cv">大量データ処理、人の自然な動き、実写リファレンスあり</span></li>
+        <li><span class="ci">強み</span><span class="cv">リアルな重量感・慣性が自動で入っている</span></li>
+      </ul>
+    </div>
+    <div class="compare-col scratch">
+      <h4 class="sc">✏️ ゼロから制作</h4>
+      <ul>
+        <li><span class="ci">入力データ</span><span class="cv">なし（白紙から）</span></li>
+        <li><span class="ci">Control Rig</span><span class="cv">Reach 100%でControl Rigが完全支配（or FK直打ち）</span></li>
+        <li><span class="ci">作業量</span><span class="cv">多い。全フレームを自分で設計する</span></li>
+        <li><span class="ci">向く場面</span><span class="cv">完全オリジナル動作、誇張表現、Mocapが撮れない動き</span></li>
+        <li><span class="ci">強み</span><span class="cv">意図を100%反映できる。物理法則を無視してよい</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="common-band">
+    <div class="cb-label">🤝 どちらでも変わらない共通構造</div>
+    <div class="cb-flow">
+      <span class="cb-step">Characterize</span>
+      <span class="cb-arr">→</span>
+      <span class="cb-step">Control Rig 作成</span>
+      <span class="cb-arr">→</span>
+      <span class="cb-step">エフェクター / FK で意図を指定</span>
+      <span class="cb-arr">→</span>
+      <span class="cb-step">Plot to Skeleton</span>
+      <span class="cb-arr">→</span>
+      <span class="cb-step">FBX 書き出し</span>
+    </div>
+  </div>
+
+  <p>構造が同じということは、<strong>Control Rigの使い方を覚えるとMocap修正にもゼロ制作にも使い回せる</strong>ということです。使う道具は変わらず、「何を入力するか」と「Reachをどう設定するか」だけが変わります。</p>
+
+  <!-- ② 機能マップ -->
+  <h2 id="why">② やりたいこと → 機能 → 理屈のマップ</h2>
+
+  <div class="concept-map">
+    <div class="concept-header">
+      <div class="ch-goal">🎯 やりたいこと</div>
+      <div class="ch-arr"></div>
+      <div class="ch-feat">🔧 機能</div>
+      <div class="ch-arr"></div>
+      <div class="ch-logic">⚙️ 理屈</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>関節を一つずつ回転させて<br>ポーズを作りたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>FK（Control Rig FKモード）</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">根元→末端へ関節回転を積み上げる。「肩をこう回したら肘がここに来る」という積み上げ型。末端位置は回転の結果として決まる。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>「手をここに置く」という<br>意図でポーズを作りたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>IK（Control Rig IKモード）</strong><br>Hand / Foot Effectorを操作</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">末端エフェクターの目標位置を指定 → ソルバーが逆算して間の関節を自動決定。「どこに置くか」が入力、「どう曲がるか」は計算結果。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>キーフレーム間の動きを<br>確認・調整したい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>FCurveエディタ</strong><br>（Window → FCurve Editor）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">MayaのGraph Editorと同じ役割。時間=横軸、値=縦軸のベジェ曲線でキーフレーム間補間を表示。カーブの傾き=その瞬間の速度。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>Mocapの動きを残しつつ<br>手付けアニメを追加したい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>Reach + Animation Layers</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">Reachで「Mocap vs Control Rig」のブレンド比率を制御。Animation Layersで非破壊的に追加アニメーションを重ねることもできる。</div>
+    </div>
+  </div>
+
+  <!-- ③ FK/IK -->
+  <h2 id="fkik">③ FK / IK の選び方（ゼロ制作視点）</h2>
+
+  <div class="cards-2">
+    <div class="card" style="border-color:rgba(139,92,246,0.25);">
+      <h3 style="margin-top:0; color:var(--accent);">FK が向く場面</h3>
+      <ul>
+        <li><strong>体をひねる・上半身の表現</strong>——脊椎・腰のねじれはFK的な積み上げが自然</li>
+        <li><strong>流れるような腕振り</strong>——波打つような動きはFKの方がコントロールしやすい</li>
+        <li><strong>顔・首の向き</strong>——頭のコントロールはFK的な操作が直感的</li>
+        <li><strong>表情的な上半身</strong>——感情を乗せる動きはFKで細かく調整</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(16,185,129,0.25);">
+      <h3 style="margin-top:0; color:var(--green);">IK が向く場面</h3>
+      <ul>
+        <li><strong>足を床に固定する</strong>——フットプラントはIK+Pinningが必須</li>
+        <li><strong>手で何かを掴む・触れる</strong>——物体の位置に手を合わせるのはIKが直感的</li>
+        <li><strong>重心移動を主体に考える</strong>——Hips Effectorで全身の重心を動かす</li>
+        <li><strong>壁・机への接触</strong>——接触位置を固定したままキャラを動かす</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <span class="callout-icon">💡</span>
+    <p><strong>実際の制作では混在：</strong> 下半身はIK（足を地面に固定）、上半身はFK（腕の振りを細かく制御）という使い分けが一般的です。MBのControl Rigではエフェクターごとに独立してIK/FKを切り替えられます。</p>
+  </div>
+
+  <!-- ④ FCurveエディタ -->
+  <h2 id="fcurve">④ FCurveエディタ（MBのGraph Editor）</h2>
+
+  <p>MotionBuilderのFCurveエディタはMayaのGraph Editorと同じ役割を持ちます。両方使う場合、どちらかを覚えればもう一方は操作感がほぼ移植できます。</p>
+
+  <table>
+    <tr><th>機能</th><th>MotionBuilder</th><th>Maya</th></tr>
+    <tr><td>ウィンドウ名</td><td>FCurve Editor</td><td>Graph Editor</td></tr>
+    <tr><td>開き方</td><td>Window → FCurve Editor</td><td>Window → Animation Editors → Graph Editor</td></tr>
+    <tr><td>横軸 / 縦軸</td><td>時間（フレーム） / 値</td><td>時間（フレーム） / 値</td></tr>
+    <tr><td>補間方式</td><td>ベジェ（Spline / Flat / Stepped）</td><td>ベジェ（Spline / Flat / Stepped）</td></tr>
+    <tr><td>キーの編集</td><td>ドラッグ / タンジェントハンドル操作</td><td>同じ</td></tr>
+    <tr><td>スパイク除去</td><td>タンジェントをFlatに / キー削除</td><td>同じ</td></tr>
+  </table>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>FBX経由で持ってきたアニメーションの確認：</strong> MBでMocapデータを開いた直後にFCurveエディタでカーブを見ると、ノイズや異常値（スパイク）が見えることがあります。修正前に一度確認しておくとどこを直すべきかが把握できます。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — FCurveエディタ</div>
+    <div class="ref-links">
+      <a href="https://zenn.dev/guncys/articles/31d4510faefa3a" target="_blank" class="ext">📖 GUNCY'S（Zenn）: 第6回 ～キャラの調整（モーションデータ編）～</a>
+      <a href="https://www.win-graphic.com/home/categories/motionbuilder" target="_blank" class="ext">📖 スプリングギルド: MB チュートリアル一覧（FCurve 関連含む）</a>
+    </div>
+  </div>
+
+  <!-- ⑤ ワークフロー -->
+  <h2 id="workflow">⑤ ゼロ制作ワークフロー（ステップ解説）</h2>
+  <p>Mocap修正との違いが出るステップを強調しています。</p>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>キャラクターをCharacterize（Mocap修正と同じ）</h4>
+      <p>CGモデルのスケルトンをMBに認識させる。ゼロ制作でも必要。</p>
+      <span class="wf-diff same">Mocap修正と同じ</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>Control Rigを作成（Mocap修正と同じ）</h4>
+      <p>Character Controls → IK/FK Control Rig を作成。</p>
+      <span class="wf-diff same">Mocap修正と同じ</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>全エフェクターのReachを100%に設定</h4>
+      <p>Mocap修正では「修正する部位だけ上げる」が、ゼロ制作では全部位を自分でコントロールするため全て100%にする。</p>
+      <span class="wf-diff diff">ゼロ制作特有</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">4</div>
+    <div class="wf-body">
+      <h4>フレーム0でT字ポーズ（またはAポーズ）を確認</h4>
+      <p>キャラクターが正しい初期姿勢にあることを確認してからアニメーションを開始する。</p>
+      <span class="wf-diff diff">ゼロ制作特有</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">5</div>
+    <div class="wf-body">
+      <h4>主要ポーズをキーで打つ（ポーズtoポーズ）</h4>
+      <p>まず動きの「山」となるポーズだけキーを打つ。例: フレーム1（立ち）→ 30（ジャンプ頂点）→ 60（着地）。FCurveエディタで確認しながら進める。</p>
+      <span class="wf-diff diff">ゼロ制作特有</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">6</div>
+    <div class="wf-body">
+      <h4>中間ポーズ・タイミングを調整</h4>
+      <p>FCurveエディタでカーブのタンジェントを整えて緩急をつける。必要に応じて中間フレームにキーを追加。</p>
+      <span class="wf-diff diff">ゼロ制作特有</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">7</div>
+    <div class="wf-body">
+      <h4>Plot to Skeleton → FBX書き出し（Mocap修正と同じ）</h4>
+      <p>完成したらPlotしてスケルトンに焼き付け、FBXで書き出す。</p>
+      <span class="wf-diff same">Mocap修正と同じ</span>
+    </div>
+  </div>
+
+  <!-- ⑥ ハイブリッド -->
+  <h2 id="hybrid">⑥ Mocapと手付けアニメの組み合わせ</h2>
+  <p>実務でよくある「ベースはMocap、一部を手で上書き」というハイブリッドパターンです。</p>
+
+  <div class="cards-2">
+    <div class="card">
+      <h3 style="margin-top:0;">Reach によるブレンド</h3>
+      <p style="font-size:0.85rem;">修正したいエフェクターのReachだけを100%に上げる。他はMocapのまま。フレームごとにReachにキーを打てば「徐々に手付けアニメに移行」もできる。</p>
+      <ul>
+        <li><strong>例：</strong> 足はMocap（Reach 0%）、右手だけ物を掴む動き（Reach 100%）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0;">Animation Layers（加算レイヤー）</h3>
+      <p style="font-size:0.85rem;">既存のアニメーションの上に差分アニメーションを「加算」で重ねる。元データを壊さずに揺れ・ブレ・呼吸などを追加できる。</p>
+      <ul>
+        <li>ベースレイヤー：Mocap（修正済み）</li>
+        <li>追加レイヤー：手付けの揺れ・微調整</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout try">
+    <span class="callout-icon">🖐</span>
+    <p><strong>試してみる：</strong> 既存のMocapで右手のReachを0%→100%に変えた後、Hand Effectorを動かして「右手で何かを指さす」ポーズを追加してみる。下半身・左腕はMocapのまま残ることを確認する。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — MB アニメーション制作</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/06-character-animation/" target="_blank" class="doc">📄 AREA JAPAN: カットシーン制作 第6回 ～キャラクターアニメーション～</a>
+      <a href="https://area.autodesk.jp/movie/motionbuilder/03-control-rig.html" target="_blank" class="doc">📄 AREA JAPAN ムービー: コントロールリグ基本操作</a>
+      <a href="https://www.win-graphic.com/post/motionbuilder-no05" target="_blank" class="ext">📖 スプリングギルド: Control Rig 詳細（FK/IK 含む）</a>
+      <a href="https://www.win-graphic.com/post/motionbuilder-no13" target="_blank" class="ext">📖 スプリングギルド: アニメーションプロット（No.13）</a>
+    </div>
+  </div>
+
+  <a href="maya_basics.html" class="next-link">
+    <div><div class="next-label">次のページ</div><div class="next-title">🖥️ Maya 基礎 — Graph Editorの理屈から</div></div>
+    <span class="next-arrow">→</span>
+  </a>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--accent); }
+  body { min-height: 100vh; }
+
+  .hero {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,92,246,0.15), transparent);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3);
+    color: var(--accent); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.35rem 1rem; border-radius: 999px; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800;
+    background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+  }
+  .hero p { color: var(--muted); font-size: 1.05rem; max-width: 580px; margin: 0 auto 2rem; }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap;
+    padding-top: 1rem; border-top: 1px solid var(--border); max-width: 480px; margin: 2rem auto 0;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 1.8rem; font-weight: 700; background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-label { font-size: 0.78rem; color: var(--muted); }
+
+  section { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+  .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .card-nav {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    text-decoration: none; color: var(--text);
+    transition: all 0.25s; display: block;
+    position: relative; overflow: hidden;
+  }
+  .card-nav::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent-grad); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .card-nav:hover { border-color: rgba(139,92,246,0.4); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(139,92,246,0.15); }
+  .card-nav:hover::before { transform: scaleX(1); }
+  .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .card-num { font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .card-nav h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .card-nav p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .card-tag {
+    display: inline-block; margin-top: 0.75rem;
+    background: rgba(34,211,238,0.1); color: var(--accent-2);
+    border: 1px solid rgba(34,211,238,0.2);
+    font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 4px;
+  }
+
+  .checklist { display: flex; flex-direction: column; gap: 0.6rem; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.85rem 1.1rem; font-size: 0.9rem;
+  }
+  .check-item.known { border-color: rgba(16,185,129,0.25); }
+  .check-item.unknown { border-color: rgba(139,92,246,0.2); }
+  .check-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .check-text strong { display: block; font-size: 0.88rem; }
+  .check-text span { font-size: 0.78rem; color: var(--muted); }
+
+  .roadmap { position: relative; display: flex; flex-direction: column; gap: 0; }
+  .roadmap-item { display: flex; gap: 1.5rem; padding-bottom: 0; position: relative; }
+  .roadmap-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px; }
+  .roadmap-dot {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; flex-shrink: 0; position: relative; z-index: 1;
+  }
+  .roadmap-dot.mb { background: rgba(139,92,246,0.2); border: 2px solid var(--accent); color: var(--accent); }
+  .roadmap-dot.maya { background: rgba(34,211,238,0.2); border: 2px solid var(--accent-2); color: var(--accent-2); }
+  .roadmap-dot.joint { background: rgba(245,158,11,0.2); border: 2px solid var(--amber); color: var(--amber); }
+  .roadmap-line { flex: 1; width: 2px; background: var(--border); margin: 4px 0; min-height: 32px; }
+  .roadmap-content {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.1rem 1.4rem;
+    margin-bottom: 1rem; flex: 1;
+  }
+  .roadmap-content h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .roadmap-content p { font-size: 0.82rem; color: var(--muted); }
+  .session-badge {
+    display: inline-block; font-size: 0.72rem; padding: 0.15rem 0.55rem;
+    border-radius: 4px; margin-top: 0.4rem;
+  }
+  .session-badge.mb { background: rgba(139,92,246,0.15); color: var(--accent); }
+  .session-badge.maya { background: rgba(34,211,238,0.15); color: var(--accent-2); }
+
+  .token-banner {
+    background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(34,211,238,0.1));
+    border: 1px solid rgba(139,92,246,0.25); border-radius: var(--radius);
+    padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .token-icon { font-size: 2.5rem; }
+  .token-text h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .token-text p { font-size: 0.85rem; color: var(--muted); }
+  .token-meter { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.6rem; }
+  .token-pip { width: 28px; height: 10px; border-radius: 3px; }
+  .token-pip.used { background: var(--border); }
+  .token-pip.avail { background: linear-gradient(90deg, #8b5cf6, #22d3ee); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html" class="active">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="mb_animation.html">MB アニメ</a>
+  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Autodesk Flex · 15セッション完走ガイド</div>
+  <h1>MotionBuilder &amp; Maya<br>学習ガイド</h1>
+  <p>残り15トークンを最大限に活かすための、ゴール逆算型スタディマップ。<br>1セッション = 4〜6時間 の想定で設計されています。</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">15</div><div class="stat-label">残りセッション</div></div>
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label">MB セッション</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Maya セッション</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="token-banner">
+    <div class="token-icon">🪙</div>
+    <div class="token-text">
+      <h3>トークン残量イメージ（計15トークン）</h3>
+      <p>1マス = 1トークン（1日分）。MotionBuilder と Maya は別カウント。</p>
+      <div class="token-meter">
+        <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
+        <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
+        <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
+        <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
+        <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">📍 あなたの現在地</div>
+  <div class="checklist" style="margin-bottom:3rem;">
+    <div class="check-item known">
+      <span class="check-icon">✅</span>
+      <div class="check-text"><strong>Mocap → Characterize</strong><span>キャプチャデータをキャラクター定義にマッピングする作業</span></div>
+    </div>
+    <div class="check-item known">
+      <span class="check-icon">✅</span>
+      <div class="check-text"><strong>CGモデルへの流し込み（リターゲット）</strong><span>キャラクタライズしたモデルにモーションを適用する</span></div>
+    </div>
+    <div class="check-item known">
+      <span class="check-icon">✅</span>
+      <div class="check-text"><strong>ベイク（Plot to Skeleton）</strong><span>アニメーションをスケルトンに焼き付ける</span></div>
+    </div>
+    <div class="check-item unknown">
+      <span class="check-icon">🎯</span>
+      <div class="check-text"><strong>Control Rig</strong><span>← ここが今回の主目標。IK/FKエフェクターでアニメーションを編集する</span></div>
+    </div>
+    <div class="check-item unknown">
+      <span class="check-icon">📚</span>
+      <div class="check-text"><strong>Story ウィンドウ / テイク編集</strong><span>MotionBuilderのNLE（非線形編集）機能</span></div>
+    </div>
+    <div class="check-item unknown">
+      <span class="check-icon">📚</span>
+      <div class="check-text"><strong>Maya 基礎操作・アニメーション</strong><span>今回新規に学ぶ領域</span></div>
+    </div>
+  </div>
+
+  <div class="section-title">📂 このガイドの構成</div>
+  <div class="cards">
+    <a href="mb_overview.html" class="card-nav">
+      <div class="card-icon">🎬</div>
+      <div class="card-num">MotionBuilder · 01</div>
+      <h3>MB 全体像と UI</h3>
+      <p>MotionBuilderのインターフェース・基本操作・テイクシステムを整理。知ってる部分の確認も兼ねて。</p>
+      <span class="card-tag">MB 1〜2セッション</span>
+    </a>
+    <a href="mb_control_rig.html" class="card-nav">
+      <div class="card-icon">🦾</div>
+      <div class="card-num">MotionBuilder · 02</div>
+      <h3>Control Rig 入門</h3>
+      <p>今回の主目標。IK/FK・エフェクター・ピン留め・Reach設定まで、ゼロから丁寧に解説。</p>
+      <span class="card-tag">MB 3〜7セッション（メイン）</span>
+    </a>
+    <a href="mb_animation.html" class="card-nav">
+      <div class="card-icon">✏️</div>
+      <div class="card-num">MotionBuilder · 03</div>
+      <h3>MB アニメーション制作</h3>
+      <p>Mocap修正とゼロ制作の違いと共通点。FK/IKの選び方・FCurveエディタ・ポーズtoポーズ ワークフロー。</p>
+      <span class="card-tag">MB 応用</span>
+    </a>
+    <a href="maya_basics.html" class="card-nav">
+      <div class="card-icon">🖥️</div>
+      <div class="card-num">Maya · 01</div>
+      <h3>Maya 基礎</h3>
+      <p>UI・基本操作・キーフレームアニメーション・Graph Editor。MBからFBXで持ち込む流れも含む。</p>
+      <span class="card-tag">Maya 1〜5セッション</span>
+    </a>
+    <a href="industry.html" class="card-nav">
+      <div class="card-icon">🌐</div>
+      <div class="card-num">コラム</div>
+      <h3>業界と用途</h3>
+      <p>ゲーム・映像・VFX・バーチャル系それぞれで何を作り、どんな形で納品し、誰がMBを触るか。</p>
+      <span class="card-tag">業界コンテキスト</span>
+    </a>
+    <a href="study_plan.html" class="card-nav">
+      <div class="card-icon">📅</div>
+      <div class="card-num">プランニング</div>
+      <h3>15セッション 学習プラン</h3>
+      <p>セッションごとの目標・やること・達成チェックを一覧化。トークンの使い方もここで確認。</p>
+      <span class="card-tag">セッション設計図</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">🗺️ 全体ロードマップ</div>
+  <div class="roadmap">
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot mb">1</div><div class="roadmap-line"></div></div>
+      <div class="roadmap-content">
+        <h4>MB UI &amp; 基本操作の整理</h4>
+        <p>ビューポート操作・Asset Browser・テイクの概念を確認。既知のワークフローを言語化して土台を固める。</p>
+        <span class="session-badge mb">MB × 1〜2</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot mb">2</div><div class="roadmap-line"></div></div>
+      <div class="roadmap-content">
+        <h4>Control Rig の作成とエフェクターの把握</h4>
+        <p>Control Rigを作る手順・各エフェクターの役割・IK/FKの違いを体で覚える。</p>
+        <span class="session-badge mb">MB × 2〜3</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot mb">3</div><div class="roadmap-line"></div></div>
+      <div class="roadmap-content">
+        <h4>Mocapデータを Control Rig で修正</h4>
+        <p>ピン留め・Reach設定・Floor Contactを使って実際のモーションを直す練習。</p>
+        <span class="session-badge mb">MB × 3〜4</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot mb">4</div><div class="roadmap-line"></div></div>
+      <div class="roadmap-content">
+        <h4>Story ウィンドウ・仕上げベイク</h4>
+        <p>複数テイクの編集・つなぎ。完成したアニメーションをFBXに書き出す。</p>
+        <span class="session-badge mb">MB × 2</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot maya">5</div><div class="roadmap-line"></div></div>
+      <div class="roadmap-content">
+        <h4>Maya UI &amp; 基本操作入門</h4>
+        <p>ビューポート・Outliner・Channel Box・基本ショートカット（Q/W/E/R）。</p>
+        <span class="session-badge maya">Maya × 1〜2</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot maya">6</div><div class="roadmap-line"></div></div>
+      <div class="roadmap-content">
+        <h4>Maya でキーフレームアニメーション</h4>
+        <p>Graph Editor・Dope Sheet・キーフレームの打ち方と編集。</p>
+        <span class="session-badge maya">Maya × 2〜3</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot joint">7</div></div>
+      <div class="roadmap-content">
+        <h4>MB → Maya FBX パイプライン</h4>
+        <p>MBで仕上げたアニメーションをMayaで開き、レンダリング・最終調整まで繋げる。</p>
+        <span class="session-badge maya">Maya × 1〜2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門 | 15セッション完走マップ</p>
+</footer>
+</body>
+</html>

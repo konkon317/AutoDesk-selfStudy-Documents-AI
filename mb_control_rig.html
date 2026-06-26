@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control Rig 入門 | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--accent); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(139,92,246,0.12), transparent); }
+
+  .diagram-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; overflow: hidden; }
+  .diagram-box svg { width: 100%; display: block; max-width: 640px; margin: 0 auto; }
+
+  .effector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+  @media(max-width:640px){ .effector-grid { grid-template-columns: 1fr 1fr; } }
+  .effector-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; }
+  .effector-card .eff-icon { font-size: 1.4rem; margin-bottom: 0.3rem; }
+  .effector-card .eff-name { font-size: 0.83rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .effector-card .eff-note { font-size: 0.76rem; color: var(--muted); }
+  .effector-card.ik { border-color: rgba(139,92,246,0.3); }
+  .effector-card.aux { border-color: rgba(245,158,11,0.3); }
+  .eff-badge { font-size: 0.65rem; padding: 0.15rem 0.45rem; border-radius: 3px; margin-left: 0.3rem; vertical-align: middle; }
+  .eff-badge.ik { background: rgba(139,92,246,0.15); color: var(--accent); }
+  .eff-badge.aux { background: rgba(245,158,11,0.15); color: var(--amber); }
+
+  .reach-demo { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem; margin-bottom: 1.5rem; }
+  .reach-track { height: 10px; border-radius: 5px; background: var(--border); position: relative; margin: 0.75rem 0; }
+  .reach-fill { height: 100%; border-radius: 5px; background: var(--accent-grad); }
+  .reach-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
+
+  .reach-table th { text-align: center; padding: 0.5rem 0.8rem; }
+  .reach-table td { text-align: center; }
+
+  .pin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem; }
+  @media(max-width:540px){ .pin-grid { grid-template-columns: 1fr; } }
+  .pin-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; font-size: 0.83rem; }
+  .pin-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .pin-card p { color: var(--muted); margin: 0; font-size: 0.8rem; }
+  .pin-card.t { border-color: rgba(34,211,238,0.3); }
+  .pin-card.r { border-color: rgba(139,92,246,0.3); }
+
+  .wf-step { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .wf-num { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: white; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.15rem; }
+  .wf-body { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; flex: 1; font-size: 0.85rem; }
+  .wf-body h4 { font-size: 0.87rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .wf-body p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--accent-2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html" class="active">Control Rig</a>
+  <a href="mb_animation.html">MB アニメ</a>
+  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">MotionBuilder · 02</div>
+  <h1><span>Control Rig</span> 入門</h1>
+  <p>「なぜControl Rigが存在するのか」という理屈から入り、IK・Reach・Pinning・Floor Contactを使ったMocap修正の実践まで。</p>
+  <div class="session-info">🪙 推奨セッション：MB × 2〜7（10〜30h）</div>
+</div>
+
+<div class="content">
+
+  <div class="toc">
+    <h4>このページの内容</h4>
+    <ol>
+      <li><a href="#why">なぜControl Rigが必要か——問題と解法のマップ</a></li>
+      <li><a href="#ik-theory">IKの理屈（FKとの比較）</a></li>
+      <li><a href="#structure">Control Rigの構造（レイヤー図解）</a></li>
+      <li><a href="#effectors">エフェクターの種類と役割</a></li>
+      <li><a href="#reach">Reach — 上書き強度を制御する</a></li>
+      <li><a href="#pinning">Pinning — 足を地面に固定する</a></li>
+      <li><a href="#floor">Floor Contact — 床めり込みを防ぐ</a></li>
+      <li><a href="#workflow">実践ワークフロー（修正からPlotまで）</a></li>
+    </ol>
+  </div>
+
+  <!-- ① なぜ必要か -->
+  <h2 id="why">① なぜControl Rigが必要か</h2>
+
+  <p>Mocapデータは「何百フレーム × 何十ボーン」のキーフレーム群として存在します。これを直接修正しようとすると：</p>
+
+  <div class="cards-2" style="margin-bottom:1.2rem;">
+    <div class="card" style="border-color:rgba(239,68,68,0.25);">
+      <h3 style="color:#f87171; margin-top:0;">ボーン直接編集の限界</h3>
+      <ul>
+        <li>手の位置を変えたら肩・肘・手首を全部合わせ直す必要がある</li>
+        <li>連続フレームの修正は事実上不可能な物量</li>
+        <li>編集が「手段（ジョイント角度）」の操作になってしまう</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(16,185,129,0.25);">
+      <h3 style="color:var(--green); margin-top:0;">Control Rigで解決すること</h3>
+      <ul>
+        <li>「手をここに置きたい」→ Hand Effectorを1点移動するだけ</li>
+        <li>IKソルバーが肩・肘・手首の角度を自動計算</li>
+        <li>編集が「意図（エフェクター位置）」の指定になる</li>
+      </ul>
+    </div>
+  </div>
+
+  <p><strong>Control Rigとは「ボーンへの直接指示から、意図の指定への抽象化」</strong>です。修正の粒度を「ボーン1本ずつ」から「体のパーツの目標位置」に変えます。</p>
+
+  <h3 style="margin-top:1.5rem;">やりたいこと → 機能 → 理屈のマップ</h3>
+
+  <div class="concept-map">
+    <div class="concept-header">
+      <div class="ch-goal">🎯 やりたいこと</div>
+      <div class="ch-arr"></div>
+      <div class="ch-feat">🔧 機能</div>
+      <div class="ch-arr"></div>
+      <div class="ch-logic">⚙️ 理屈</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>ボーンを直接触らずに<br>全身の動きを制御したい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>IKエフェクター</strong><br>（手・足・腰・頭）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">IKソルバーが末端位置から間の関節角度を自動計算する。「意図（エフェクター位置）」を指定するだけで「手段（全ジョイント角度）」は自動生成される。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>修正したい部位だけ上書きして<br>他はMocapのまま保ちたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>Reach（0〜100%）</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">Reachは「元MocapとControl Rigエフェクターの合成比率」。0%=元Mocap通り、100%=完全上書き。フレームごとにキーを打って変化させることもできる。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>足が地面をスライドしないよう<br>地面に固定したい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>Translation Pinning</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">エフェクターをワールド空間の特定座標に「固定（Pin）」する。キャラクターの重心が動いても、Pinされたエフェクターはその座標から動かない。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>膝・肘が変な方向に<br>曲がってしまう</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>Auxiliary Effectors</strong><br>（Knee / Elbow）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">補助エフェクターは関節の「ポールベクター（曲がる方向）」を制御する。IKは末端と根元だけでは曲がる方向が一意に決まらない。Auxがその方向を指定する。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>足が床面より下に<br>めり込んでしまう</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>Floor Contact</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">床面（Y値）との接触制約を自動計算し、足が設定高さより下に行かないようクランプする。Pinningとは違い「床に当たったら止まる」動的制約。</div>
+    </div>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — Control Rig 概要</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/movie/motionbuilder/02-characterize-control-rig.html" target="_blank" class="doc">📄 AREA JAPAN ムービー: キャラクタライズと Control Rig 作成</a>
+      <a href="https://www.win-graphic.com/post/motionbuilder-no05" target="_blank" class="ext">📖 スプリングギルド: Control Rig 詳細・HIK（入門編 No.05）</a>
+    </div>
+  </div>
+
+  <!-- ② IKの理屈 -->
+  <h2 id="ik-theory">② IKの理屈（FKとの比較）</h2>
+  <p>IKとFKは「骨格を動かす計算の方向」が逆です。これを先に理解するとエフェクターの操作が直感的になります。</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+      <rect width="560" height="200" fill="#0a0a1a" rx="8"/>
+      <!-- FK panel -->
+      <rect x="10" y="10" width="255" height="180" rx="6" fill="#10102a" stroke="#8b5cf6" stroke-width="1.2" stroke-opacity="0.4"/>
+      <text x="137" y="32" fill="#8b5cf6" font-size="12" font-weight="700" text-anchor="middle">FK（順運動学）</text>
+      <text x="137" y="47" fill="#7c8ba1" font-size="9" text-anchor="middle">根元から順番に角度を積み上げる</text>
+      <g transform="translate(30, 60)">
+        <circle cx="40" cy="20" r="8" fill="#1c1c3a" stroke="#8b5cf6" stroke-width="2"/>
+        <text x="40" y="10" fill="#8b5cf6" font-size="8" text-anchor="middle">肩</text>
+        <path d="M 48,14 A 12,12 0 0 1 52,26" fill="none" stroke="#8b5cf6" stroke-width="1.5"/>
+        <line x1="40" y1="20" x2="80" y2="50" stroke="#4a4a7a" stroke-width="2"/>
+        <circle cx="80" cy="50" r="8" fill="#1c1c3a" stroke="#8b5cf6" stroke-width="2"/>
+        <text x="80" y="42" fill="#8b5cf6" font-size="8" text-anchor="middle">肘</text>
+        <path d="M 88,44 A 12,12 0 0 1 89,57" fill="none" stroke="#8b5cf6" stroke-width="1.5"/>
+        <line x1="80" y1="50" x2="115" y2="85" stroke="#4a4a7a" stroke-width="2"/>
+        <circle cx="115" cy="85" r="7" fill="#1c1c3a" stroke="#7c8ba1" stroke-width="1.5"/>
+        <text x="115" y="102" fill="#7c8ba1" font-size="8" text-anchor="middle">手首（結果）</text>
+      </g>
+      <text x="137" y="175" fill="#7c8ba1" font-size="8.5" text-anchor="middle">末端位置は積み上げた結果として決まる</text>
+      <!-- IK panel -->
+      <rect x="295" y="10" width="255" height="180" rx="6" fill="#10102a" stroke="#22d3ee" stroke-width="1.2" stroke-opacity="0.4"/>
+      <text x="422" y="32" fill="#22d3ee" font-size="12" font-weight="700" text-anchor="middle">IK（逆運動学）</text>
+      <text x="422" y="47" fill="#7c8ba1" font-size="9" text-anchor="middle">末端の目標位置を指定 → ソルバーが逆算</text>
+      <g transform="translate(315, 60)">
+        <circle cx="40" cy="20" r="8" fill="#1c1c3a" stroke="#3a3a65" stroke-width="1.5"/>
+        <text x="40" y="10" fill="#7c8ba1" font-size="8" text-anchor="middle">肩（根元）</text>
+        <line x1="40" y1="20" x2="78" y2="48" stroke="#2a2a50" stroke-width="2" stroke-dasharray="4,3"/>
+        <circle cx="78" cy="48" r="7" fill="#1c1c3a" stroke="#2a2a50" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <text x="78" y="42" fill="#2a2a50" font-size="8" text-anchor="middle">肘</text>
+        <text x="78" y="69" fill="#3a3a65" font-size="7.5" text-anchor="middle">自動計算</text>
+        <line x1="78" y1="48" x2="115" y2="82" stroke="#2a2a50" stroke-width="2" stroke-dasharray="4,3"/>
+        <circle cx="115" cy="82" r="10" fill="rgba(34,211,238,0.15)" stroke="#22d3ee" stroke-width="2"/>
+        <text x="115" y="86" fill="#22d3ee" font-size="8" text-anchor="middle" font-weight="700">Hand</text>
+        <text x="115" y="100" fill="#22d3ee" font-size="8" text-anchor="middle">Effector</text>
+        <path d="M 130,75 L 145,60" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="148" y="57" fill="#22d3ee" font-size="8">移動</text>
+      </g>
+      <text x="422" y="175" fill="#7c8ba1" font-size="8.5" text-anchor="middle">目標1点を動かすだけで全関節が解ける</text>
+    </svg>
+  </div>
+
+  <div class="callout info">
+    <span class="callout-icon">💡</span>
+    <p><strong>FBIKとは：</strong> MotionBuilderのControl RigはFull Body IK（FBIK）を使います。通常のIKが「腕1本」を解くのに対し、FBIKは全身を同時に解きます。Hips Effectorを動かすと体全体の重心が移動し、すべてのエフェクターとの整合が自動的に保たれます。</p>
+  </div>
+
+  <!-- ③ 構造 -->
+  <h2 id="structure">③ Control Rigの構造（レイヤー図解）</h2>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+      <rect width="560" height="160" fill="#0a0a1a" rx="8"/>
+      <rect x="20" y="14" width="520" height="36" rx="8" fill="rgba(139,92,246,0.12)" stroke="rgba(139,92,246,0.4)" stroke-width="1.5"/>
+      <text x="40" y="37" fill="#8b5cf6" font-size="12" font-weight="700">Layer 3: Control Rig（編集レイヤー）</text>
+      <text x="380" y="37" fill="#7c8ba1" font-size="9">IKエフェクター · Reach · Pinning · Floor Contact</text>
+      <text x="280" y="68" fill="#3a3a65" font-size="18" text-anchor="middle">↓ 計算結果を反映</text>
+      <rect x="20" y="76" width="520" height="36" rx="8" fill="rgba(34,211,238,0.08)" stroke="rgba(34,211,238,0.3)" stroke-width="1.5"/>
+      <text x="40" y="99" fill="#22d3ee" font-size="12" font-weight="700">Layer 2: Character（Characterize済み定義）</text>
+      <text x="420" y="99" fill="#7c8ba1" font-size="9">Retarget はここで解決</text>
+      <text x="280" y="128" fill="#3a3a65" font-size="18" text-anchor="middle">↓ Plot でキーフレームとして確定</text>
+      <rect x="20" y="136" width="520" height="16" rx="6" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.25)" stroke-width="1"/>
+      <text x="40" y="148" fill="#10b981" font-size="10" font-weight="700">Layer 1: Skeleton（ボーン・キーフレーム）— FBXで書き出す実体</text>
+    </svg>
+  </div>
+
+  <p><strong>重要：</strong> Control RigはLayer 1のボーンを直接編集しません。PlotでLayer 3の計算結果がLayer 1に焼き付けられます。Plot前はUndoで戻せます。</p>
+
+  <!-- ④ エフェクター -->
+  <h2 id="effectors">④ エフェクターの種類と役割</h2>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 540 520" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+      <rect width="540" height="520" fill="#0a0a1a" rx="8"/>
+      <g stroke="#2a2a50" stroke-width="2" fill="none">
+        <circle cx="270" cy="60" r="28" stroke="#3a3a65"/>
+        <line x1="270" y1="88" x2="270" y2="180"/>
+        <line x1="160" y1="120" x2="380" y2="120"/>
+        <line x1="160" y1="120" x2="110" y2="200"/>
+        <line x1="110" y1="200" x2="75" y2="280"/>
+        <line x1="380" y1="120" x2="430" y2="200"/>
+        <line x1="430" y1="200" x2="465" y2="280"/>
+        <line x1="200" y1="290" x2="190" y2="370"/>
+        <line x1="340" y1="290" x2="350" y2="370"/>
+        <line x1="200" y1="290" x2="340" y2="290"/>
+        <line x1="270" y1="180" x2="270" y2="295"/>
+        <line x1="190" y1="370" x2="180" y2="460"/>
+        <line x1="350" y1="370" x2="360" y2="460"/>
+      </g>
+      <!-- IK Effectors -->
+      <circle cx="270" cy="60" r="14" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="270" y="65" fill="#8b5cf6" font-size="9" font-weight="700" text-anchor="middle">Head</text>
+      <circle cx="270" cy="145" r="12" fill="rgba(139,92,246,0.2)" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="270" y="149" fill="#8b5cf6" font-size="8.5" font-weight="700" text-anchor="middle">Chest</text>
+      <circle cx="270" cy="250" r="13" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="270" y="254" fill="#8b5cf6" font-size="8.5" font-weight="700" text-anchor="middle">Hips</text>
+      <circle cx="160" cy="120" r="11" fill="rgba(139,92,246,0.18)" stroke="#8b5cf6" stroke-width="1.5"/>
+      <text x="160" y="124" fill="#8b5cf6" font-size="7.5" text-anchor="middle">LSho</text>
+      <circle cx="380" cy="120" r="11" fill="rgba(139,92,246,0.18)" stroke="#8b5cf6" stroke-width="1.5"/>
+      <text x="380" y="124" fill="#8b5cf6" font-size="7.5" text-anchor="middle">RSho</text>
+      <circle cx="75" cy="280" r="13" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="75" y="284" fill="#8b5cf6" font-size="8.5" font-weight="700" text-anchor="middle">LHand</text>
+      <circle cx="465" cy="280" r="13" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="465" y="284" fill="#8b5cf6" font-size="8.5" font-weight="700" text-anchor="middle">RHand</text>
+      <circle cx="180" cy="460" r="14" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="180" y="464" fill="#8b5cf6" font-size="8.5" font-weight="700" text-anchor="middle">LFoot</text>
+      <circle cx="360" cy="460" r="14" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="360" y="464" fill="#8b5cf6" font-size="8.5" font-weight="700" text-anchor="middle">RFoot</text>
+      <!-- Auxiliary Effectors -->
+      <rect x="102" y="192" width="16" height="16" fill="rgba(245,158,11,0.25)" stroke="#f59e0b" stroke-width="1.5" transform="rotate(45 110 200)"/>
+      <text x="86" y="225" fill="#f59e0b" font-size="8" text-anchor="middle">LElbow</text>
+      <rect x="422" y="192" width="16" height="16" fill="rgba(245,158,11,0.25)" stroke="#f59e0b" stroke-width="1.5" transform="rotate(45 430 200)"/>
+      <text x="450" y="225" fill="#f59e0b" font-size="8" text-anchor="middle">RElbow</text>
+      <rect x="182" y="362" width="16" height="16" fill="rgba(245,158,11,0.25)" stroke="#f59e0b" stroke-width="1.5" transform="rotate(45 190 370)"/>
+      <text x="165" y="395" fill="#f59e0b" font-size="8" text-anchor="middle">LKnee</text>
+      <rect x="342" y="362" width="16" height="16" fill="rgba(245,158,11,0.25)" stroke="#f59e0b" stroke-width="1.5" transform="rotate(45 350 370)"/>
+      <text x="368" y="395" fill="#f59e0b" font-size="8" text-anchor="middle">RKnee</text>
+      <!-- Legend -->
+      <rect x="15" y="480" width="250" height="32" rx="5" fill="rgba(10,10,26,0.9)" stroke="#2a2a50" stroke-width="1"/>
+      <circle cx="32" cy="497" r="7" fill="rgba(139,92,246,0.25)" stroke="#8b5cf6" stroke-width="1.5"/>
+      <text x="45" y="501" fill="#8b5cf6" font-size="9">IKエフェクター（●）</text>
+      <rect x="118" y="490" width="10" height="10" fill="rgba(245,158,11,0.25)" stroke="#f59e0b" stroke-width="1.5" transform="rotate(45 123 495)"/>
+      <text x="135" y="501" fill="#f59e0b" font-size="9">Auxiliary（◇）</text>
+    </svg>
+  </div>
+
+  <div class="effector-grid">
+    <div class="effector-card ik">
+      <div class="eff-icon">🧠</div>
+      <div class="eff-name">Head <span class="eff-badge ik">IK</span></div>
+      <div class="eff-note">頭の向き・位置。視線方向の修正に。</div>
+    </div>
+    <div class="effector-card ik">
+      <div class="eff-icon">🫁</div>
+      <div class="eff-name">Chest <span class="eff-badge ik">IK</span></div>
+      <div class="eff-note">胸の向き。上半身全体のねじれ修正に。</div>
+    </div>
+    <div class="effector-card ik">
+      <div class="eff-icon">⬡</div>
+      <div class="eff-name">Hips <span class="eff-badge ik">IK</span></div>
+      <div class="eff-note">重心・骨盤の位置と向き。全身の基点。最もよく使う。</div>
+    </div>
+    <div class="effector-card ik">
+      <div class="eff-icon">✋</div>
+      <div class="eff-name">L/R Hand <span class="eff-badge ik">IK</span></div>
+      <div class="eff-note">手の位置と向き。腕全体が追従する。壁・机への接触修正に。</div>
+    </div>
+    <div class="effector-card ik">
+      <div class="eff-icon">👟</div>
+      <div class="eff-name">L/R Foot <span class="eff-badge ik">IK</span></div>
+      <div class="eff-note">足の位置と向き。フットプラント修正の核心。</div>
+    </div>
+    <div class="effector-card ik">
+      <div class="eff-icon">💪</div>
+      <div class="eff-name">Shoulders <span class="eff-badge ik">IK</span></div>
+      <div class="eff-note">肩が不自然に上がるMocapの修正に。上半身の自然さに関わる。</div>
+    </div>
+    <div class="effector-card aux">
+      <div class="eff-icon">🔷</div>
+      <div class="eff-name">L/R Elbow <span class="eff-badge aux">AUX</span></div>
+      <div class="eff-note">肘の曲がる方向（ポール）を制御。肘の向きがおかしいときに使う。</div>
+    </div>
+    <div class="effector-card aux">
+      <div class="eff-icon">🔷</div>
+      <div class="eff-name">L/R Knee <span class="eff-badge aux">AUX</span></div>
+      <div class="eff-note">膝の曲がる方向を制御。内股・ガニ股の修正に。</div>
+    </div>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — エフェクター・IK/FK</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/movie/motionbuilder/03-control-rig.html" target="_blank" class="doc">📄 AREA JAPAN ムービー: コントロールリグ基本操作</a>
+      <a href="https://www.win-graphic.com/post/motionbuilder-no05" target="_blank" class="ext">📖 スプリングギルド: Control Rig 詳細（FK/IK・Reach 含む）</a>
+    </div>
+  </div>
+
+  <!-- ⑤ Reach -->
+  <h2 id="reach">⑤ Reach — 上書き強度を制御する</h2>
+  <p>Reachは「Control RigのエフェクターがMocapをどの程度上書きするか」の重み付けです。エフェクターごとに独立して設定できます。</p>
+
+  <div class="reach-demo">
+    <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.5rem;">
+      <span>Reach = <strong style="color:var(--accent-2)">0%</strong>（元Mocap通り）</span>
+      <span>Reach = <strong style="color:var(--accent)">100%</strong>（完全上書き）</span>
+    </div>
+    <div class="reach-track"><div class="reach-fill" style="width:100%;"></div></div>
+    <div class="reach-labels"><span>元Mocapそのまま</span><span>← キーで徐々に上げる →</span><span>エフェクター完全優先</span></div>
+  </div>
+
+  <table>
+    <tr><th>Reach値</th><th>意味</th><th>使いどころ</th></tr>
+    <tr><td><strong style="color:var(--muted)">0%</strong></td><td>Control Rigを使わない</td><td>「この部位は修正不要」を明示するとき</td></tr>
+    <tr><td><strong style="color:var(--accent)">50%</strong></td><td>MocapとControl Rigの中間</td><td>自然な移行、徐々に修正を加えるとき</td></tr>
+    <tr><td><strong style="color:var(--accent-2)">100%</strong></td><td>エフェクターに完全に従う</td><td>Pinningと組み合わせた修正、向きを固定するとき</td></tr>
+  </table>
+
+  <div class="callout try">
+    <span class="callout-icon">🖐</span>
+    <p><strong>試してみる：</strong> Head Effector の Translation Reach を 0% → 100% に変えながら再生する。頭がMocapの動きからエフェクター位置に「引っ張られる」様子が確認できる。</p>
+  </div>
+
+  <!-- ⑥ Pinning -->
+  <h2 id="pinning">⑥ Pinning — 足を地面に固定する</h2>
+  <p>Pinningは「エフェクターをワールド空間の特定座標に固定する」仕組みです。足スライド（フットプラント問題）の修正が主な用途です。</p>
+
+  <div class="pin-grid">
+    <div class="pin-card t">
+      <h4>Translation Pinning（位置固定）</h4>
+      <p>エフェクターのXYZ位置をワールド空間に固定する。体の重心が動いても足はその座標に留まる。「地面に刺さっている」状態を作れる。</p>
+    </div>
+    <div class="pin-card r">
+      <h4>Rotation Pinning（向き固定）</h4>
+      <p>エフェクターの向きを固定する。足の向きが回転しないようにするとき。Translation Pinningと組み合わせることが多い。</p>
+    </div>
+  </div>
+
+  <h3>フットプラント修正の手順</h3>
+  <div class="wf-step"><div class="wf-num">1</div><div class="wf-body"><h4>着地フレームを特定する</h4><p>タイムラインを確認し、足が完全に着地しているフレームを探す。</p></div></div>
+  <div class="wf-step"><div class="wf-num">2</div><div class="wf-body"><h4>着地フレームでTranslation PinをONにする</h4><p>Character Controls → Foot Effector → Translation Pin をON。キーフレームが自動で打たれる。</p></div></div>
+  <div class="wf-step"><div class="wf-num">3</div><div class="wf-body"><h4>離地フレームでPinをOFFにする</h4><p>足が地面から離れるフレームでPinをOFF。ここからは元のMocapの動きに戻る。</p></div></div>
+  <div class="wf-step"><div class="wf-num">4</div><div class="wf-body"><h4>全ステップ分繰り返す</h4><p>歩行サイクルのすべてのステップ分繰り返して精度を上げる。</p></div></div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — Pinning・フットプラント</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/movie/motionbuilder/03-control-rig.html" target="_blank" class="doc">📄 AREA JAPAN ムービー: コントロールリグ（ピン留め含む）</a>
+      <a href="https://zenn.dev/guncys/articles/31d4510faefa3a" target="_blank" class="ext">📖 GUNCY'S（Zenn）: 第6回 ～キャラの調整（モーションデータ編）～</a>
+    </div>
+  </div>
+
+  <!-- ⑦ Floor Contact -->
+  <h2 id="floor">⑦ Floor Contact — 床めり込みを防ぐ</h2>
+  <p>Pinningが「特定フレームで足を固定する手動制御」なのに対し、Floor Contactは「床面に当たったら自動的に止まる動的制約」です。</p>
+
+  <div class="cards-2">
+    <div class="card">
+      <h3 style="margin-top:0;">設定場所</h3>
+      <ul>
+        <li><strong>Character Controls → Character Properties</strong></li>
+        <li>Foot Contact → ON</li>
+        <li>Floor Y（床の高さ）を設定</li>
+        <li>Contact Height（接触判定の高さ）を調整</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0;">Pinningとの使い分け</h3>
+      <table style="margin:0; font-size:0.8rem;">
+        <tr><th>観点</th><th>Pinning</th><th>Floor Contact</th></tr>
+        <tr><td>制御方法</td><td>手動（フレームごと）</td><td>自動</td></tr>
+        <tr><td>用途</td><td>足スライド修正</td><td>床めり込み防止</td></tr>
+        <tr><td>柔軟性</td><td>高い</td><td>床のみ</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — Floor Contact</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/movie/motionbuilder/03-control-rig.html" target="_blank" class="doc">📄 AREA JAPAN ムービー: コントロールリグ基本操作</a>
+      <a href="https://knowledge.autodesk.com/ja/support/motionbuilder/learn-explore/caas/CloudHelp/cloudhelp/2023/JPN/MotionBuilder/files/GUID-FFC123CA-62D6-440E-93F8-D9027C0D1B42-htm.html" target="_blank" class="doc">📄 Autodesk Knowledge Network（日本語）: Control Rigへのアニメーションプロット</a>
+    </div>
+  </div>
+
+  <!-- ⑧ 実践ワークフロー -->
+  <h2 id="workflow">⑧ 実践ワークフロー（修正からPlotまで）</h2>
+
+  <div class="wf-step"><div class="wf-num" style="background:var(--green);">1</div><div class="wf-body"><h4>Control Rigを作成する</h4><p>Character Controls → キャラクターを選択 → 「IK/FK Control Rig」を作成。作成後すぐにエフェクターが使える。</p></div></div>
+  <div class="wf-step"><div class="wf-num" style="background:var(--green);">2</div><div class="wf-body"><h4>問題箇所を特定し、修正部位を絞る</h4><p>再生しながら「足？ 腰？ 手？」と修正箇所を決める。1セッション1テーマで集中する。</p></div></div>
+  <div class="wf-step"><div class="wf-num" style="background:var(--green);">3</div><div class="wf-body"><h4>関係するエフェクターのReachを100%にする</h4><p>修正したい部位だけReachを上げる。修正しない部位は0%のまま。</p></div></div>
+  <div class="wf-step"><div class="wf-num" style="background:var(--green);">4</div><div class="wf-body"><h4>エフェクターを動かして修正する</h4><p>エフェクターをドラッグで移動・回転。Pinningが必要なら設定。</p></div></div>
+  <div class="wf-step"><div class="wf-num" style="background:var(--green);">5</div><div class="wf-body"><h4>確認してPlotする</h4><p>再生して確認。問題なければ Character Controls → Plot → Plot to Skeleton。</p></div></div>
+  <div class="wf-step"><div class="wf-num" style="background:var(--green);">6</div><div class="wf-body"><h4>FBXで書き出す</h4><p>File → Export → FBX。アニメーション・スケルトンにチェックが入っているか確認。</p></div></div>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>Plot前のチェック：</strong> PlotするとControl Rigの編集内容がボーンキーフレームに確定されます。Plot後に再修正するにはControl Rigを再作成が必要。修正が完成してからPlotするようにしましょう。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — 実践ワークフロー</div>
+    <div class="ref-links">
+      <a href="https://www.win-graphic.com/post/motionbuilder-no13" target="_blank" class="ext">📖 スプリングギルド: アニメーションプロット（No.13）</a>
+      <a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/02-mocap/" target="_blank" class="doc">📄 AREA JAPAN: カットシーン制作 第2回 ～Mocap収録とリターゲット～</a>
+      <a href="https://zenn.dev/guncys/articles/363883ae075b90" target="_blank" class="ext">📖 GUNCY'S（Zenn）: 第7回 ～モデルデータとモーションデータを繋げる～</a>
+    </div>
+  </div>
+
+  <a href="maya_basics.html" class="next-link">
+    <div><div class="next-label">次のページ</div><div class="next-title">🖥️ Maya 基礎 — Graph Editorの理屈から</div></div>
+    <span class="next-arrow">→</span>
+  </a>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>

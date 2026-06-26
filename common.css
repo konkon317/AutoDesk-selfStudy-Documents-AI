@@ -1,0 +1,217 @@
+/* ─────────────────────────────────────────────────────────
+   Autodesk Study Guide — Shared Stylesheet
+   ───────────────────────────────────────────────────────── */
+
+:root {
+  --bg: #080818;
+  --surface: #10102a;
+  --surface-2: #181838;
+  --border: #2a2a50;
+  --accent: #8b5cf6;
+  --accent-2: #22d3ee;
+  --accent-grad: linear-gradient(135deg, #8b5cf6, #22d3ee);
+  --green: #10b981;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --text: #e2e8f0;
+  --muted: #7c8ba1;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.7;
+}
+
+/* ── Navigation ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8,8,24,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  height: 56px;
+}
+nav .logo {
+  font-weight: 700; font-size: 0.9rem;
+  background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-right: 1rem; white-space: nowrap;
+}
+nav a {
+  color: var(--muted); text-decoration: none; font-size: 0.85rem;
+  padding: 0.35rem 0.75rem; border-radius: 6px; transition: all 0.2s; white-space: nowrap;
+}
+nav a:hover, nav a.active { color: var(--text); background: var(--surface-2); }
+
+/* ── Inner-page Hero ── */
+.page-hero {
+  padding: 3.5rem 2rem 2.5rem;
+  max-width: 960px; margin: 0 auto;
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 80% 40%, rgba(139,92,246,0.08), transparent);
+  pointer-events: none;
+}
+.page-hero .tag {
+  display: inline-block;
+  background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.28);
+  color: var(--accent); font-size: 0.74rem; letter-spacing: 0.09em;
+  text-transform: uppercase; padding: 0.28rem 0.85rem;
+  border-radius: 999px; margin-bottom: 1rem;
+}
+.page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 0.75rem; }
+.page-hero h1 span { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.page-hero p { color: var(--muted); max-width: 640px; font-size: 0.95rem; }
+.session-info {
+  display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.82rem; color: var(--muted);
+}
+
+/* ── Content Wrapper ── */
+.content { max-width: 960px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+/* ── Typography ── */
+h2 {
+  font-size: 1.2rem; font-weight: 700; margin: 2.5rem 0 1rem;
+  padding-bottom: 0.6rem; border-bottom: 1px solid var(--border);
+}
+h3 { font-size: 1rem; font-weight: 700; margin: 1.5rem 0 0.75rem; color: var(--accent-2); }
+p { margin-bottom: 1rem; font-size: 0.93rem; }
+ul { padding-left: 1.3rem; line-height: 2.2; }
+li { font-size: 0.87rem; color: var(--muted); }
+li strong { color: var(--text); }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.4rem 1.6rem; margin-bottom: 1rem;
+}
+.cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+@media(max-width: 640px) { .cards-2 { grid-template-columns: 1fr; } }
+
+/* ── Callouts ── */
+.callout {
+  border-radius: var(--radius); padding: 1rem 1.3rem; margin-bottom: 1.25rem;
+  font-size: 0.87rem; display: flex; gap: 0.75rem;
+}
+.callout.tip  { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.22); }
+.callout.note { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.22); }
+.callout.info { background: rgba(34,211,238,0.08);  border: 1px solid rgba(34,211,238,0.22); }
+.callout.try  { background: rgba(16,185,129,0.08);  border: 1px solid rgba(16,185,129,0.25); }
+.callout-icon { flex-shrink: 0; font-size: 1.1rem; }
+.callout p    { margin: 0; color: var(--text); }
+
+/* ── Reference Link Box ── */
+.ref-box {
+  background: rgba(34,211,238,0.04); border: 1px solid rgba(34,211,238,0.18);
+  border-radius: var(--radius); padding: 0.9rem 1.2rem; margin: 0.5rem 0 1.8rem;
+}
+.ref-title {
+  font-size: 0.72rem; color: var(--muted); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.55rem;
+}
+.ref-links { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.ref-links a {
+  display: inline-block; text-decoration: none; font-size: 0.8rem;
+  padding: 0.28rem 0.7rem; border-radius: 5px; transition: all 0.18s; border: 1px solid;
+}
+.ref-links a.doc   { color: var(--accent);   background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.22); }
+.ref-links a.doc:hover { background: rgba(139,92,246,0.2); }
+.ref-links a.yt    { color: #f87171;           background: rgba(239,68,68,0.08);  border-color: rgba(239,68,68,0.22); }
+.ref-links a.yt:hover  { background: rgba(239,68,68,0.2); }
+.ref-links a.ext   { color: var(--accent-2); background: rgba(34,211,238,0.06); border-color: rgba(34,211,238,0.2); }
+.ref-links a.ext:hover { background: rgba(34,211,238,0.18); }
+
+/* ── Table ── */
+table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.87rem; }
+th {
+  text-align: left; padding: 0.6rem 1rem;
+  background: var(--surface-2); color: var(--muted);
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border);
+}
+td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+kbd {
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px;
+  padding: 0.15rem 0.5rem; font-family: monospace; font-size: 0.82rem; color: var(--accent-2);
+}
+
+/* ── Next Page Link ── */
+.next-link {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface); border: 1px solid rgba(139,92,246,0.3);
+  border-radius: var(--radius); padding: 1.2rem 1.5rem;
+  text-decoration: none; color: var(--text); transition: all 0.25s; margin-top: 2rem;
+}
+.next-link:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(139,92,246,0.15); }
+.next-link .next-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.2rem; }
+.next-link .next-title { font-weight: 700; }
+.next-arrow { font-size: 1.5rem; color: var(--accent); }
+
+/* ── Footer ── */
+footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 3rem 2rem; border-top: 1px solid var(--border); }
+
+/* ─────────────────────────────────────────────────────────
+   Concept Map — 目的 → 機能 → 理屈 (三列マップ)
+   ───────────────────────────────────────────────────────── */
+.concept-map { margin-bottom: 2.5rem; }
+
+.concept-header {
+  display: grid;
+  grid-template-columns: 1fr 1.4rem 1fr 1.4rem 1.6fr;
+  margin-bottom: 0.5rem; padding: 0 0.2rem;
+}
+.concept-header > div {
+  font-size: 0.69rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 0 0.8rem;
+}
+.ch-goal    { color: #f87171; }
+.ch-feat    { color: var(--accent); }
+.ch-logic   { color: var(--accent-2); }
+.ch-arr     { /* spacer */ }
+
+.concept-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4rem 1fr 1.4rem 1.6fr;
+  align-items: stretch;
+  margin-bottom: 0.6rem;
+  gap: 0;
+}
+.concept-cell {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.concept-cell strong { font-size: 0.85rem; display: block; margin-bottom: 0.2rem; }
+.concept-cell.goal    { background: rgba(239,68,68,0.06);  border: 1px solid rgba(239,68,68,0.18); }
+.concept-cell.feature { background: rgba(139,92,246,0.07); border: 1px solid rgba(139,92,246,0.2); }
+.concept-cell.logic   { background: rgba(34,211,238,0.06); border: 1px solid rgba(34,211,238,0.18); color: var(--muted); }
+.concept-arrow {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--border); font-size: 0.95rem; flex-shrink: 0;
+}
+
+@media(max-width: 700px) {
+  .concept-header { display: none; }
+  .concept-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .concept-cell { border-radius: 0; border: none; border-bottom: 1px solid var(--border); }
+  .concept-cell:last-child { border-bottom: none; }
+  .concept-arrow { display: none; }
+}

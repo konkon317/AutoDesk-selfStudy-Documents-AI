@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>業界コラム | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--amber); }
+  .page-hero .tag { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); color: var(--amber); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(245,158,11,0.09), transparent); }
+  h2 { color: var(--amber); }
+  h3 { color: var(--text); }
+
+  .industry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2rem; }
+  @media(max-width:680px){ .industry-grid { grid-template-columns: 1fr; } }
+
+  .industry-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .industry-card .ic-header { padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.75rem; }
+  .industry-card .ic-icon { font-size: 1.8rem; line-height: 1; }
+  .industry-card .ic-title { font-size: 1rem; font-weight: 700; }
+  .industry-card .ic-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+  .industry-card .ic-body { padding: 0.9rem 1.2rem; }
+  .industry-card .ic-row { display: flex; gap: 0.6rem; padding: 0.35rem 0; border-bottom: 1px solid var(--surface-alt, #1e2535); font-size: 0.81rem; }
+  .industry-card .ic-row:last-child { border-bottom: none; }
+  .industry-card .ic-label { color: var(--muted); font-size: 0.74rem; width: 5rem; flex-shrink: 0; padding-top: 0.1rem; }
+  .industry-card .ic-val { color: var(--text); line-height: 1.55; }
+  .industry-card .ic-val .tag-inline { display: inline-block; background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2); color: var(--accent); border-radius: 3px; font-size: 0.7rem; padding: 0.05rem 0.4rem; margin: 0.05rem 0.1rem; }
+
+  /* 業界ヘッダーカラー */
+  .game    .ic-header { background: rgba(99,102,241,0.07); }
+  .film    .ic-header { background: rgba(16,185,129,0.07); }
+  .virtual .ic-header { background: rgba(34,211,238,0.07); }
+  .ad      .ic-header { background: rgba(245,158,11,0.07); }
+
+  .position-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.4rem; margin-bottom: 1.5rem; }
+  .position-box h3 { margin-top: 0; font-size: 0.93rem; }
+  .flow-diagram { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; font-size: 0.82rem; margin: 0.8rem 0; }
+  .flow-box { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.75rem; text-align: center; }
+  .flow-box.mb { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); color: var(--amber); font-weight: 700; }
+  .flow-box.maya { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.3); color: var(--green); font-weight: 700; }
+  .flow-arr { color: var(--muted); }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--amber); }
+
+  .mw-table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+  .mw-table-wrap table { min-width: 520px; }
+
+  .colophon { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; font-size: 0.85rem; line-height: 1.8; }
+  .colophon h3 { margin-top: 0; font-size: 0.9rem; color: var(--amber); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="mb_animation.html">MB アニメ</a>
+  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="industry.html" class="active">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">コラム</div>
+  <h1>MB / Maya が使われる<span>業界と文脈</span></h1>
+  <p>どんな業界が使っているか、何を作っているか、MBとMayaはその中でどこに立っているか。</p>
+</div>
+
+<div class="content">
+
+  <div class="toc">
+    <h4>このページの内容</h4>
+    <ol>
+      <li><a href="#position">パイプラインでのMBの立ち位置</a></li>
+      <li><a href="#industries">業界別カード</a></li>
+      <li><a href="#delivery">納品形態・ファイル形式まとめ</a></li>
+      <li><a href="#role">MBを担当するのは誰か</a></li>
+    </ol>
+  </div>
+
+  <!-- ① 立ち位置 -->
+  <h2 id="position">① パイプラインでの MB の立ち位置</h2>
+
+  <p>MotionBuilderは、<strong>Mocapのデータ処理に特化したミドルウェア</strong>です。「最初から最後まで全部MB」という使い方はほぼなく、パイプラインの中継点として機能します。</p>
+
+  <div class="position-box">
+    <h3>一般的な Mocap → 最終成果物 のパイプライン</h3>
+    <div class="flow-diagram">
+      <span class="flow-box">撮影（Mocap Studio）</span>
+      <span class="flow-arr">→</span>
+      <span class="flow-box">生データ（C3D / BVH）</span>
+      <span class="flow-arr">→</span>
+      <span class="flow-box mb">MotionBuilder<br><small>修正・リターゲット・編集</small></span>
+      <span class="flow-arr">→</span>
+      <span class="flow-box">FBX</span>
+      <span class="flow-arr">→</span>
+      <span class="flow-box maya">Maya / Houdini<br><small>仕上げ・レンダリング</small></span>
+      <span class="flow-arr">→</span>
+      <span class="flow-box">最終成果物</span>
+    </div>
+    <p style="font-size:0.82rem; color:var(--muted); margin:0;">ゲームの場合はMayaの後にUnity/Unrealへ。バーチャル系はMBの後にリアルタイムエンジンへ直接。</p>
+  </div>
+
+  <p>MBが得意とするのは「Mocapデータを受け取り、人間が使えるアニメーションに変換する」という工程です。Maya単体でもできますが、MBはこの目的に最適化されているため処理速度・直感性で勝ります。</p>
+
+  <!-- ② 業界別カード -->
+  <h2 id="industries">② 業界別カード</h2>
+
+  <div class="industry-grid">
+
+    <!-- ゲーム -->
+    <div class="industry-card game">
+      <div class="ic-header">
+        <span class="ic-icon">🎮</span>
+        <div>
+          <div class="ic-title">ゲーム開発</div>
+          <div class="ic-sub">最大のユーザー層。Mocap活用が最も標準化されている</div>
+        </div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row">
+          <span class="ic-label">主な用途</span>
+          <span class="ic-val">キャラクターアニメーション全般。戦闘・走り・会話・表情など</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">納品形態</span>
+          <span class="ic-val"><span class="tag-inline">FBX</span> にPlotしたスケルトンアニメーション</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">作業形態</span>
+          <span class="ic-val">スタジオ内または外注Mocap → MBで処理担当者（TA or アニメーター）が修正 → ゲームエンジンへ</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">よく使う機能</span>
+          <span class="ic-val">Characterize・Retarget・Control Rig・Plot・Story Window（クリップ管理）</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 映像・VFX・映画 -->
+    <div class="industry-card film">
+      <div class="ic-header">
+        <span class="ic-icon">🎬</span>
+        <div>
+          <div class="ic-title">映像・VFX・映画</div>
+          <div class="ic-sub">パイプラインが複雑。MBはMocap処理に集中</div>
+        </div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row">
+          <span class="ic-label">主な用途</span>
+          <span class="ic-val">ビジュアルエフェクト用のキャラクター動作、スタント置換アニメーション</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">納品形態</span>
+          <span class="ic-val"><span class="tag-inline">FBX</span> → Maya → レンダリング。大規模プロダクションでは<span class="tag-inline">USD</span>や<span class="tag-inline">Alembic</span>も</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">作業形態</span>
+          <span class="ic-val">MBとMayaが明確に分担。MBで修正したFBXをMayaで仕上げる。キャラアニメ担当者とFX担当者は別チーム</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">よく使う機能</span>
+          <span class="ic-val">高精度なRetarget・Control Rig手修正・Pinning・Floor Contact</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- バーチャル・VTuber・メタバース -->
+    <div class="industry-card virtual">
+      <div class="ic-header">
+        <span class="ic-icon">🌐</span>
+        <div>
+          <div class="ic-title">バーチャル・VTuber・メタバース</div>
+          <div class="ic-sub">リアルタイム用途。低レイテンシと軽量化が重要</div>
+        </div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row">
+          <span class="ic-label">主な用途</span>
+          <span class="ic-val">ライブパフォーマンス用アニメーション、アバターへのMocapリアルタイム適用</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">納品形態</span>
+          <span class="ic-val">事前制作分は<span class="tag-inline">FBX</span>、ライブはMBからUnity/Unrealへリアルタイムストリーミング</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">作業形態</span>
+          <span class="ic-val">小規模チームが多い。MBオペレーターがライブ収録で同席し、その場でデータ確認・修正することも</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">よく使う機能</span>
+          <span class="ic-val">リアルタイムMocapプレビュー・Characterize・軽量なRetarget</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 広告・CM -->
+    <div class="industry-card ad">
+      <div class="ic-header">
+        <span class="ic-icon">📺</span>
+        <div>
+          <div class="ic-title">広告・CM・アニメプロダクション</div>
+          <div class="ic-sub">短納期と品質の両立。既存アセット流用も多い</div>
+        </div>
+      </div>
+      <div class="ic-body">
+        <div class="ic-row">
+          <span class="ic-label">主な用途</span>
+          <span class="ic-val">CGIキャラクターの動作作成。Mocapを使う案件では素材処理にMBを使用</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">納品形態</span>
+          <span class="ic-val">映像（MP4/MOV）が最終。中間は<span class="tag-inline">FBX</span>でMayaへ渡しレンダリング</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">作業形態</span>
+          <span class="ic-val">プロジェクト単位で外注Mocap、社内CG制作の流れが多い。MBは使わず全手付けの現場も多い</span>
+        </div>
+        <div class="ic-row">
+          <span class="ic-label">よく使う機能</span>
+          <span class="ic-val">すばやいRetarget・FCurveエディタでの修正・Plotしてすぐ書き出し</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>アニメ（セルルック）について：</strong> 日本のアニメでは従来手付けが主流で、MBのユーザー層はゲーム・映像・VFX側が中心です。ただしCGIシーンや3DCGアニメ（クレヨンしんちゃんのCGパート等）ではMocapとMBを使うケースがあります。</p>
+  </div>
+
+  <!-- ③ 納品形態まとめ -->
+  <h2 id="delivery">③ 納品形態・ファイル形式まとめ</h2>
+
+  <div class="mw-table-wrap">
+    <table>
+      <tr><th>形式</th><th>用途</th><th>特徴</th></tr>
+      <tr>
+        <td><strong>FBX</strong></td>
+        <td>MB → Maya / ゲームエンジン の標準中継</td>
+        <td>Autodesk製。アニメーション・メッシュ・マテリアルを一括。MBで書き出す主要形式</td>
+      </tr>
+      <tr>
+        <td><strong>BVH</strong></td>
+        <td>Mocap生データの保存・交換</td>
+        <td>骨格+モーションのみ。軽量だがスキンメッシュなし。MBに読み込んでFBXに変換するのが一般的</td>
+      </tr>
+      <tr>
+        <td><strong>Alembic (.abc)</strong></td>
+        <td>頂点アニメーション・クロスシム結果の受け渡し</td>
+        <td>ポリゴン頂点を時系列で保存。ベイク済みメッシュをそのままDCC間で移送する用途</td>
+      </tr>
+      <tr>
+        <td><strong>USD</strong></td>
+        <td>大規模VFX・映画パイプラインの標準化</td>
+        <td>Pixarが開発。シーン全体を構造化。ゲーム・ゲームエンジン側にも普及中</td>
+      </tr>
+      <tr>
+        <td><strong>glTF / GLB</strong></td>
+        <td>ウェブ・メタバース・リアルタイム3D</td>
+        <td>ウェブ標準に近い3Dフォーマット。Unreal/Unityへの流通も増加</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout info">
+    <span class="callout-icon">💡</span>
+    <p><strong>MBを使う限りまず覚えるのはFBX：</strong> BVHで受け取り→MB処理→FBX書き出しがほぼすべての業界で共通のパターンです。FBXの読み書き設定（軸方向・フレームレート・スケール）は書き出し先ツールに合わせる必要があります。</p>
+  </div>
+
+  <!-- ④ 担当者の役割 -->
+  <h2 id="role">④ MBを担当するのは誰か</h2>
+
+  <table>
+    <tr><th>役職・肩書き</th><th>主な業界</th><th>MBでの作業内容</th></tr>
+    <tr>
+      <td><strong>Mocap TA / テクニカルアニメーター</strong></td>
+      <td>ゲーム・映像</td>
+      <td>Mocap処理パイプライン構築・Characterize・Retarget・スクリプト自動化</td>
+    </tr>
+    <tr>
+      <td><strong>アニメーター（キャラクター）</strong></td>
+      <td>ゲーム・映像・アニメ</td>
+      <td>Mocap修正・Control Rig手修正・FCurveエディタ編集</td>
+    </tr>
+    <tr>
+      <td><strong>Mocap オペレーター</strong></td>
+      <td>バーチャル・スタジオ</td>
+      <td>リアルタイムMocapのキャプチャ・チェック・Characterize・ライブ中のモニタリング</td>
+    </tr>
+    <tr>
+      <td><strong>CG ジェネラリスト</strong></td>
+      <td>広告・小規模プロダクション</td>
+      <td>MBもMayaも両方触る。処理は最小限にしてすばやくFBX化</td>
+    </tr>
+  </table>
+
+  <div class="colophon">
+    <h3>📝 コラム：MBを「メインツール」と「脇役」で学ぶ場合の違い</h3>
+    <p>MBをメインで使う人（TA・専任アニメーター）は、スクリプト（Python/MoBu API）・パイプライン最適化まで深掘りします。一方、<strong>「Mocapを使うシーンで効率的に処理したい」という文脈</strong>なら、Characterize → Retarget → Control Rig修正 → Plot → FBX という一本のフローを確実に使えることが最優先です。スクリプトや高度なRetarget設定はその後の選択肢として持てば十分です。</p>
+    <p>限られた時間でMBを学ぶなら、「どの業界のどの工程」を自分が担当するかを最初に定義しておくと、学習対象がはっきりします。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — 業界とパイプライン</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/product/motionbuilder/" target="_blank" class="doc">📄 AREA JAPAN: MotionBuilder 製品ページ（業界・用途説明）</a>
+      <a href="https://area.autodesk.jp/column/tutorial/motionbuilder/cooperate_with_maya/" target="_blank" class="doc">📄 AREA JAPAN: MotionBuilder と Maya の連携チュートリアル</a>
+      <a href="https://area.autodesk.jp/column/trend_tech/nextmedia_m_and_e/pipeline/" target="_blank" class="doc">📄 AREA JAPAN コラム: パイプラインの中での HumanIK</a>
+      <a href="https://area.autodesk.jp/information/motionbuilder-beginner-tutorial/" target="_blank" class="doc">📄 AREA JAPAN: MB 初心者向けチュートリアル（業界利用例含む）</a>
+    </div>
+  </div>
+
+  <a href="study_plan.html" class="next-link">
+    <div><div class="next-label">次のページ</div><div class="next-title">📋 学習プラン — セッション別スケジュール</div></div>
+    <span class="next-arrow">→</span>
+  </a>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>
