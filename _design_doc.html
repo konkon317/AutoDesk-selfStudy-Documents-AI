@@ -162,6 +162,11 @@
     .res-name { color: var(--amber); min-width: 200px; flex-shrink: 0; }
     .res-url  { color: var(--text-sub); word-break: break-all; font-family: 'Consolas', monospace; font-size: .82em; }
 
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+    a:hover { opacity: .8; }
+    a.res-name { color: var(--amber); text-decoration: none; border-bottom: 1px dashed rgba(251,191,36,.5); }
+    a.res-name:hover { border-bottom-color: var(--amber); }
+
     footer {
       margin-top: 3rem;
       padding-top: 1rem;
@@ -349,72 +354,72 @@
 
   <h3>優先順位</h3>
   <ol>
-    <li><strong>AREA JAPAN（area.autodesk.jp）</strong> — Autodesk 公式の日本語サイト。動画チュートリアル・コラム・製品情報。最も信頼度が高い。</li>
-    <li><strong>Autodesk ナレッジネットワーク 日本語版（knowledge.autodesk.com/ja）</strong> — 公式テクニカルリファレンス。深い仕様確認に使う。</li>
-    <li><strong>Autodesk ヘルプ 日本語版（help.autodesk.com/cloudhelp/20XX/JPN）</strong> — オンラインヘルプの日本語版。</li>
-    <li><strong>業界ブログ・備忘録系</strong> — 会社またはデザイナーが実務経験をもとに書いたもの、または学習中のユーザーが備忘録として残したもの。初学者が順を追って学べる構成を優先。</li>
+    <li><strong><a href="https://area.autodesk.jp/product/motionbuilder/" target="_blank">AREA JAPAN（area.autodesk.jp）</a></strong> — Autodesk 公式の日本語サイト。動画チュートリアル・コラム・製品情報。最も信頼度が高い。</li>
+    <li><strong><a href="https://knowledge.autodesk.com/ja/support/motionbuilder/" target="_blank">Autodesk ナレッジネットワーク 日本語版（knowledge.autodesk.com/ja）</a></strong> — 公式テクニカルリファレンス。深い仕様確認に使う。</li>
+    <li><strong><a href="https://help.autodesk.com/cloudhelp/2024/JPN/MotionBuilder/files/GUID-17E2AD49-708B-4E99-84A0-210890B09948.htm" target="_blank">Autodesk ヘルプ 日本語版（help.autodesk.com/cloudhelp/20XX/JPN）</a></strong> — オンラインヘルプの日本語版。チュートリアル目次から入るのがわかりやすい。</li>
+    <li><strong>業界ブログ・備忘録系</strong>（例：<a href="https://zenn.dev/guncys_blog/articles/69f219d4ca77f6" target="_blank">GUNCY'S</a>、<a href="https://win-graphic.com/home/categories/motionbuilder" target="_blank">スプリングギルド</a>、<a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/" target="_blank">アニもぐCG</a>）— 会社またはデザイナーが実務経験をもとに書いたもの、または学習中のユーザーが備忘録として残したもの。初学者が順を追って学べる構成を優先。</li>
   </ol>
 
   <h3>採用したリソース一覧</h3>
 
   <div class="res-group">
     <h4>AREA JAPAN — MotionBuilder</h4>
-    <div class="res-item"><span class="res-name">MB 製品情報</span><span class="res-url">https://area.autodesk.jp/product/motionbuilder/</span></div>
-    <div class="res-item"><span class="res-name">MB 初心者チュートリアル</span><span class="res-url">https://area.autodesk.jp/information/motionbuilder-beginner-tutorial/</span></div>
-    <div class="res-item"><span class="res-name">UI ムービー</span><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/01-user-interface.html</span></div>
-    <div class="res-item"><span class="res-name">Characterize &amp; Control Rig ムービー</span><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/02-characterize-control-rig.html</span></div>
-    <div class="res-item"><span class="res-name">Control Rig 操作ムービー</span><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/03-control-rig.html</span></div>
-    <div class="res-item"><span class="res-name">Retarget ムービー</span><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/07-character-animation-retarget.html</span></div>
-    <div class="res-item"><span class="res-name">カットシーン第2回（Mocap修正）</span><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/02-mocap/</span></div>
-    <div class="res-item"><span class="res-name">カットシーン第4回（Story ウィンドウ）</span><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/04-how-to-use-story/</span></div>
-    <div class="res-item"><span class="res-name">カットシーン第6回（アニメーション応用）</span><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/06-character-animation/</span></div>
-    <div class="res-item"><span class="res-name">MB + Maya 連携コラム</span><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder/cooperate_with_maya/</span></div>
-    <div class="res-item"><span class="res-name">HumanIK パイプライン解説</span><span class="res-url">https://area.autodesk.jp/column/trend_tech/nextmedia_m_and_e/pipeline/</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/product/motionbuilder/" target="_blank" class="res-name">MB 製品情報</a><span class="res-url">https://area.autodesk.jp/product/motionbuilder/</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/information/motionbuilder-beginner-tutorial/" target="_blank" class="res-name">MB 初心者チュートリアル</a><span class="res-url">https://area.autodesk.jp/information/motionbuilder-beginner-tutorial/</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/motionbuilder/01-user-interface.html" target="_blank" class="res-name">UI ムービー</a><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/01-user-interface.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/motionbuilder/02-characterize-control-rig.html" target="_blank" class="res-name">Characterize &amp; Control Rig ムービー</a><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/02-characterize-control-rig.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/motionbuilder/03-control-rig.html" target="_blank" class="res-name">Control Rig 操作ムービー</a><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/03-control-rig.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/motionbuilder/07-character-animation-retarget.html" target="_blank" class="res-name">Retarget ムービー</a><span class="res-url">https://area.autodesk.jp/movie/motionbuilder/07-character-animation-retarget.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/02-mocap/" target="_blank" class="res-name">カットシーン第2回（Mocap修正）</a><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/02-mocap/</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/04-how-to-use-story/" target="_blank" class="res-name">カットシーン第4回（Story ウィンドウ）</a><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/04-how-to-use-story/</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/06-character-animation/" target="_blank" class="res-name">カットシーン第6回（アニメーション応用）</a><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/06-character-animation/</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/column/tutorial/motionbuilder/cooperate_with_maya/" target="_blank" class="res-name">MB + Maya 連携コラム</a><span class="res-url">https://area.autodesk.jp/column/tutorial/motionbuilder/cooperate_with_maya/</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/column/trend_tech/nextmedia_m_and_e/pipeline/" target="_blank" class="res-name">HumanIK パイプライン解説</a><span class="res-url">https://area.autodesk.jp/column/trend_tech/nextmedia_m_and_e/pipeline/</span></div>
   </div>
 
   <div class="res-group">
     <h4>AREA JAPAN — Maya</h4>
-    <div class="res-item"><span class="res-name">Start@Maya 入門ムービー</span><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/22.html</span></div>
-    <div class="res-item"><span class="res-name">Maya Graph Editor ムービー</span><span class="res-url">https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank" class="res-name">Start@Maya 入門ムービー</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/22.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html" target="_blank" class="res-name">Maya Graph Editor ムービー</a><span class="res-url">https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html</span></div>
   </div>
 
   <div class="res-group">
     <h4>Autodesk KN JPN / Help JPN</h4>
-    <div class="res-item"><span class="res-name">MB ヘルプ日本語版 チュートリアル目次（2024）</span><span class="res-url">https://help.autodesk.com/cloudhelp/2024/JPN/MotionBuilder/files/GUID-17E2AD49-708B-4E99-84A0-210890B09948.htm</span></div>
+    <div class="res-item"><a href="https://help.autodesk.com/cloudhelp/2024/JPN/MotionBuilder/files/GUID-17E2AD49-708B-4E99-84A0-210890B09948.htm" target="_blank" class="res-name">MB ヘルプ日本語版 チュートリアル目次（2024）</a><span class="res-url">https://help.autodesk.com/cloudhelp/2024/JPN/MotionBuilder/files/GUID-17E2AD49-708B-4E99-84A0-210890B09948.htm</span></div>
     <div class="res-item"><span class="res-name">MB Plot（KN JPN）</span><span class="res-url">https://knowledge.autodesk.com/ja/support/motionbuilder/.../GUID-FFC123CA-62D6-440E-93F8-D9027C0D1B42-htm.html</span></div>
-    <div class="res-item"><span class="res-name">Maya Graph Editor（KN JPN）</span><span class="res-url">https://knowledge.autodesk.com/ja/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2020/JPN/Maya-Animation/files/GUID-6D38EAEA-6032-471E-BD0E-54A74D4443C0-htm.html</span></div>
+    <div class="res-item"><a href="https://knowledge.autodesk.com/ja/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2020/JPN/Maya-Animation/files/GUID-6D38EAEA-6032-471E-BD0E-54A74D4443C0-htm.html" target="_blank" class="res-name">Maya Graph Editor（KN JPN）</a><span class="res-url">https://knowledge.autodesk.com/ja/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2020/JPN/Maya-Animation/files/GUID-6D38EAEA-6032-471E-BD0E-54A74D4443C0-htm.html</span></div>
   </div>
 
   <div class="res-group">
     <h4>GUNCY'S（Zenn 連載）</h4>
     <p style="font-size:.85rem;color:var(--text-sub);margin-bottom:.5rem;">「MotionBuilder超入門」連載。実務ユーザーによる段階的な解説。</p>
-    <div class="res-item"><span class="res-name">第0回 — MBってどんなソフト？</span><span class="res-url">https://zenn.dev/guncys_blog/articles/69f219d4ca77f6</span></div>
-    <div class="res-item"><span class="res-name">第1回</span><span class="res-url">https://zenn.dev/guncys_blog/articles/6538b0eeb55959</span></div>
-    <div class="res-item"><span class="res-name">第2回</span><span class="res-url">https://zenn.dev/guncys/articles/a3f53202aab5ca</span></div>
-    <div class="res-item"><span class="res-name">第4回 — Story ウィンドウ</span><span class="res-url">https://zenn.dev/guncys/articles/349c159d34062a</span></div>
-    <div class="res-item"><span class="res-name">第5回</span><span class="res-url">https://zenn.dev/guncys/articles/a62226e4a16d3a</span></div>
-    <div class="res-item"><span class="res-name">第6回 — FCurve</span><span class="res-url">https://zenn.dev/guncys/articles/31d4510faefa3a</span></div>
-    <div class="res-item"><span class="res-name">第7回</span><span class="res-url">https://zenn.dev/guncys/articles/363883ae075b90</span></div>
+    <div class="res-item"><a href="https://zenn.dev/guncys_blog/articles/69f219d4ca77f6" target="_blank" class="res-name">第0回 — MBってどんなソフト？</a><span class="res-url">https://zenn.dev/guncys_blog/articles/69f219d4ca77f6</span></div>
+    <div class="res-item"><a href="https://zenn.dev/guncys_blog/articles/6538b0eeb55959" target="_blank" class="res-name">第1回</a><span class="res-url">https://zenn.dev/guncys_blog/articles/6538b0eeb55959</span></div>
+    <div class="res-item"><a href="https://zenn.dev/guncys/articles/a3f53202aab5ca" target="_blank" class="res-name">第2回</a><span class="res-url">https://zenn.dev/guncys/articles/a3f53202aab5ca</span></div>
+    <div class="res-item"><a href="https://zenn.dev/guncys/articles/349c159d34062a" target="_blank" class="res-name">第4回 — Story ウィンドウ</a><span class="res-url">https://zenn.dev/guncys/articles/349c159d34062a</span></div>
+    <div class="res-item"><a href="https://zenn.dev/guncys/articles/a62226e4a16d3a" target="_blank" class="res-name">第5回</a><span class="res-url">https://zenn.dev/guncys/articles/a62226e4a16d3a</span></div>
+    <div class="res-item"><a href="https://zenn.dev/guncys/articles/31d4510faefa3a" target="_blank" class="res-name">第6回 — FCurve</a><span class="res-url">https://zenn.dev/guncys/articles/31d4510faefa3a</span></div>
+    <div class="res-item"><a href="https://zenn.dev/guncys/articles/363883ae075b90" target="_blank" class="res-name">第7回</a><span class="res-url">https://zenn.dev/guncys/articles/363883ae075b90</span></div>
   </div>
 
   <div class="res-group">
     <h4>スプリングギルド（win-graphic.com）</h4>
     <p style="font-size:.85rem;color:var(--text-sub);margin-bottom:.5rem;">実務者による MB チュートリアル連載。No. 番号で順を追って学べる。</p>
-    <div class="res-item"><span class="res-name">記事一覧</span><span class="res-url">https://win-graphic.com/home/categories/motionbuilder</span></div>
-    <div class="res-item"><span class="res-name">No.01 — UI 入門</span><span class="res-url">https://win-graphic.com/home/motionbuilder-no01</span></div>
-    <div class="res-item"><span class="res-name">No.05 — Control Rig とエフェクター</span><span class="res-url">https://win-graphic.com/home/motionbuilder-no05</span></div>
-    <div class="res-item"><span class="res-name">No.13 — アニメーション修正の実践</span><span class="res-url">https://win-graphic.com/home/motionbuilder-no13</span></div>
+    <div class="res-item"><a href="https://win-graphic.com/home/categories/motionbuilder" target="_blank" class="res-name">記事一覧</a><span class="res-url">https://win-graphic.com/home/categories/motionbuilder</span></div>
+    <div class="res-item"><a href="https://win-graphic.com/home/motionbuilder-no01" target="_blank" class="res-name">No.01 — UI 入門</a><span class="res-url">https://win-graphic.com/home/motionbuilder-no01</span></div>
+    <div class="res-item"><a href="https://win-graphic.com/home/motionbuilder-no05" target="_blank" class="res-name">No.05 — Control Rig とエフェクター</a><span class="res-url">https://win-graphic.com/home/motionbuilder-no05</span></div>
+    <div class="res-item"><a href="https://win-graphic.com/home/motionbuilder-no13" target="_blank" class="res-name">No.13 — アニメーション修正の実践</a><span class="res-url">https://win-graphic.com/home/motionbuilder-no13</span></div>
   </div>
 
   <div class="res-group">
     <h4>その他ブログ・備忘録</h4>
-    <div class="res-item"><span class="res-name">もふもふテック — MB Retarget</span><span class="res-url">https://mohumohu-tech.com/2024/07/10/motionbuilder%E3%81%A7%E3%83%AA%E3%82%BF%E3%83%BC%E3%82%B2%E3%83%83%E3%83%88%E3%82%92%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/</span></div>
-    <div class="res-item"><span class="res-name">LOGIC&amp;MAGIC — Characterize &amp; Control Rig</span><span class="res-url">https://note.com/logic_magic/n/n7db6305dc56c</span></div>
-    <div class="res-item"><span class="res-name">アニもぐCG — Maya 基本操作【前編】</span><span class="res-url">https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/</span></div>
-    <div class="res-item"><span class="res-name">アニもぐCG — Maya 基本操作【後編】</span><span class="res-url">https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%BE%8C%E7%B7%A8/</span></div>
-    <div class="res-item"><span class="res-name">アニログ — Maya Graph Editor 基礎</span><span class="res-url">https://3dcg.comaroku.com/maya-grapheditor/</span></div>
-    <div class="res-item"><span class="res-name">ThanksToToday — Graph Editor 基礎1</span><span class="res-url">https://thankstotoday.com/maya-animation-grapheditor-basic1/</span></div>
-    <div class="res-item"><span class="res-name">akamarupro — Maya FBX エクスポートガイド</span><span class="res-url">https://akamarupro.com/maya-fbx-export-guide-error-fix-settings/</span></div>
+    <div class="res-item"><a href="https://mohumohu-tech.com/2024/07/10/motionbuilder%E3%81%A7%E3%83%AA%E3%82%BF%E3%83%BC%E3%82%B2%E3%83%83%E3%83%88%E3%82%92%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/" target="_blank" class="res-name">もふもふテック — MB Retarget</a><span class="res-url">https://mohumohu-tech.com/2024/07/10/motionbuilder%E3%81%A7%E3%83%AA%E3%82%BF%E3%83%BC%E3%82%B2%E3%83%83%E3%83%88%E3%82%92%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/</span></div>
+    <div class="res-item"><a href="https://note.com/logic_magic/n/n7db6305dc56c" target="_blank" class="res-name">LOGIC&amp;MAGIC — Characterize &amp; Control Rig</a><span class="res-url">https://note.com/logic_magic/n/n7db6305dc56c</span></div>
+    <div class="res-item"><a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/" target="_blank" class="res-name">アニもぐCG — Maya 基本操作【前編】</a><span class="res-url">https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/</span></div>
+    <div class="res-item"><a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%BE%8C%E7%B7%A8/" target="_blank" class="res-name">アニもぐCG — Maya 基本操作【後編】</a><span class="res-url">https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%BE%8C%E7%B7%A8/</span></div>
+    <div class="res-item"><a href="https://3dcg.comaroku.com/maya-grapheditor/" target="_blank" class="res-name">アニログ — Maya Graph Editor 基礎</a><span class="res-url">https://3dcg.comaroku.com/maya-grapheditor/</span></div>
+    <div class="res-item"><a href="https://thankstotoday.com/maya-animation-grapheditor-basic1/" target="_blank" class="res-name">ThanksToToday — Graph Editor 基礎1</a><span class="res-url">https://thankstotoday.com/maya-animation-grapheditor-basic1/</span></div>
+    <div class="res-item"><a href="https://akamarupro.com/maya-fbx-export-guide-error-fix-settings/" target="_blank" class="res-name">akamarupro — Maya FBX エクスポートガイド</a><span class="res-url">https://akamarupro.com/maya-fbx-export-guide-error-fix-settings/</span></div>
   </div>
 
 
@@ -438,11 +443,11 @@
 
   <h3>内容面</h3>
   <ul>
-    <li><strong>mb_overview.html</strong> — Story ウィンドウのセクションは現状簡易。実際に使い始めたらより詳しい解説を追加可能。</li>
-    <li><strong>mb_control_rig.html</strong> — Auxiliary Effectors（膝・肘の補正）の説明が薄め。実務で使ったタイミングで補完できる。</li>
-    <li><strong>maya_basics.html</strong> — Playblast（プレビュー動画の書き出し）はタスクリストに記載のみ。実践後に専用セクション追加の余地あり。</li>
-    <li><strong>industry.html</strong> — バーチャル制作（Vtuber 等）のセクションは概要のみ。業界詳細が必要なら拡張する。</li>
-    <li><strong>study_plan.html</strong> — フェーズ3以降（S11〜S15）の Maya セッションは入門レベルで止めている。深堀りが必要になったら Maya 専用ページを追加。</li>
+    <li><strong>mb_overview.html</strong> — Story ウィンドウのセクションは現状簡易。実際に使い始めたらより詳しい解説を追加可能。（参考: <a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/04-how-to-use-story/" target="_blank">AREA JAPAN カットシーン第4回</a> / <a href="https://zenn.dev/guncys/articles/349c159d34062a" target="_blank">GUNCY'S 第4回</a>）</li>
+    <li><strong>mb_control_rig.html</strong> — Auxiliary Effectors（膝・肘の補正）の説明が薄め。実務で使ったタイミングで補完できる。（参考: <a href="https://win-graphic.com/home/motionbuilder-no13" target="_blank">スプリングギルド No.13</a>）</li>
+    <li><strong>maya_basics.html</strong> — Playblast（プレビュー動画の書き出し）はタスクリストに記載のみ。実践後に専用セクション追加の余地あり。（参考: <a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank">AREA JAPAN Start@Maya</a>）</li>
+    <li><strong>industry.html</strong> — バーチャル制作（Vtuber 等）のセクションは概要のみ。業界詳細が必要なら拡張する。（参考: <a href="https://area.autodesk.jp/column/trend_tech/nextmedia_m_and_e/pipeline/" target="_blank">AREA JAPAN HumanIK パイプライン解説</a>）</li>
+    <li><strong>study_plan.html</strong> — フェーズ3以降（S11〜S15）の Maya セッションは入門レベルで止めている。深堀りが必要になったら Maya 専用ページを追加。（参考: <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%BE%8C%E7%B7%A8/" target="_blank">アニもぐCG 後編</a> / <a href="https://3dcg.comaroku.com/maya-grapheditor/" target="_blank">アニログ</a>）</li>
   </ul>
 
   <h3>構造・スタイル面</h3>
