@@ -83,6 +83,7 @@
       <li><a href="#hybrid">Mocapと手付けアニメの組み合わせ</a></li>
       <li><a href="#handkeyed">手付けアニメーション — キーを打つ基本サイクル</a></li>
       <li><a href="#nonhuman">人型以外のアニメーション — Characterize できないオブジェクトの扱い</a></li>
+      <li><a href="#plot">Plot — アニメーションを焼き付ける・焼き替える</a></li>
     </ol>
   </div>
 
@@ -492,6 +493,110 @@
   <div class="callout tip">
     <span class="callout-icon">💡</span>
     <p><strong>Constraint の Plot を忘れずに：</strong> Constraint を使ったオブジェクトは、FBX 書き出し前に必ず <strong>Plot（Constraint の結果をキーフレームに焼き付け）</strong> してください。Plot なしで書き出すと Maya 側で Constraint が失われ、オブジェクトが元の位置に戻ってしまいます。</p>
+  </div>
+
+  <!-- ⑨ Plot -->
+  <h2 id="plot">⑨ Plot — アニメーションを焼き付ける・焼き替える</h2>
+  <p>Plot は「現在のアニメーション状態をキーフレームとして確定させる」操作です。<strong>どこに焼き付けるか</strong>によって操作と目的が変わります。</p>
+
+  <div class="concept-map">
+    <div class="concept-row header">
+      <div class="concept-cell goal">目的</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">操作</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">何が起きるか</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">Control Rig上でキーを編集したい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">Plot Character → <strong>Control Rig</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">スケルトンのFK動きをIKエフェクターのキーに逆算して記録。以後エフェクターのキーを編集できる</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">FBX書き出し前にアニメを確定させたい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">Plot Character → <strong>Character</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">Control Rigのポーズをスケルトンボーンのキーに変換。Mayaに渡しても動く状態になる</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">別キャラクターに同じ動きをさせたい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">Retarget設定 → Plot Character → <strong>Character</strong>（ターゲット側で実行）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">ソースキャラのスケルトン動作をターゲットの骨格比率に変換して焼き付ける</div>
+    </div>
+  </div>
+
+  <h3>Plot to Control Rig の手順（スケルトン → Control Rig）</h3>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>キャラクターが Characterize 済みであることを確認</h4>
+      <p>Character Controls パネルを開き、キャラクター名が表示されていれば OK。FBX インポート後などは再 Characterize が必要な場合がある。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>Control Rig を作成（まだない場合）</h4>
+      <p>Character Controls パネル上部のメニューから <strong>Create &gt; Control Rig</strong>。FK / IK のどちらでも可。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>Edit → Plot Character → "Control Rig" を選択</h4>
+      <p>Character Controls パネルの Edit メニューから実行。フレームレンジの確認ダイアログが出るので範囲を設定して OK。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">4</div>
+    <div class="wf-body">
+      <h4>Control Rig のエフェクターにキーが生成される</h4>
+      <p>以後は FCurve エディタや Character Controls でエフェクターのキーを直接編集できる。</p>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <strong>スケルトンに焼き付け済みのアニメーションも同じ手順で OK</strong><br>
+    FBX で持ってきた「すでにボーンにキーが乗っているアニメーション」も、キャラクターを Characterize さえすれば同じ手順で Control Rig に焼き替えられます。MBはCharacterize済みの骨格に乗っているキーをFKソースとして読むため、データの出所（Mocap・手付け・他ツール書き出し）は問いません。
+  </div>
+
+  <h3>Plot to Skeleton の手順（逆方向 / FBX書き出し前）</h3>
+  <p>Control Rig 上で編集した結果を スケルトンボーンのキーに確定させます。FBX書き出し前に必要な工程です。</p>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>Edit → Plot Character → "Character" を選択</h4>
+      <p>Control Rig の状態がスケルトンボーンのキーに変換される。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>FBX 書き出し</h4>
+      <p>Plot 済みのスケルトンキーが FBX に含まれる。Maya でそのまま再生できる状態になる。</p>
+    </div>
+  </div>
+
+  <h3>別キャラへの再 Retarget（応用）</h3>
+  <div class="mw-table-wrap">
+    <table>
+      <tr><th>手順</th><th>内容</th></tr>
+      <tr><td>① ソース・ターゲット両方を Characterize</td><td>骨格が違ってもどちらも HumanIK マッピングが完了していれば OK</td></tr>
+      <tr><td>② ターゲット側の Character Controls を開く</td><td>Source のプルダウンでソースキャラ名を選択</td></tr>
+      <tr><td>③ Edit → Plot Character → "Character"</td><td>ターゲット側で実行。ソースの動きがターゲットの骨格比率に変換されて焼き付けられる</td></tr>
+    </table>
+  </div>
+
+  <div class="callout tip">
+    <strong>Characterize が大前提</strong><br>
+    Plot 操作は Characterize（HumanIK マッピング）があって初めて成立します。FBX インポート直後は Characterize が解除されている場合があるため、<strong>Plot 前に Character Controls パネルでキャラクター名が表示されているか</strong>を必ず確認してください。
   </div>
 
   <div class="ref-box">
