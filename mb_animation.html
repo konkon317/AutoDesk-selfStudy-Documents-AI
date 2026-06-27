@@ -314,6 +314,39 @@
     </div>
   </div>
 
+  <h3>Control Rig パラメータの読み方</h3>
+  <p>エフェクターを選択したとき Properties パネルに表示されるパラメータと、概念上の「Reach」の対応です。</p>
+
+  <div class="mw-table-wrap">
+    <table>
+      <tr>
+        <th>UIの名前</th>
+        <th>概念上の呼び方</th>
+        <th>何をするか</th>
+      </tr>
+      <tr>
+        <td><strong>IK Blend T</strong></td>
+        <td>Reach（位置）</td>
+        <td>エフェクターのIK位置がFKソース（Mocap等）をどれだけ上書きするか。0%=FK側、100%=エフェクター優先</td>
+      </tr>
+      <tr>
+        <td><strong>IK Blend R</strong></td>
+        <td>Reach（回転）</td>
+        <td>エフェクターのIK回転がFKソースをどれだけ上書きするか。TとRは独立して設定できる</td>
+      </tr>
+      <tr>
+        <td><strong>IK Pull</strong></td>
+        <td>（別の概念）</td>
+        <td>エフェクターを動かしたとき周辺ボーン（肘・膝など）をどれだけ引き寄せるか。ブレンドではなくチェーンの硬さ</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout note">
+    <strong>ソースアニメーションなしだと IK Blend を変えても変化が見えない</strong><br>
+    IK Blend T/R は「FK側（Mocapなどのソース）とエフェクター位置の合成比率」です。ソースアニメーションが存在しない状態では合成する元データがないため、値を変えても見かけ上ほとんど変わりません。ゼロから手付けする場合は T/R とも 100% のまま放置して、エフェクターを動かすことに集中すればOKです。
+  </div>
+
   <div class="callout try">
     <span class="callout-icon">🖐</span>
     <p><strong>試してみる：</strong> 既存のMocapで右手のReachを0%→100%に変えた後、Hand Effectorを動かして「右手で何かを指さす」ポーズを追加してみる。下半身・左腕はMocapのまま残ることを確認する。</p>
