@@ -45,6 +45,9 @@
   .wf-body .wf-diff { display: inline-block; font-size: 0.72rem; margin-top: 0.3rem; padding: 0.15rem 0.55rem; border-radius: 4px; }
   .wf-diff.same { background: rgba(34,211,238,0.1); color: var(--accent-2); }
   .wf-diff.diff { background: rgba(16,185,129,0.1); color: var(--green); }
+
+  .cards-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  @media(max-width:680px){ .cards-3 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -78,6 +81,8 @@
       <li><a href="#fcurve">FCurveエディタ（MBのGraph Editor）</a></li>
       <li><a href="#workflow">ゼロ制作ワークフロー（ステップ解説）</a></li>
       <li><a href="#hybrid">Mocapと手付けアニメの組み合わせ</a></li>
+      <li><a href="#handkeyed">手付けアニメーション — キーを打つ基本サイクル</a></li>
+      <li><a href="#nonhuman">人型以外のアニメーション — Characterize できないオブジェクトの扱い</a></li>
     </ol>
   </div>
 
@@ -312,6 +317,148 @@
   <div class="callout try">
     <span class="callout-icon">🖐</span>
     <p><strong>試してみる：</strong> 既存のMocapで右手のReachを0%→100%に変えた後、Hand Effectorを動かして「右手で何かを指さす」ポーズを追加してみる。下半身・左腕はMocapのまま残ることを確認する。</p>
+  </div>
+
+  <!-- ⑦ 手付けアニメーション -->
+  <h2 id="handkeyed">⑦ 手付けアニメーション — キーを打つ基本サイクル</h2>
+  <p>MB はMocap処理ソフトですが、Control Rig を使って手付けアニメーションをゼロから作ることもできます。<strong>基本サイクルは「フレームを決める → エフェクターを動かす → キーを打つ」の繰り返し</strong>です。</p>
+
+  <div class="concept-map">
+    <div class="concept-row header">
+      <div class="concept-cell goal">目的</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">機能</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">理屈</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">ポーズを1フレームずつ決めたい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">エフェクターを動かして <kbd>K</kbd> キーでキーを打つ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">Reach 100% のとき IK ソルバーがエフェクター位置から関節角度を逆算して確定させる</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">FK で回転を直打ちしたい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">ボーンを選択して Rotation を変えてキーを打つ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">FK モードではボーンの Rotation チャンネルに直接キーが積まれる。親から順に回転が伝播する</div>
+    </div>
+  </div>
+
+  <h3>基本キーイングサイクル（IK 手付け）</h3>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>Control Rig を Active にして Reach を 100% に設定</h4>
+      <p>全エフェクターの Reach（T・R 両方）を 100% にする。Mocap データがなければ 0% でも同じ結果になるが、意図を明確にするため 100% 推奨。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>始点フレームへ移動してすべての Control をキー打ち</h4>
+      <p>Transport Controls でフレームを指定。<kbd>A</kbd> で全オブジェクト選択 → <kbd>K</kbd>（または Character メニュー → Key All）でTポーズを初期キーとして記録する。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>目的のフレームへ移動 → エフェクターを動かす</h4>
+      <p>動かしたいエフェクターを選択して <kbd>W</kbd>（Move）または <kbd>E</kbd>（Rotate）で位置・角度を変更する。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">4</div>
+    <div class="wf-body">
+      <h4><kbd>K</kbd> キーで選択中のエフェクターにキーを打つ</h4>
+      <p>選択オブジェクトにキーが記録される。全身まとめて打ちたいときは <kbd>A</kbd> で全選択してから <kbd>K</kbd>。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">5</div>
+    <div class="wf-body">
+      <h4>次のキーフレームへ移動して繰り返す</h4>
+      <p>主要ポーズだけ打ってから FCurve エディタでタイミングと緩急を調整する。ポーズ to ポーズの繰り返しがゼロ制作の基本単位。</p>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>MBの手付けは「粗打ち → Mayaで仕上げ」が現実的：</strong> MB の Dopesheet はキー管理が Maya より不便です。主要ポーズだけ MB で作り、FBX で Maya に渡してから Graph Editor で緩急・タイミングを整えるフローが実務では一般的です。</p>
+  </div>
+
+  <!-- ⑧ 人型以外のアニメーション -->
+  <h2 id="nonhuman">⑧ 人型以外のアニメーション — Characterize できないオブジェクトの扱い</h2>
+  <p>MB の Control Rig は <strong>HumanIK（人型ボーン構造）専用</strong>です。4足・乗り物・小道具など人型でないオブジェクトには Characterize が使えず、アプローチが変わります。</p>
+
+  <div class="concept-map">
+    <div class="concept-row header">
+      <div class="concept-cell goal">対象</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">MBでの扱い方</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">なぜそうなるか</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">小道具・武器（持ち物）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">Constraint で手ボーンに追従させて Plot</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">Position / Rotation Constraint が MB に組み込まれており、ターゲットボーンを指定するだけで追従できる。Plot で独立したキーに焼き付ける</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">乗り物・単純なメカ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">ルートボーンに直接キーを打つ（Raw アニメ）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">Control Rig を使わない場合、ボーンの Translate / Rotation チャンネルに直接キーが積まれる通常のキーアニメになる</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">4足歩行・非人型キャラクター</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">人型部分だけ MB で処理 → 残りは Maya へ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">HumanIK は人型マッピング前提のため4足対応は限定的。Maya のほうが柔軟なリグを組める</div>
+    </div>
+  </div>
+
+  <h3>3つのアプローチ比較</h3>
+  <div class="cards-3">
+    <div class="card">
+      <h3 style="margin-top:0;font-size:0.9rem;">① 直接ボーン操作（Raw）</h3>
+      <p style="font-size:0.82rem;margin-bottom:.5rem;">Control Rig なしで直接ボーンを選択して Rotate / Translate を変えてキーを打つ。</p>
+      <ul style="font-size:0.82rem;padding-left:1.2rem;">
+        <li>シンプルな乗り物・単純な小道具</li>
+        <li>ループしない単発アニメ</li>
+        <li>操作が直感的・FCurve で完結</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0;font-size:0.9rem;">② Constraint（追従）</h3>
+      <p style="font-size:0.82rem;margin-bottom:.5rem;">武器・持ち物など「人体に追従させたいオブジェクト」に Position / Rotation Constraint を設定し、手ボーンを親にする。最後に Plot して独立したアニメに焼き付ける。</p>
+      <ul style="font-size:0.82rem;padding-left:1.2rem;">
+        <li>武器・持ち物全般</li>
+        <li>騎乗キャラの体固定</li>
+        <li>MB の Constraint ペインで設定</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0;font-size:0.9rem;">③ Maya に渡す</h3>
+      <p style="font-size:0.82rem;margin-bottom:.5rem;">人型部分だけ MB で処理して FBX 書き出し。非人型部分は Maya でリグを組んで Graph Editor で仕上げる。</p>
+      <ul style="font-size:0.82rem;padding-left:1.2rem;">
+        <li>4足歩行キャラクター</li>
+        <li>複雑なメカ・テール・翼</li>
+        <li>最終品質が重要な場合</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <p><strong>Constraint の Plot を忘れずに：</strong> Constraint を使ったオブジェクトは、FBX 書き出し前に必ず <strong>Plot（Constraint の結果をキーフレームに焼き付け）</strong> してください。Plot なしで書き出すと Maya 側で Constraint が失われ、オブジェクトが元の位置に戻ってしまいます。</p>
   </div>
 
   <div class="ref-box">
