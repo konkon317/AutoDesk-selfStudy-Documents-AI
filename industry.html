@@ -82,6 +82,7 @@
       <li><a href="#industries">業界別カード</a></li>
       <li><a href="#delivery">納品形態・ファイル形式まとめ</a></li>
       <li><a href="#role">MBを担当するのは誰か</a></li>
+      <li><a href="#toolrole">MBとMayaの役割分担 — どっちで何をするか</a></li>
     </ol>
   </div>
 
@@ -308,6 +309,73 @@
     <h3>📝 コラム：MBを「メインツール」と「脇役」で学ぶ場合の違い</h3>
     <p>MBをメインで使う人（TA・専任アニメーター）は、スクリプト（Python/MoBu API）・パイプライン最適化まで深掘りします。一方、<strong>「Mocapを使うシーンで効率的に処理したい」という文脈</strong>なら、Characterize → Retarget → Control Rig修正 → Plot → FBX という一本のフローを確実に使えることが最優先です。スクリプトや高度なRetarget設定はその後の選択肢として持てば十分です。</p>
     <p>限られた時間でMBを学ぶなら、「どの業界のどの工程」を自分が担当するかを最初に定義しておくと、学習対象がはっきりします。</p>
+  </div>
+
+  <!-- ⑤ MBとMayaの役割分担 -->
+  <h2 id="toolrole">⑤ MBとMayaの役割分担 — どっちで何をするか</h2>
+
+  <p>MBとMayaはよく「どちらを使えばいいか」と比較されますが、<strong>競合ツールではなく工程分担ツール</strong>です。それぞれが得意とする工程が明確に異なり、多くのパイプラインで両方が役割を分けて存在します。</p>
+
+  <div class="mw-table-wrap">
+    <table>
+      <tr>
+        <th style="width:12rem;"></th>
+        <th style="color:var(--amber);">MotionBuilder</th>
+        <th style="color:#3fa06e;">Maya</th>
+      </tr>
+      <tr>
+        <td><strong>一言で</strong></td>
+        <td>Mocap処理の工場（前工程ツール）</td>
+        <td>アニメーション制作のスタジオ（仕上げツール）</td>
+      </tr>
+      <tr>
+        <td><strong>強み</strong></td>
+        <td>リターゲット・Floor Contact・Pinningが速い。大量Mocapデータを捌ける。HumanIK専用UIが直感的</td>
+        <td>Graph Editor・Dope Sheet・タンジェント制御が細かい。リギング全般。カーブの自由度が高い</td>
+      </tr>
+      <tr>
+        <td><strong>弱み</strong></td>
+        <td>Dope Sheet が使いにくい。手付けUIはMayaより不便。リギングはほぼできない</td>
+        <td>Mocap大量処理が遅い。HumanIKはあるがMBほど直感的でない</td>
+      </tr>
+      <tr>
+        <td><strong>向くアニメーション</strong></td>
+        <td>写実的なMocapベース。量産Mocap処理</td>
+        <td>誇張・スタイライズド・ループ・細かい緩急設計</td>
+      </tr>
+      <tr>
+        <td><strong>最終成果物</strong></td>
+        <td>FBX（次工程へ渡す中間ファイル）</td>
+        <td>FBX / Alembic / USD（最終出力に近い）</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>ゲームアニメーションでの実際の分担例</h3>
+
+  <div class="flow-diagram">
+    <div class="flow-box">Mocap スタジオ<br><small>キャプチャデータ（.bvh/.c3d）</small></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-box mb">MotionBuilder<br><small>Retarget・Floor Contact・クリーンアップ</small></div>
+    <div class="flow-arr">→ FBX →</div>
+    <div class="flow-box maya">Maya<br><small>Graph Editor仕上げ・誇張・タイミング調整</small></div>
+    <div class="flow-arr">→</div>
+    <div class="flow-box">ゲームエンジン<br><small>最終インポート</small></div>
+  </div>
+
+  <div class="callout note" style="margin-top:1rem;">
+    <strong>スタイライズド・ゲームアニメーション（誇張系）の場合</strong><br>
+    日本のアクションゲームなど誇張表現が強いタイトルでは、<strong>MBを使わずMayaまたはエンジン直で手付け</strong>するケースも多いです。Mocapをベースとしても、最終的な「緩急・タイミング・スクワッシュ&amp;ストレッチ」はMayaのGraph Editorでカーブを設計するほうが精度が出やすいです。
+  </div>
+
+  <div class="callout tip" style="margin-top:1rem;">
+    <strong>Mayaに渡すべき判断基準</strong>
+    <ul style="margin:0.5rem 0 0 1.2rem;">
+      <li>緩急・タイミングをカーブで細かく設計したいとき</li>
+      <li>ループアニメーションの前後フレームをつなぐとき</li>
+      <li>誇張表現（オーバーシュート・バウンス・スクワッシュ）が必要なとき</li>
+      <li>人型以外のオブジェクトのアニメーションを仕上げるとき</li>
+    </ul>
   </div>
 
   <div class="ref-box">
