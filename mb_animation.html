@@ -355,6 +355,104 @@
     <p><strong>試してみる：</strong> 既存のMocapで右手のReachを0%→100%に変えた後、Hand Effectorを動かして「右手で何かを指さす」ポーズを追加してみる。下半身・左腕はMocapのまま残ることを確認する。</p>
   </div>
 
+  <h3>Mocapをベースに部分的に手付けで上書きする — 実践ワークフロー</h3>
+  <p>「全体の動きはMocapのまま、特定部位・特定区間だけ手付けに置き換える」パターンです。目的に応じて3つのアプローチから選びます。</p>
+
+  <div class="mw-table-wrap">
+    <table>
+      <tr>
+        <th>アプローチ</th>
+        <th>向く場面</th>
+        <th>元データへの影響</th>
+      </tr>
+      <tr>
+        <td><strong>A: Reach で部位ごとに上書き</strong></td>
+        <td>特定エフェクター（手・頭など）の動きを置き換えたい</td>
+        <td>Mocapはそのまま残る</td>
+      </tr>
+      <tr>
+        <td><strong>B: Animation Layer で差分を加算</strong></td>
+        <td>試行錯誤しながら修正したい。元に戻しやすくしたい</td>
+        <td>Base Layer は変更なし</td>
+      </tr>
+      <tr>
+        <td><strong>C: Plot to CR → 直接編集</strong></td>
+        <td>特定区間を完全に手付けに置き換えたい。最大の自由度が必要</td>
+        <td>CR キーを上書き（元Mocapは失われる）</td>
+      </tr>
+    </table>
+  </div>
+
+  <h4 style="margin-top:1.25rem;color:var(--green);">アプローチ A — Reach を使った部位単位の上書き</h4>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>上書きしたい部位の IK Blend T/R を 100% に設定</h4>
+      <p>例：右手だけ上書きしたいなら Right Hand Effector の IK Blend T / IK Blend R を 100% に。他の部位は 0% のままで Mocap が流れ続ける。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>手付けを入れたいフレームでエフェクターを動かして K</h4>
+      <p>Mocap の動きに重ねて新しいポーズをキーとして記録する。Reach 100% のエフェクターだけが上書きされ、他は Mocap のまま。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>Reach 自体にキーを打って「移行区間」を作る</h4>
+      <p>上書きが始まるフレームの手前で Reach = 0% にキーを打ち、上書き区間に入るところで Reach = 100% にキーを打つ。これで「Mocap → 手付けへの自然な移行」が作れる。</p>
+    </div>
+  </div>
+
+  <h4 style="margin-top:1.25rem;color:var(--green);">アプローチ B — Animation Layer で区間を絞って差分を乗せる</h4>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>Animation Layer を追加してその上にキーを打つ</h4>
+      <p>ベースレイヤーの Mocap は一切触れない。新しいレイヤーに修正差分のキーだけ記録する。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>Layer Weight にキーを打って「有効区間」を限定する</h4>
+      <p>修正を入れたい区間の前後で Weight = 0 → 100 → 0 のようにキーを打つ。区間の外では修正レイヤーが無効になり Mocap だけが再生される。</p>
+    </div>
+  </div>
+
+  <h4 style="margin-top:1.25rem;color:var(--green);">アプローチ C — Plot to Control Rig → 区間を直接置き換える</h4>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>Mocap を Control Rig に焼き付ける（Plot to CR）</h4>
+      <p>Character Controls → Edit → Plot Character → "Control Rig"。全フレームの CR キーが得られ、FCurve 上で自由に編集できる状態になる。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>置き換えたい区間のキーを FCurve エディタで編集・削除</h4>
+      <p>問題区間のキーをドラッグ選択して Delete → 新しいポーズをキーとして打ち直す。前後の区間はそのまま残るので、スプライン補間でつながる。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>Butterworth フィルターで境目を滑らかにつなぐ</h4>
+      <p>置き換えた区間の前後で急激な変化が出る場合は、その部分を選択して Edit → Filter → Butterworth でスムーズをかける。</p>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <strong>「突出した感じ」が出る原因と対処</strong><br>
+    Mocap データは密なキーが全フレームに入っているため、1フレームだけ変えると前後の古いキーとの間で急激なカーブになります。アプローチ C の場合は「問題区間のキーを削除してから新しいキーを打つ」のが最短の解決策です。削除したくない場合は Butterworth フィルターで区間全体をスムーズに。
+  </div>
+
   <!-- ⑦ 手付けアニメーション -->
   <h2 id="handkeyed">⑦ 手付けアニメーション — キーを打つ基本サイクル</h2>
   <p>MB はMocap処理ソフトですが、Control Rig を使って手付けアニメーションをゼロから作ることもできます。<strong>基本サイクルは「フレームを決める → エフェクターを動かす → キーを打つ」の繰り返し</strong>です。</p>
