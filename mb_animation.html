@@ -56,8 +56,8 @@
   <span class="logo">Autodesk Study</span>
   <a href="index.html">ホーム</a>
   <a href="mb_overview.html">MB 概要</a>
-  <a href="mb_control_rig.html">Control Rig</a>
   <a href="mb_animation.html" class="active">MB アニメ</a>
+  <a href="mb_control_rig.html">Control Rig</a>
   <a href="maya_basics.html">Maya 基礎</a>
   <a href="industry.html">業界</a>
   <a href="study_plan.html">学習プラン</a>
@@ -84,6 +84,8 @@
       <li><a href="#handkeyed">手付けアニメーション — キーを打つ基本サイクル</a></li>
       <li><a href="#nonhuman">人型以外のアニメーション — Characterize できないオブジェクトの扱い</a></li>
       <li><a href="#plot">Plot — アニメーションを焼き付ける・焼き替える</a></li>
+      <li><a href="#posetopase">Pose to Pose — アニメーションを組み立てる</a></li>
+      <li><a href="#animlayer">Animation Layer — 元データを壊さずに修正を重ねる</a></li>
     </ol>
   </div>
 
@@ -597,6 +599,173 @@
   <div class="callout tip">
     <strong>Characterize が大前提</strong><br>
     Plot 操作は Characterize（HumanIK マッピング）があって初めて成立します。FBX インポート直後は Characterize が解除されている場合があるため、<strong>Plot 前に Character Controls パネルでキャラクター名が表示されているか</strong>を必ず確認してください。
+  </div>
+
+  <!-- ⑩ Pose to Pose -->
+  <h2 id="posetopase">⑩ Pose to Pose — アニメーションを組み立てる</h2>
+  <p>ポーズを作れるようになった次のステップ。<strong>Pose to Pose</strong> は「全フレームを順に打つ」のではなく、<strong>重要なポーズだけ先に決めて中割りは MB に補間させる</strong>方法です。実務・教育を問わず最も一般的な手付けアニメーションの作り方です。</p>
+
+  <div class="concept-map">
+    <div class="concept-row header">
+      <div class="concept-cell goal">やりたいこと</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">操作</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">理屈</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">動きの「山」になるポーズを決める</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">重要フレームにポーズを作って K</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">これが「原画」。キー間はMBがスプライン補間で埋める</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">動きの緩急・タイミングを整える</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">FCurve エディタでタンジェントを調整、または Dope Sheet でキーを移動</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">カーブの傾きが速度。Dope Sheet はキー位置を時間軸上で並べて視覚管理</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">ループアニメーションを作る</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">最初と最後のフレームに同じポーズをキーとして打つ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">開始ポーズ = 終了ポーズにすることでシームレスにループする</div>
+    </div>
+  </div>
+
+  <h3>Pose to Pose の基本ステップ</h3>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>タイムラインのフレームレンジを設定する</h4>
+      <p>画面下部のタイムラインで開始・終了フレームを指定する。短いループなら 0〜30（1秒）などで始めると管理しやすい。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>フレーム 0 に基本ポーズを作って K</h4>
+      <p>待機・初期状態のポーズを作り、全エフェクター選択（<kbd>A</kbd>）してから <kbd>K</kbd> でキーを打つ。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>次の重要フレームに移動 → ポーズを変えて K</h4>
+      <p>「動きの頂点」になるフレームに移動してポーズを作る。Kキーでキーを打つ。これを繰り返す。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">4</div>
+    <div class="wf-body">
+      <h4>再生して全体の流れを確認する</h4>
+      <p><kbd>Space</kbd> で再生。MB がキー間を補間した動きを確認する。ここで「タイミングがずれている」「動きが早すぎる」などを把握する。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">5</div>
+    <div class="wf-body">
+      <h4>FCurve エディタ / Dope Sheet でタイミングと緩急を調整</h4>
+      <p>FCurve：カーブの傾き（速度）をタンジェント操作で整える。Dope Sheet：キー全体を俯瞰してフレーム単位で移動・コピーできる。</p>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <strong>Dope Sheet と FCurve エディタは目的で使い分ける</strong><br>
+    <strong>Dope Sheet</strong> はキー位置（タイミング）を全ボーン横断で見るのに向いている。<strong>FCurve エディタ</strong>は特定チャンネルの速度カーブを細かく操るのに向いている。「全体のリズムを整える → Dope Sheet、特定部位の緩急を詰める → FCurve」の順が実務では多い。
+  </div>
+
+  <!-- ⑪ Animation Layer -->
+  <h2 id="animlayer">⑪ Animation Layer — 元データを壊さずに修正を重ねる</h2>
+  <p>既存のアニメーション（Mocapや手付け済みデータ）に<strong>元データを破壊せずに</strong>修正・追加動作を重ねる仕組みです。レイヤーを off にすればいつでも元の状態に戻せます。</p>
+
+  <div class="concept-map">
+    <div class="concept-row header">
+      <div class="concept-cell goal">やりたいこと</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">操作</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">理屈</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">Mocapの上に呼吸の揺れだけ加えたい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">Additive Layer を追加 → その上にキーを打つ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">Additive Layer は Base Layer に差分値を加算する。Base Layer は変更されない</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">修正を一時的に切って元の状態を確認したい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">追加レイヤーの目のアイコンを off にする</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">レイヤーの Weight が 0 になり Base Layer だけが再生される</td>
+    </div>
+  </div>
+
+  <h3>Animation Layer の追加手順</h3>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>Animation Layer パネルを開く</h4>
+      <p>メニュー <strong>Window → Animation Layer Editor</strong>。BaseAnimation レイヤーが表示されていれば現在のアニメーションが乗っている。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>+ ボタンで新規レイヤーを追加する</h4>
+      <p>追加したレイヤーが選択状態になる。以後このレイヤーにキーが記録される。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>追加レイヤーを選択した状態でキーを打つ</h4>
+      <p>修正したいフレームに移動してポーズを変えて K。BaseAnimation には一切触れない。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">4</div>
+    <div class="wf-body">
+      <h4>Layer Weight でブレンド強度を調整する</h4>
+      <p>0%〜100% で追加レイヤーの加算強度を変えられる。フレームごとにキーを打てば「徐々に修正が入る」効果も作れる。</p>
+    </div>
+  </div>
+
+  <div class="mw-table-wrap" style="margin-top:1rem;">
+    <table>
+      <tr>
+        <th></th>
+        <th>直接編集</th>
+        <th>Animation Layer</th>
+      </tr>
+      <tr>
+        <td><strong>元データ</strong></td>
+        <td>変更される（上書き）</td>
+        <td>保持される（触らない）</td>
+      </tr>
+      <tr>
+        <td><strong>取り消し</strong></td>
+        <td>Undo のみ（セッションをまたげない）</td>
+        <td>レイヤーを off または削除するだけ</td>
+      </tr>
+      <tr>
+        <td><strong>向く場面</strong></td>
+        <td>最終的に確定した修正を入れるとき</td>
+        <td>試行錯誤しながら差分を積むとき、Mocap修正の試し打ち</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout tip">
+    <strong>Mocap修正の定番フロー：Reach ＋ Animation Layer</strong><br>
+    修正したい部位の IK Blend T/R（Reach）を 100% に上げて Animation Layer 上でキーを打つと、元のMocapを保持したまま上半身・手先だけを修正できます。確定したら Plot to Skeleton して FBX へ。
   </div>
 
   <div class="ref-box">
