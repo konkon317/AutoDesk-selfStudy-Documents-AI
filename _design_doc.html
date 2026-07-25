@@ -225,19 +225,25 @@
       <td><code>mb_overview.html</code></td>
       <td><span class="tag tag-mb">MotionBuilder · 01</span></td>
       <td>グリーン (#4ade80)</td>
-      <td>MB 概要・UI・Characterize・Retarget・Story ウィンドウ。</td>
+      <td>MB 概要・UI・Characterize・Retarget・アニメ制作の全体地図（⑥）・Story ウィンドウ（⑦）。</td>
     </tr>
     <tr>
       <td><code>mb_control_rig.html</code></td>
       <td><span class="tag tag-mb">MotionBuilder · 02</span></td>
       <td>グリーン (#4ade80)</td>
-      <td>Control Rig 全体。FK/IK・エフェクター・Reach・Pinning・Floor Contact・Plot。</td>
+      <td>Control Rig 全体。FK/IK・エフェクター・Reach（STEP 1〜3 構成）・Pinning・Floor Contact・よくある失敗と対処（⑨）。</td>
     </tr>
     <tr>
-      <td><code>mb_animation.html</code></td>
+      <td><code>mb_animation_basics.html</code></td>
       <td><span class="tag tag-mb">MotionBuilder · 03</span></td>
       <td>グリーン (#4ade80)</td>
-      <td>MB でのアニメーション制作（Mocap修正 vs ゼロから制作）。FCurve・Animation Layers。</td>
+      <td>アニメ制作の基本編。FK/IKの選び方・手付けサイクル・FCurve・Pose to Pose・ゼロ制作の通しワークフロー。</td>
+    </tr>
+    <tr>
+      <td><code>mb_animation_workflows.html</code></td>
+      <td><span class="tag tag-mb">MotionBuilder · 04</span></td>
+      <td>グリーン (#4ade80)</td>
+      <td>実践ワークフロー編。Animation Layer・Plot 3方向・Mocap×手付けの部分上書き3アプローチ・人型以外。</td>
     </tr>
     <tr>
       <td><code>maya_basics.html</code></td>
@@ -256,6 +262,12 @@
       <td><span class="tag tag-plan">PLAN</span></td>
       <td>パープル (#a78bfa)</td>
       <td>15 セッション学習プラン。フェーズ別セッション一覧・ゴール・作業リスト・参考リンク。</td>
+    </tr>
+    <tr>
+      <td><code>glossary.html</code></td>
+      <td><span class="tag tag-idx">参考</span></td>
+      <td>—（デフォルトのパープル）</td>
+      <td>用語集。40語・5カテゴリ・1行定義＋詳細セクションへのリンク。本文の <code>a.term</code> リンクの飛び先。</td>
     </tr>
     <tr>
       <td><code>common.css</code></td>
@@ -330,14 +342,20 @@
     <tr><td><code>.page-tag</code></td><td>ページ右上のラベル（"MotionBuilder · 01" など）。</td></tr>
     <tr><td><code>.toc</code></td><td>ページ内目次。<code>.toc-list</code> + <code>.toc-item</code>。</td></tr>
     <tr><td><code>.next-link</code></td><td>ページ末尾の「次のページ」ナビゲーション。</td></tr>
+    <tr><td><code>.prereq</code></td><td>ページ冒頭「このページの前提」ブロック。<code>.prereq-title</code> + <code>.prereq-pages</code>（前提ページリンク）+ <code>.prereq-terms</code>（既知用語チップ）。</td></tr>
+    <tr><td><code>a.term</code></td><td>本文中の用語集リンク（<code>glossary.html#用語id</code> へ）。破線下線・ホバーで実線。初出用語に付ける。</td></tr>
+    <tr><td><code>.checkpoint</code></td><td>「ここで一区切り」ブロック。<code>.checkpoint-title</code> + 達成確認の <code>ul</code>。セッション境界の目安。</td></tr>
+    <tr><td><code>.fig-slot</code></td><td>スクリーンショット差し込み用プレースホルダ（破線枠）。実機で撮影した日に <code>&lt;img&gt;</code> を入れる。</td></tr>
   </table>
 
   <h3>ページ固有コンポーネント（主なもの）</h3>
   <table>
     <tr><th>ファイル</th><th>クラス</th><th>説明</th></tr>
-    <tr><td><code>mb_animation.html</code></td><td><code>.compare-wrap</code>, <code>.compare-col</code></td><td>Mocap修正 vs ゼロ制作の2列比較レイアウト。</td></tr>
-    <tr><td><code>mb_animation.html</code></td><td><code>.common-band</code>, <code>.cb-flow</code>, <code>.cb-step</code></td><td>共通フロー帯（Characterize→CR→Plot→FBX）。</td></tr>
-    <tr><td><code>mb_animation.html</code></td><td><code>.wf-step</code>, <code>.wf-diff.same</code>/<code>.diff</code></td><td>ステップワークフロー + 「同じ」「違う」バッジ。</td></tr>
+    <tr><td><code>mb_overview.html</code></td><td><code>.flow-band</code>, <code>.fb-flow</code>, <code>.fb-step</code></td><td>共通構造フロー帯（Characterize→CR→Plot→FBX）。旧 mb_animation の <code>.common-band</code> の後継。</td></tr>
+    <tr><td><code>mb_animation_basics.html</code></td><td><code>.wf-step</code>, <code>.wf-diff.same</code>/<code>.diff</code></td><td>ステップワークフロー + 「同じ」「違う」バッジ。</td></tr>
+    <tr><td><code>mb_animation_basics.html</code> / <code>_workflows.html</code></td><td><code>.diagram</code></td><td>SVG 模式図の枠（FCurve・Pose to Pose・Layer 加算構造）。</td></tr>
+    <tr><td><code>glossary.html</code></td><td><code>.gloss-item</code>, <code>.gloss-term</code>, <code>.gloss-more</code></td><td>用語カード。<code>:target</code> でハイライト。id は用語のケバブケース。</td></tr>
+    <tr><td><code>study_plan.html</code></td><td><code>.session-check</code>, <code>.phase-read</code></td><td>セッションの達成チェック行・フェーズの事前読みリンク。</td></tr>
     <tr><td><code>industry.html</code></td><td><code>.position-box</code></td><td>MB のパイプライン上の立ち位置フロー図。</td></tr>
     <tr><td><code>industry.html</code></td><td><code>.industry-grid</code>, <code>.industry-card</code></td><td>4業界カードグリッド（ゲーム/映像/バーチャル/広告）。</td></tr>
     <tr><td><code>maya_basics.html</code></td><td><code>.tool-row</code>, <code>.tool-btn</code></td><td>Q/W/E/R ツールボタン表示。</td></tr>
@@ -431,11 +449,16 @@
 
   <div class="warn">
     注意：common.css に nav の <em>スタイル</em> は含まれているが、nav の <em>HTML</em> は各ファイルにコピーで持つ（SSI・JSなし）。
-    ページを追加・削除したら 7 ファイル全ての nav を手動更新すること。
+    ページを追加・削除したら 9 ファイル全ての nav を手動更新すること。
   </div>
 
-  <h3>現在のナビゲーションリンク順</h3>
-  <pre><code>🏠 TOP → MB概要 → Control Rig → MB アニメ → Maya基礎 → 業界 → 学習プラン</code></pre>
+  <h3>現在のナビゲーションリンク順（2026-07-25 再構成後）</h3>
+  <pre><code>🏠 ホーム → MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya基礎 → 業界 → 学習プラン → 用語集</code></pre>
+
+  <h3>next-link チェーン（ページ末尾の「次のページ」導線）</h3>
+  <pre><code>MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya基礎 → 業界 → 学習プラン
+（glossary は参照ページのためチェーン外・next-link なし）</code></pre>
+  <p>nav 順と next-link チェーンは<strong>常に同じ順序を保つ</strong>こと。順序を変えるときは両方セットで更新する。</p>
 
 
   <!-- ========== 7. 今後の調整ポイント ========== -->
@@ -452,7 +475,8 @@
 
   <h3>構造・スタイル面</h3>
   <ul>
-    <li>現状 MB ページが3つあり index のカードが増えている。ページ数が増えるなら index にカテゴリ別グルーピングを入れると見やすくなる。</li>
+    <li><s>現状 MB ページが3つあり index のカードが増えている。ページ数が増えるなら index にカテゴリ別グルーピングを入れると見やすくなる。</s>（2026-07-25 対応済み：index は「学習パス STEP 01〜05」＋「参考・計画」の2グループ構成になった）</li>
+    <li>各ページの <code>.fig-slot</code>（スクリーンショット差し込み枠）が空のまま。実機セッションで撮影したら差し込む（FCurve エディタ・Character Controls・Animation Layer Editor・Plot ダイアログの4枚）。</li>
     <li>参考リンクはセクション直下の <code>.ref-box</code> に配置しているが、将来的に「リソース一覧ページ」として切り出すことも可能。</li>
     <li><code>common.css</code> のコンポーネントは現状 MB/Maya 寄りに作られている。まったく別ソフト（例：Houdini）を追加するなら変数の色セットを増やすだけで対応できる。</li>
   </ul>
@@ -469,7 +493,9 @@
       <li><code>study_plan.html</code> のみ ref-box 内のインデントが <strong>4 スペース</strong>（他ファイルは 2 スペース）。Edit ツール使用時は既存インデントに合わせること。</li>
       <li>参考リンクのクラスは <code>class="doc"</code>（公式・青）/ <code>class="ext"</code>（外部・グリーン）/ <code>class="yt"</code>（YouTube・赤）の 3 種。アイコン絵文字もセットで使う（📄 / 📖 / ▶）。</li>
       <li>日本語を含む URL は <strong>パーセントエンコーディング済みの形</strong>で href に書くこと（ブラウザが解釈できるが、確実性のため）。</li>
-      <li>nav は全ファイルを更新する必要があるため、ページ追加・削除時は 7 ファイル全部を確認すること。</li>
+      <li>nav は全ファイルを更新する必要があるため、ページ追加・削除時は 9 ファイル全部を確認すること（next-link チェーンもセットで）。</li>
+      <li><strong>用語の初出管理：</strong>新しい専門用語を本文に書くときは、glossary.html に1行定義を追加し、初出箇所に <code>&lt;a class="term" href="glossary.html#用語id"&gt;</code> でリンクする。ページ内で説明済みの用語にリンクは不要。</li>
+      <li><strong>新ページの型：</strong>ページを追加するときは「冒頭に <code>.prereq</code>（前提ブロック）・区切りに <code>.checkpoint</code>・スクショ予定地に <code>.fig-slot</code>」の3点セットを踏襲する。</li>
     </ul>
   </div>
 
@@ -479,6 +505,45 @@
     <li>図解・視覚的な構造整理を好む。テキスト説明だけより概念マップ・フロー図が有効。</li>
     <li>実務に直結する情報を優先。理論だけで終わらず「で、実際どう操作するか」まで含める。</li>
     <li>トークン制約があるため、ソフト起動前に読める分量・構成にする。</li>
+  </ul>
+
+
+  <!-- ========== 9. 2026-07-25 初心者向け再構成の記録 ========== -->
+  <h2>9. 初心者向け再構成の記録（2026-07-25）</h2>
+
+  <p>全ページ調査に基づく再構成を実施した。将来の改稿時は、ここに書かれた判断基準を引き継ぐこと。</p>
+
+  <h3>診断（当時の課題）</h3>
+  <ol>
+    <li><strong>用語の初出順とページ順の逆転</strong> — 旧 nav（MB概要 → MBアニメ → Control Rig）に対し、旧 mb_animation.html が Control Rig 用語を無説明で前提にしていた</li>
+    <li><strong>情報密度の不揃い</strong> — 旧 mb_animation.html が突出（888行・11セクション・図解ゼロ・1見出しに複数ワークフロー同居）</li>
+    <li><strong>消化の区切り・検証可能な達成チェックの不在</strong></li>
+    <li><strong>実画面との接続の弱さ・MB 側トラブルシューティング不足</strong></li>
+  </ol>
+
+  <h3>順序の設計判断（最重要・変えるときは要注意）</h3>
+  <div class="card">
+    <p><strong>採用した原則：「概念レベルの全体像は先出し、操作レベルの内容は依存順」</strong></p>
+    <ul>
+      <li>判断基準は<strong>「未知用語の保留数」</strong>——説明されていない用語を保留したまま読み進めるほど理解に使える容量が削られる。全体→詳細型の学習効果（先行オーガナイザ）が出るのは「全体」が概念レベルに圧縮されているときだけ</li>
+      <li>これを実装したのが mb_overview ⑥「アニメ制作の全体地図」（概念のみ・操作なし）＋ 依存順の nav（CR → アニメ基本 → アニメ実践）</li>
+      <li>この教材は「ソフト起動前に読む」設計なので「読んですぐ試せない」コストは低い。効くのは保留数の方</li>
+      <li><strong>逆に言えば</strong>：ページ順を変えたくなったら「そのページが無説明で前提にする用語は何か」を先に洗い出すこと。概念コンテンツなら前に出してよいが、操作コンテンツを依存元より前に出すと同じ問題が再発する</li>
+    </ul>
+  </div>
+
+  <h3>実施内容の要約</h3>
+  <ul>
+    <li><strong>層A（構成）：</strong>旧 mb_animation.html を basics（単一スキル→統合）/ workflows（道具→組み合わせ）に分割。①②は概念化して mb_overview へ移設。glossary.html 新設。nav 9項目化・next-link 一本化。index を「学習パス＋参考」の2グループに再編（当初の3トラック案は Maya の位置が読み順と矛盾するため変更）</li>
+    <li><strong>層B（ページ内）：</strong>前提ブロック・用語集リンク・チェックポイント・fig-slot を各ページに設置。CR ⑤を STEP 1〜3 に分離（Reach 概念 → IK Blend 実名 → IK Pull は別概念）。CR ⑨「よくある失敗と対処」新設。旧⑥のアプローチ A/B/C を h3 に分解して粒度統一</li>
+    <li><strong>層C（運用）：</strong>study_plan 全15セッションに検証可能な達成チェック（再生確認・前後比較・成果物の存在で判定）。S8 の「調べる」タスクを教材参照つき2択に置換。フェーズごとの事前読みリンク</li>
+  </ul>
+
+  <h3>意図的に変えなかったもの</h3>
+  <ul>
+    <li>index の「全体ロードマップ」セクション — study_plan のフェーズ構成の鏡なので、study_plan 側の構成を変えるときにセットで見直す</li>
+    <li>参考リンクの選定・配置 — 今回のスコープ外（5章の基準は従来どおり有効）</li>
+    <li>スクリーンショット — 実機起動が必要なため <code>.fig-slot</code> の枠だけ用意（7章の TODO 参照）</li>
   </ul>
 
 </div>
