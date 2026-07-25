@@ -66,6 +66,18 @@
 
 <div class="content">
 
+  <div class="prereq">
+    <div class="prereq-title">📋 このページの前提</div>
+    <div class="prereq-pages">
+      <a href="mb_animation_basics.html#fcurve">アニメ基本 ③ FCurve エディタ</a>
+      <a href="mb_animation_workflows.html#plot">アニメ実践 ② Plot</a>
+    </div>
+    <div class="prereq-terms">
+      <span>キーフレーム</span><span>FCurve（→ Graph Editor に対応）</span><span>Plot</span><span>FBX</span>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin:0.6rem 0 0;">MB 側の操作を知っている前提で「MB との差分」を中心に進みます。用語に詰まったら<a class="term" href="glossary.html">用語集</a>へ。</p>
+  </div>
+
   <div class="toc">
     <h4>このページの内容</h4>
     <ol>
@@ -144,7 +156,7 @@
       <ul>
         <li>モデリング・シェーダー・レンダリングまで一通りできる</li>
         <li>リギングシステムが柔軟（カスタムリグを作れる）</li>
-        <li>ノードベースのDependency Graph が基盤</li>
+        <li>ノードベースの<a class="term" href="glossary.html#dependency-graph">Dependency Graph</a> が基盤（操作を覚える段階では「そういう土台がある」程度でOK）</li>
         <li>MEL/Pythonで自動化できる</li>
         <li>Mocap処理はMBほど直感的でない</li>
       </ul>
@@ -456,10 +468,10 @@
   <table>
     <tr><th>問題</th><th>原因・対処</th></tr>
     <tr><td>スケールが大きすぎる / 小さすぎる</td><td>FBXエクスポート時の単位設定がズレている。MBのFBX Export設定でScaleを確認。</td></tr>
-    <tr><td>アニメーションが来ない</td><td>Plot to Skeleton が完了しているか確認。Control Rigのままだとアニメーションが入っていないことがある。</td></tr>
+    <tr><td>アニメーションが来ない</td><td><a href="mb_animation_workflows.html#plot">Plot to Skeleton</a> が完了しているか確認。Control Rigのままだとアニメーションが入っていないことがある。</td></tr>
     <tr><td>ボーンが多すぎる</td><td>MBでControl Rigを削除してから書き出す。</td></tr>
     <tr><td>FBXオプションが出ない</td><td>Window → Settings/Preferences → Plug-in Manager で fbxmaya.mll をLoad &amp; Auto Loadにチェック。</td></tr>
-    <tr><td>アニメーションにジッターが出る</td><td>Import時に "Retain Quaternion Interpolation" を選択（"Resample as Euler" は使わない）。</td></tr>
+    <tr><td>アニメーションにジッターが出る</td><td>Import時に "Retain Quaternion Interpolation" を選択（"Resample as Euler" は使わない）。<a class="term" href="glossary.html#quaternion">Quaternion</a> は回転を4成分で表す方式で、オイラー角より補間が安定するため。</td></tr>
   </table>
 
   <div class="callout note">
