@@ -60,6 +60,15 @@
   .tip-card .tip-icon { font-size: 1.3rem; margin-bottom: 0.4rem; }
   .tip-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.4rem; }
   .tip-card p { font-size: 0.8rem; color: var(--muted); margin: 0; }
+
+  .session-check {
+    font-size: 0.78rem; color: var(--green);
+    background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 6px; padding: 0.4rem 0.7rem; margin: 0.5rem 0 0.4rem;
+  }
+  .phase-read { font-size: 0.78rem; margin-top: 0.25rem; }
+  .phase-read a { color: var(--accent-2); text-decoration: none; border-bottom: 1px dashed rgba(34,211,238,0.4); }
+  .phase-read a:hover { border-bottom-style: solid; }
 </style>
 </head>
 <body>
@@ -113,6 +122,7 @@
       <div>
         <div class="phase-title">UI確認 → Control Rig習得 → Mocap修正実践</div>
         <div class="phase-desc">既知のワークフローを言語化しながら Control Rig を体に覚えさせる</div>
+        <div class="phase-read">📖 事前読み：<a href="mb_overview.html">MB 概要</a> ／ <a href="mb_control_rig.html">Control Rig 入門</a>（詰まったら <a href="mb_control_rig.html#troubleshoot">CR ⑨ よくある失敗と対処</a>）</div>
       </div>
     </div>
 
@@ -123,6 +133,7 @@
         <div class="session-body">
           <h4>UI再確認 &amp; 既知ワークフローの言語化</h4>
           <div class="goal">🎯 ゴール：Characterize → Retarget → Bake の流れを自分の手で通しで実行できる</div>
+          <div class="session-check">✅ 達成チェック：書き出した FBX をもう一度開き、リターゲット済みモーションがそのまま再生されたらクリア</div>
           <ul class="session-todo">
             <li>ビューポート操作・Asset Browser を確認（30分）</li>
             <li>テイクシステムの動作確認</li>
@@ -138,6 +149,7 @@
         <div class="session-body">
           <h4>Control Rig の作成とエフェクター把握</h4>
           <div class="goal">🎯 ゴール：Control Rigを自分で作り、各エフェクターを選んで動かせる</div>
+          <div class="session-check">✅ 達成チェック：任意のエフェクターで「Reach 100% で追従・0% で無効」の両方を再生で見せられたらクリア</div>
           <ul class="session-todo">
             <li>Character Controls ウィンドウを開く</li>
             <li>IK Control Rig を作成する</li>
@@ -154,6 +166,7 @@
         <div class="session-body">
           <h4>IK / FK の感覚をつかむ</h4>
           <div class="goal">🎯 ゴール：IKとFKの操作の違いを体感として理解できる</div>
+          <div class="session-check">✅ 達成チェック：「Hand Effector を動かすと肘が自動で曲がる」「FK で肩を回すと腕全体が付いてくる」の2つを自分の操作で再現できたらクリア</div>
           <ul class="session-todo">
             <li>FK モードで各ジョイントを個別に回転させてみる</li>
             <li>IK モードで手・足のエフェクターを移動して体の追従を確認</li>
@@ -169,6 +182,7 @@
         <div class="session-body">
           <h4>ピン留め（Pinning）でフットプラントを直す</h4>
           <div class="goal">🎯 ゴール：足のスライドをピン留めで修正できる</div>
+          <div class="session-check">✅ 達成チェック：修正後の歩行を再生し、着地中の足が滑るフレームがないことをビューポートで確認できたらクリア（修正前と見比べる）</div>
           <ul class="session-todo">
             <li>歩行Mocapデータを用意して足スライドを確認</li>
             <li>着地フレームに Foot Effector の Translation Pin を打つ</li>
@@ -185,6 +199,7 @@
         <div class="session-body">
           <h4>Reach 設定と部分修正</h4>
           <div class="goal">🎯 ゴール：修正したい部位だけ Reach を上げて局所的に直せる</div>
+          <div class="session-check">✅ 達成チェック：頭の向き修正が「指定した区間だけ」効いていて、区間外は元の Mocap のままであることを再生で確認できたらクリア</div>
           <ul class="session-todo">
             <li>上半身はMocapのまま、足だけ修正するワークフローを試す</li>
             <li>Head Effector を Reach 100% にして頭の向きを修正する</li>
@@ -200,6 +215,7 @@
         <div class="session-body">
           <h4>Floor Contact &amp; 総合Mocap修正</h4>
           <div class="goal">🎯 ゴール：Floor Contact を設定し、Pinning と組み合わせた修正ができる</div>
+          <div class="session-check">✅ 達成チェック：全フレームで足が床より下にめり込んでいないことを確認し、Plot 後も同じ見た目が保たれていたらクリア</div>
           <ul class="session-todo">
             <li>Character Properties で Foot Contact をオンにする</li>
             <li>床の高さ（Floor Y）を合わせる</li>
@@ -215,6 +231,7 @@
         <div class="session-body">
           <h4>Story ウィンドウ &amp; FBX 書き出し</h4>
           <div class="goal">🎯 ゴール：複数テイクをStoryでつなぎ、Maya向けFBXを書き出せる</div>
+          <div class="session-check">✅ 達成チェック：つなぎ目が再生で不自然に見えないこと、書き出した FBX が Maya で開いて再生できることの2点でクリア</div>
           <ul class="session-todo">
             <li>Window → Story でStoryウィンドウを開く</li>
             <li>複数テイクをタイムラインに並べてつなぐ</li>
@@ -248,6 +265,7 @@
       <div>
         <div class="phase-title">応用操作・仕上げ力を上げる</div>
         <div class="phase-desc">フェーズ1を踏まえてより実践的な編集力をつける</div>
+        <div class="phase-read">📖 事前読み：<a href="mb_animation_basics.html">アニメ制作の基本</a> ／ <a href="mb_animation_workflows.html">実践ワークフロー</a></div>
       </div>
     </div>
 
@@ -258,10 +276,11 @@
         <div class="session-body">
           <h4>上半身だけ差し替え（Upper Body Layering）</h4>
           <div class="goal">🎯 ゴール：下半身の歩行に別のクリップの上半身の腕振りを合成する</div>
+          <div class="session-check">✅ 達成チェック：再生で「下半身＝歩行・上半身＝腕振り」になっていること、ベイク後も同じ動きが保たれていることの2点でクリア</div>
           <ul class="session-todo">
             <li>2つのMocapテイクを用意する（歩行、腕を振る動作）</li>
-            <li>Story ウィンドウでトラックを分けてレイヤリングを試みる</li>
-            <li>または Character Controls で上半身だけ別キャラクターをInputに設定する方法を調べる</li>
+            <li>方法A：Story ウィンドウでトラックを分けてレイヤリングする（<a href="mb_overview.html#story">MB 概要 ⑦ Story</a>）</li>
+            <li>方法B：上半身のエフェクター群だけ Reach を100%にして腕振り側で上書きする（<a href="mb_animation_workflows.html#hybrid">実践ワークフロー ③ アプローチA</a> の応用）</li>
             <li>完成形をベイクして確認</li>
           </ul>
         </div>
@@ -273,6 +292,7 @@
         <div class="session-body">
           <h4>Auxiliary Effector（肘・膝の補正）</h4>
           <div class="goal">🎯 ゴール：補助エフェクターで関節の向きを修正できる</div>
+          <div class="session-check">✅ 達成チェック：内股／ガニ股の修正前後を見比べて（スクショかメモで記録）、膝の向きが意図どおりに変わっていたらクリア</div>
           <ul class="session-todo">
             <li>Knee Auxiliary Effector を選んで膝の向きを変えてみる</li>
             <li>Elbow Auxiliary Effector で肘の飛び出し方向を修正</li>
@@ -287,6 +307,7 @@
         <div class="session-body">
           <h4>総復習 &amp; 自由課題</h4>
           <div class="goal">🎯 ゴール：フェーズ1〜2で学んだ内容を使って1本のアニメーションを仕上げる</div>
+          <div class="session-check">✅ 達成チェック：書き出した FBX を Maya で開き、設定した修正3点（例：足・腰・頭）がすべて反映されていたらクリア</div>
           <ul class="session-todo">
             <li>自分で課題を設定してMocapデータを1本仕上げる</li>
             <li>フットプラント・腰の高さ・頭の向きを組み合わせて修正</li>
@@ -317,6 +338,7 @@
       <div>
         <div class="phase-title">UI → アニメーション → FBXパイプライン</div>
         <div class="phase-desc">MBユーザーとして「Mayaでどこまでできるか」を把握する</div>
+        <div class="phase-read">📖 事前読み：<a href="maya_basics.html">Maya 基礎</a>（FBX で詰まったら <a href="maya_basics.html#fbx">⑨ よくある問題と対処</a>）</div>
       </div>
     </div>
 
@@ -327,6 +349,7 @@
         <div class="session-body">
           <h4>Maya UI &amp; 基本操作</h4>
           <div class="goal">🎯 ゴール：Mayaを迷わず動かせる。Outliner・Channel Boxを使いこなせる</div>
+          <div class="session-check">✅ 達成チェック：FBX のスケルトンを Outliner で辿り、任意ボーンの数値を Channel Box で変更→元に戻す、が自力でできたらクリア</div>
           <ul class="session-todo">
             <li>ビューポート操作（Alt+マウス）を確認</li>
             <li>Q/W/E/R ツールで基本操作</li>
@@ -343,6 +366,7 @@
         <div class="session-body">
           <h4>キーフレームアニメーション入門</h4>
           <div class="goal">🎯 ゴール：Sキーでキーを打ち、タイムラインを使ったポーズ to ポーズができる</div>
+          <div class="session-check">✅ 達成チェック：Sphere の 30 フレームアニメを自作して再生できたこと、キーの移動・削除を自力で行えたことの2点でクリア</div>
           <ul class="session-todo">
             <li>シンプルなオブジェクト（Sphere等）でキーフレームを打つ練習</li>
             <li>タイムラインでキーを移動・削除する</li>
@@ -358,6 +382,7 @@
         <div class="session-body">
           <h4>Graph Editor でカーブを編集する</h4>
           <div class="goal">🎯 ゴール：Graph Editorでカーブを読み、タンジェントを調整してモーションを滑らかにできる</div>
+          <div class="session-check">✅ 達成チェック：スパイクを1箇所自分で見つけて修正し、修正前後の再生を見比べて滑らかになったと確認できたらクリア</div>
           <ul class="session-todo">
             <li>Graph Editorを開いてFBXのアニメーションカーブを表示する</li>
             <li>キーをドラッグで移動・タンジェントを調整する</li>
@@ -373,6 +398,7 @@
         <div class="session-body">
           <h4>MBからMayaへの完全パイプライン実践</h4>
           <div class="goal">🎯 ゴール：MB修正 → FBX書き出し → Maya読み込み → Graph Editor微調整 → 確認 を1本通せる</div>
+          <div class="session-check">✅ 達成チェック：Playblast の動画ファイルが実際に書き出され、再生して動きを確認できたらクリア（これが本プランの卒業制作）</div>
           <ul class="session-todo">
             <li>MBでControl Rig修正 → Plot → FBX書き出し</li>
             <li>MayaにFBX読み込み・スケール確認</li>
@@ -403,6 +429,7 @@
     <div class="session-body">
       <h4>自由枠 / 気になるところの追加探索</h4>
       <div class="goal">🎯 S1〜S14で詰まったこと・深掘りしたいことに使う</div>
+      <div class="session-check">✅ 達成チェック：起動前に「今日のゴール1行」を書いてから始めていればOK（自由枠は運用ルールの遵守だけ判定する）</div>
       <ul class="session-todo">
         <li>Control Rigで解決できなかった問題を再挑戦する</li>
         <li>Mayaのリグ構造をもう少し深く見る</li>
@@ -437,6 +464,11 @@
       <h4>1セッション = 1ゴール</h4>
       <p>欲張って複数のことをやろうとしない。「今日はピン留めだけ完璧にする」の方が身につく。</p>
     </div>
+  </div>
+
+  <div class="callout note">
+    <span class="callout-icon">🚨</span>
+    <p><strong>セッション中に詰まったら：</strong> Control Rig 系（動かない・変になる）は <a href="mb_control_rig.html#troubleshoot">Control Rig ⑨ よくある失敗と対処</a>、FBX の受け渡し系（スケール・ジッター・アニメが来ない）は <a href="maya_basics.html#fbx">Maya 基礎 ⑨ よくある問題と対処</a> を先に確認する。原因調査に時間を溶かすのが一番のトークン浪費。</p>
   </div>
 
   <h2>📚 参考資料・公式リソース</h2>
