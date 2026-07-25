@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MB アニメ制作の基本 | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--green); }
+  .page-hero .tag { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: var(--green); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(16,185,129,0.1), transparent); }
+  h3 { color: var(--green); }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--green); }
+
+  .wf-step { display: flex; gap: 1rem; margin-bottom: 0.9rem; }
+  .wf-num { width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: white; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.15rem; }
+  .wf-body { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; flex: 1; font-size: 0.85rem; }
+  .wf-body h4 { font-size: 0.87rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .wf-body p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+  .wf-body .wf-diff { display: inline-block; font-size: 0.72rem; margin-top: 0.3rem; padding: 0.15rem 0.55rem; border-radius: 4px; }
+  .wf-diff.same { background: rgba(34,211,238,0.1); color: var(--accent-2); }
+  .wf-diff.diff { background: rgba(16,185,129,0.1); color: var(--green); }
+
+  .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; margin-bottom: 1.5rem; }
+  .diagram svg { width: 100%; display: block; max-width: 620px; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_animation.html">MB アニメ</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">MotionBuilder · 03</div>
+  <h1>アニメ制作の<span>基本</span></h1>
+  <p>Control Rig という道具を覚えたら、次は「作る」。キーの打ち方から Pose to Pose、ゼロ制作の通しワークフローまで、1スキルずつ積み上げる基本編です。</p>
+  <div class="session-info">🪙 参考セッション：MB 応用の前半（1〜2セッション）</div>
+</div>
+
+<div class="content">
+
+  <div class="prereq">
+    <div class="prereq-title">📋 このページの前提</div>
+    <div class="prereq-pages">
+      <a href="mb_overview.html#map">MB 概要 ⑥ アニメ制作の全体地図</a>
+      <a href="mb_control_rig.html">Control Rig 入門（全体）</a>
+    </div>
+    <div class="prereq-terms">
+      <span>Control Rig</span><span>エフェクター</span><span>Reach</span><span>FK / IK</span><span>キーフレーム</span>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin:0.6rem 0 0;">上の用語が曖昧なら先に<a class="term" href="glossary.html">用語集</a>か前提ページへ。このページは Control Rig の操作を説明済みの前提で進みます。</p>
+  </div>
+
+  <div class="toc">
+    <h4>このページの内容</h4>
+    <ol>
+      <li><a href="#fkik">FK / IK の選び方 — どちらで作るか</a></li>
+      <li><a href="#handkeyed">手付けの基本サイクル — キーを打つ</a></li>
+      <li><a href="#fcurve">FCurve エディタ — 動きの質を磨く</a></li>
+      <li><a href="#posetopose">Pose to Pose — アニメーションを組み立てる</a></li>
+      <li><a href="#workflow">ゼロ制作ワークフロー — 通しでやってみる</a></li>
+    </ol>
+  </div>
+
+  <!-- ① FK/IK の選び方 -->
+  <h2 id="fkik">① FK / IK の選び方 — どちらで作るか</h2>
+  <p>IK と FK の仕組み・切り替え方は <a href="mb_control_rig.html#ik-theory">Control Rig ②</a> で学びました。ここでは「実際に作るとき、どの部位をどちらで扱うか」という<strong>判断基準</strong>の話です。</p>
+
+  <div class="cards-2">
+    <div class="card" style="border-color:rgba(139,92,246,0.25);">
+      <h3 style="margin-top:0; color:var(--accent);">FK が向く場面</h3>
+      <ul>
+        <li><strong>体をひねる・上半身の表現</strong>——脊椎・腰のねじれはFK的な積み上げが自然</li>
+        <li><strong>流れるような腕振り</strong>——波打つような動きはFKの方がコントロールしやすい</li>
+        <li><strong>顔・首の向き</strong>——頭のコントロールはFK的な操作が直感的</li>
+        <li><strong>表情的な上半身</strong>——感情を乗せる動きはFKで細かく調整</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(16,185,129,0.25);">
+      <h3 style="margin-top:0; color:var(--green);">IK が向く場面</h3>
+      <ul>
+        <li><strong>足を床に固定する</strong>——フットプラントは IK + <a class="term" href="glossary.html#pinning">Pinning</a> が必須</li>
+        <li><strong>手で何かを掴む・触れる</strong>——物体の位置に手を合わせるのはIKが直感的</li>
+        <li><strong>重心移動を主体に考える</strong>——Hips <a class="term" href="glossary.html#effector">Effector</a> で全身の重心を動かす</li>
+        <li><strong>壁・机への接触</strong>——接触位置を固定したままキャラを動かす</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <span class="callout-icon">💡</span>
+    <p><strong>実際の制作では混在：</strong> 下半身はIK（足を地面に固定）、上半身はFK（腕の振りを細かく制御）という使い分けが一般的です。MBのControl Rigではエフェクターごとに独立してIK/FKを切り替えられます。</p>
+  </div>
+
+  <!-- ② 手付けの基本サイクル -->
+  <h2 id="handkeyed">② 手付けの基本サイクル — キーを打つ</h2>
+  <p>MB はMocap処理ソフトですが、Control Rig を使って手付けアニメーションをゼロから作ることもできます。<strong>基本サイクルは「フレームを決める → エフェクターを動かす → キーを打つ」の繰り返し</strong>です。</p>
+
+  <div class="concept-map">
+    <div class="concept-row header">
+      <div class="concept-cell goal">目的</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">機能</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">理屈</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">ポーズを1フレームずつ決めたい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">エフェクターを動かして <kbd>K</kbd> キーでキーを打つ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic"><a class="term" href="glossary.html#reach">Reach</a> 100% のとき IK <a class="term" href="glossary.html#solver">ソルバー</a>がエフェクター位置から関節角度を逆算して確定させる</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">FK で回転を直打ちしたい</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">ボーンを選択して Rotation を変えてキーを打つ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">FK モードではボーンの Rotation チャンネルに直接キーが積まれる。親から順に回転が伝播する</div>
+    </div>
+  </div>
+
+  <h3>基本キーイングサイクル（IK 手付け）</h3>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>Control Rig を Active にして Reach を 100% に設定</h4>
+      <p>全エフェクターの Reach（T・R 両方）を 100% にする。Mocap データがなければ 0% でも同じ結果になるが、意図を明確にするため 100% 推奨。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>始点フレームへ移動してすべての Control をキー打ち</h4>
+      <p>Transport Controls でフレームを指定。<kbd>A</kbd> で全オブジェクト選択 → <kbd>K</kbd>（または Character メニュー → Key All）で<a class="term" href="glossary.html#tpose">Tポーズ</a>を初期キーとして記録する。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>目的のフレームへ移動 → エフェクターを動かす</h4>
+      <p>動かしたいエフェクターを選択して <kbd>W</kbd>（Move）または <kbd>E</kbd>（Rotate）で位置・角度を変更する。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">4</div>
+    <div class="wf-body">
+      <h4><kbd>K</kbd> キーで選択中のエフェクターにキーを打つ</h4>
+      <p>選択オブジェクトにキーが記録される。全身まとめて打ちたいときは <kbd>A</kbd> で全選択してから <kbd>K</kbd>。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">5</div>
+    <div class="wf-body">
+      <h4>次のキーフレームへ移動して繰り返す</h4>
+      <p>主要ポーズだけ打ってから FCurve エディタでタイミングと緩急を調整する。ポーズ to ポーズの繰り返しがゼロ制作の基本単位。</p>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>MBの手付けは「粗打ち → Mayaで仕上げ」が現実的：</strong> MB の <a class="term" href="glossary.html#dope-sheet">Dope Sheet</a> はキー管理が Maya より不便です。主要ポーズだけ MB で作り、FBX で Maya に渡してから Graph Editor で緩急・タイミングを整えるフローが実務では一般的です。</p>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">🚩 ここで一区切り — 最初のキーが打てたら</div>
+    <ul>
+      <li>Reach 100% が何を意味するか、自分の言葉で言える</li>
+      <li>好きなフレームにポーズを作り、<kbd>K</kbd> でキーを打てた</li>
+      <li>再生して、キーとキーの間を MB が補間していることを確認した</li>
+    </ul>
+  </div>
+
+  <!-- ③ FCurve -->
+  <h2 id="fcurve">③ FCurve エディタ — 動きの質を磨く</h2>
+
+  <p>キーが打てるようになったら、次は<strong>キーとキーの間</strong>の話です。動きの「速い・遅い・タメ・キレ」は全部カーブの形で決まります。</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+      <rect width="620" height="250" fill="#0a0a1a" rx="8"/>
+      <!-- axes -->
+      <line x1="50" y1="20" x2="50" y2="210" stroke="#2a2a50" stroke-width="1.5"/>
+      <line x1="50" y1="210" x2="590" y2="210" stroke="#2a2a50" stroke-width="1.5"/>
+      <text x="18" y="115" fill="#7c8ba1" font-size="11" transform="rotate(-90 18 115)">値（位置・回転）</text>
+      <text x="320" y="236" fill="#7c8ba1" font-size="11" text-anchor="middle">時間（フレーム）</text>
+      <!-- curve -->
+      <path d="M 80,190 C 150,190 170,60 250,60 C 330,60 350,160 440,160 C 500,160 520,90 560,80"
+            fill="none" stroke="#10b981" stroke-width="2.5"/>
+      <!-- keys -->
+      <circle cx="80" cy="190" r="6" fill="#10b981"/>
+      <circle cx="250" cy="60" r="6" fill="#10b981"/>
+      <circle cx="440" cy="160" r="6" fill="#10b981"/>
+      <circle cx="560" cy="80" r="6" fill="#10b981"/>
+      <text x="80" y="175" fill="#e2e8f0" font-size="10" text-anchor="middle">キー1</text>
+      <text x="250" y="45" fill="#e2e8f0" font-size="10" text-anchor="middle">キー2</text>
+      <text x="440" y="182" fill="#e2e8f0" font-size="10" text-anchor="middle">キー3</text>
+      <!-- tangent handle -->
+      <line x1="200" y1="88" x2="300" y2="42" stroke="#f59e0b" stroke-width="1.5"/>
+      <circle cx="200" cy="88" r="4" fill="#f59e0b"/>
+      <circle cx="300" cy="42" r="4" fill="#f59e0b"/>
+      <text x="318" y="36" fill="#f59e0b" font-size="10">タンジェントハンドル（傾きを操作）</text>
+      <!-- slope annotations -->
+      <text x="140" y="130" fill="#22d3ee" font-size="10">急な傾き＝速い</text>
+      <text x="345" y="120" fill="#22d3ee" font-size="10">なだらか＝ゆっくり</text>
+    </svg>
+  </div>
+
+  <p>MotionBuilderのFCurveエディタはMayaのGraph Editorと同じ役割を持ちます。両方使う場合、どちらかを覚えればもう一方は操作感がほぼ移植できます。</p>
+
+  <table>
+    <tr><th>機能</th><th>MotionBuilder</th><th>Maya</th></tr>
+    <tr><td>ウィンドウ名</td><td>FCurve Editor</td><td>Graph Editor</td></tr>
+    <tr><td>開き方</td><td>Window → FCurve Editor</td><td>Window → Animation Editors → Graph Editor</td></tr>
+    <tr><td>横軸 / 縦軸</td><td>時間（フレーム） / 値</td><td>時間（フレーム） / 値</td></tr>
+    <tr><td>補間方式</td><td>ベジェ（Spline / Flat / Stepped）</td><td>ベジェ（Spline / Flat / Stepped）</td></tr>
+    <tr><td>キーの編集</td><td>ドラッグ / <a class="term" href="glossary.html#tangent">タンジェント</a>ハンドル操作</td><td>同じ</td></tr>
+    <tr><td>スパイク除去</td><td>タンジェントをFlatに / キー削除</td><td>同じ</td></tr>
+  </table>
+
+  <div class="fig-slot">📷 FCurve エディタの実画面スクリーンショット（実機セッションで撮影予定）— Window → FCurve Editor を開き、歩きモーションの足首カーブを表示した状態</div>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>FBX経由で持ってきたアニメーションの確認：</strong> MBでMocapデータを開いた直後にFCurveエディタでカーブを見ると、ノイズや異常値（スパイク）が見えることがあります。修正前に一度確認しておくとどこを直すべきかが把握できます。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — FCurveエディタ</div>
+    <div class="ref-links">
+      <a href="https://zenn.dev/guncys/articles/31d4510faefa3a" target="_blank" class="ext">📖 GUNCY'S（Zenn）: 第6回 ～キャラの調整（モーションデータ編）～</a>
+      <a href="https://www.win-graphic.com/home/categories/motionbuilder" target="_blank" class="ext">📖 スプリングギルド: MB チュートリアル一覧（FCurve 関連含む）</a>
+    </div>
+  </div>
+
+  <!-- ④ Pose to Pose -->
+  <h2 id="posetopose">④ Pose to Pose — アニメーションを組み立てる</h2>
+  <p>ポーズを作れるようになった次のステップ。<strong>Pose to Pose</strong> は「全フレームを順に打つ」のではなく、<strong>重要なポーズだけ先に決めて中割りは MB に補間させる</strong>方法です。実務・教育を問わず最も一般的な手付けアニメーションの作り方です。</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 620 150" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+      <rect width="620" height="150" fill="#0a0a1a" rx="8"/>
+      <!-- timeline -->
+      <line x1="40" y1="100" x2="580" y2="100" stroke="#2a2a50" stroke-width="2"/>
+      <text x="40" y="126" fill="#7c8ba1" font-size="10" text-anchor="middle">F0</text>
+      <text x="310" y="126" fill="#7c8ba1" font-size="10" text-anchor="middle">F15</text>
+      <text x="580" y="126" fill="#7c8ba1" font-size="10" text-anchor="middle">F30</text>
+      <!-- key poses -->
+      <circle cx="40" cy="100" r="9" fill="#10b981"/>
+      <circle cx="310" cy="100" r="9" fill="#10b981"/>
+      <circle cx="580" cy="100" r="9" fill="#10b981"/>
+      <text x="40" y="60" fill="#10b981" font-size="11" font-weight="700" text-anchor="middle">立ち</text>
+      <text x="310" y="60" fill="#10b981" font-size="11" font-weight="700" text-anchor="middle">ジャンプ頂点</text>
+      <text x="580" y="60" fill="#10b981" font-size="11" font-weight="700" text-anchor="middle">着地</text>
+      <text x="40" y="76" fill="#e2e8f0" font-size="9" text-anchor="middle">キーポーズ（原画）</text>
+      <text x="310" y="76" fill="#e2e8f0" font-size="9" text-anchor="middle">キーポーズ（原画）</text>
+      <text x="580" y="76" fill="#e2e8f0" font-size="9" text-anchor="middle">キーポーズ（原画）</text>
+      <!-- interpolation -->
+      <line x1="60" y1="100" x2="290" y2="100" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <line x1="330" y1="100" x2="560" y2="100" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text x="175" y="92" fill="#22d3ee" font-size="9" text-anchor="middle">MB が補間（中割り）</text>
+      <text x="445" y="92" fill="#22d3ee" font-size="9" text-anchor="middle">MB が補間（中割り）</text>
+    </svg>
+  </div>
+
+  <div class="concept-map">
+    <div class="concept-row header">
+      <div class="concept-cell goal">やりたいこと</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">操作</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">理屈</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">動きの「山」になるポーズを決める</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">重要フレームにポーズを作って K</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">これが「原画」。キー間はMBがスプライン補間で埋める</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">動きの緩急・タイミングを整える</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">FCurve エディタでタンジェントを調整、または Dope Sheet でキーを移動</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">カーブの傾きが速度。Dope Sheet はキー位置を時間軸上で並べて視覚管理</div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-cell goal">ループアニメーションを作る</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature">最初と最後のフレームに同じポーズをキーとして打つ</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">開始ポーズ = 終了ポーズにすることでシームレスにループする</div>
+    </div>
+  </div>
+
+  <h3>Pose to Pose の基本ステップ</h3>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>タイムラインのフレームレンジを設定する</h4>
+      <p>画面下部のタイムラインで開始・終了フレームを指定する。短いループなら 0〜30（1秒）などで始めると管理しやすい。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>フレーム 0 に基本ポーズを作って K</h4>
+      <p>待機・初期状態のポーズを作り、全エフェクター選択（<kbd>A</kbd>）してから <kbd>K</kbd> でキーを打つ。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>次の重要フレームに移動 → ポーズを変えて K</h4>
+      <p>「動きの頂点」になるフレームに移動してポーズを作る。Kキーでキーを打つ。これを繰り返す。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">4</div>
+    <div class="wf-body">
+      <h4>再生して全体の流れを確認する</h4>
+      <p><kbd>Space</kbd> で再生。MB がキー間を補間した動きを確認する。ここで「タイミングがずれている」「動きが早すぎる」などを把握する。</p>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">5</div>
+    <div class="wf-body">
+      <h4>FCurve エディタ / Dope Sheet でタイミングと緩急を調整</h4>
+      <p>FCurve：カーブの傾き（速度）をタンジェント操作で整える。Dope Sheet：キー全体を俯瞰してフレーム単位で移動・コピーできる。</p>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <strong>Dope Sheet と FCurve エディタは目的で使い分ける</strong><br>
+    <strong>Dope Sheet</strong> はキー位置（タイミング）を全ボーン横断で見るのに向いている。<strong>FCurve エディタ</strong>は特定チャンネルの速度カーブを細かく操るのに向いている。「全体のリズムを整える → Dope Sheet、特定部位の緩急を詰める → FCurve」の順が実務では多い。
+  </div>
+
+  <!-- ⑤ ゼロ制作ワークフロー -->
+  <h2 id="workflow">⑤ ゼロ制作ワークフロー — 通しでやってみる</h2>
+  <p>①〜④のスキルを1本に繋げます。Mocap修正との違いが出るステップを強調しています。</p>
+
+  <div class="wf-step">
+    <div class="wf-num">1</div>
+    <div class="wf-body">
+      <h4>キャラクターをCharacterize（Mocap修正と同じ）</h4>
+      <p>CGモデルのスケルトンをMBに認識させる。ゼロ制作でも必要。</p>
+      <span class="wf-diff same">Mocap修正と同じ</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">2</div>
+    <div class="wf-body">
+      <h4>Control Rigを作成（Mocap修正と同じ）</h4>
+      <p>Character Controls → IK/FK Control Rig を作成。</p>
+      <span class="wf-diff same">Mocap修正と同じ</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">3</div>
+    <div class="wf-body">
+      <h4>全エフェクターのReachを100%に設定</h4>
+      <p>Mocap修正では「修正する部位だけ上げる」が、ゼロ制作では全部位を自分でコントロールするため全て100%にする。</p>
+      <span class="wf-diff diff">ゼロ制作特有</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">4</div>
+    <div class="wf-body">
+      <h4>フレーム0でT字ポーズ（またはAポーズ）を確認</h4>
+      <p>キャラクターが正しい初期姿勢にあることを確認してからアニメーションを開始する。</p>
+      <span class="wf-diff diff">ゼロ制作特有</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">5</div>
+    <div class="wf-body">
+      <h4>主要ポーズをキーで打つ（Pose to Pose）</h4>
+      <p>まず動きの「山」となるポーズだけキーを打つ。例: フレーム1（立ち）→ 30（ジャンプ頂点）→ 60（着地）。FCurveエディタで確認しながら進める。</p>
+      <span class="wf-diff diff">ゼロ制作特有</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">6</div>
+    <div class="wf-body">
+      <h4>中間ポーズ・タイミングを調整</h4>
+      <p>FCurveエディタでカーブのタンジェントを整えて緩急をつける。必要に応じて中間フレームにキーを追加。</p>
+      <span class="wf-diff diff">ゼロ制作特有</span>
+    </div>
+  </div>
+  <div class="wf-step">
+    <div class="wf-num">7</div>
+    <div class="wf-body">
+      <h4>Plot to Skeleton → FBX書き出し（Mocap修正と同じ）</h4>
+      <p>完成したら<a class="term" href="glossary.html#plot">Plot</a>してスケルトンに焼き付け、<a class="term" href="glossary.html#fbx">FBX</a>で書き出す。Plot の詳細（Control Rig への焼き戻しなど）は実践ワークフロー編で扱う。</p>
+      <span class="wf-diff same">Mocap修正と同じ</span>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">🏁 基本編クリアの目安</div>
+    <ul>
+      <li>短いループ（30〜60フレーム）を Pose to Pose で1本、通しで作れた</li>
+      <li>FCurve エディタでタンジェントを触り、動きの緩急が変わることを確認できた</li>
+      <li>Plot → FBX 書き出しまで自分の手で完了できた</li>
+    </ul>
+  </div>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>
