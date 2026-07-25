@@ -77,6 +77,18 @@
 
 <div class="content">
 
+  <div class="prereq">
+    <div class="prereq-title">📋 このページの前提</div>
+    <div class="prereq-pages">
+      <a href="mb_overview.html#workflow">MB 概要 ⑤ 既知ワークフロー</a>
+      <a href="mb_overview.html#map">MB 概要 ⑥ アニメ制作の全体地図</a>
+    </div>
+    <div class="prereq-terms">
+      <span>Mocap</span><span>Characterize</span><span>Retarget</span><span>Plot（概要）</span>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin:0.6rem 0 0;">Characterize～Plot の流れが仕事で経験済みなら、そのまま読み進めてOK。用語に詰まったら<a class="term" href="glossary.html">用語集</a>へ。</p>
+  </div>
+
   <div class="toc">
     <h4>このページの内容</h4>
     <ol>
@@ -88,6 +100,7 @@
       <li><a href="#pinning">Pinning — 足を地面に固定する</a></li>
       <li><a href="#floor">Floor Contact — 床めり込みを防ぐ</a></li>
       <li><a href="#workflow">実践ワークフロー（修正からPlotまで）</a></li>
+      <li><a href="#troubleshoot">よくある失敗と対処</a></li>
     </ol>
   </div>
 
@@ -133,7 +146,7 @@
       <div class="concept-arrow">→</div>
       <div class="concept-cell feature"><strong>IKエフェクター</strong><br>（手・足・腰・頭）</div>
       <div class="concept-arrow">→</div>
-      <div class="concept-cell logic">IKソルバーが末端位置から間の関節角度を自動計算する。「意図（エフェクター位置）」を指定するだけで「手段（全ジョイント角度）」は自動生成される。</div>
+      <div class="concept-cell logic">IK<a class="term" href="glossary.html#solver">ソルバー</a>が末端位置から間の関節角度を自動計算する。「意図（エフェクター位置）」を指定するだけで「手段（全ジョイント角度）」は自動生成される。</div>
     </div>
 
     <div class="concept-row">
@@ -157,7 +170,7 @@
       <div class="concept-arrow">→</div>
       <div class="concept-cell feature"><strong>Auxiliary Effectors</strong><br>（Knee / Elbow）</div>
       <div class="concept-arrow">→</div>
-      <div class="concept-cell logic">補助エフェクターは関節の「ポールベクター（曲がる方向）」を制御する。IKは末端と根元だけでは曲がる方向が一意に決まらない。Auxがその方向を指定する。</div>
+      <div class="concept-cell logic">補助エフェクターは関節の「<a class="term" href="glossary.html#pole-vector">ポールベクター</a>（曲がる方向）」を制御する。IKは末端と根元だけでは曲がる方向が一意に決まらない。Auxがその方向を指定する。</div>
     </div>
 
     <div class="concept-row">
@@ -350,6 +363,13 @@
     </div>
   </div>
 
+  <div class="callout tip">
+    <span class="callout-icon">🚪</span>
+    <p><strong>操作の起点は Character Controls パネル：</strong> 開き方は <kbd>Window → Character Controls</kbd>。エフェクターの選択・Reach・Pin の操作はすべてこのパネルが起点になる。以降の手順で「Character Controls →」と書いてあったら、このパネルのことです。</p>
+  </div>
+
+  <div class="fig-slot">📷 Character Controls パネルの実画面スクリーンショット（実機セッションで撮影予定）— エフェクター選択部と Source 切替が見える状態</div>
+
   <div class="ref-box">
     <div class="ref-title">🔗 参考リンク — エフェクター・IK/FK</div>
     <div class="ref-links">
@@ -360,7 +380,9 @@
 
   <!-- ⑤ Reach -->
   <h2 id="reach">⑤ Reach — 上書き強度を制御する</h2>
-  <p>Reachは「Control RigのエフェクターがMocapをどの程度上書きするか」の重み付けです。エフェクターごとに独立して設定できます。</p>
+  <p>Reachは「Control RigのエフェクターがMocapをどの程度上書きするか」の重み付けです。エフェクターごとに独立して設定できます。このセクションは<strong>「概念 → 実画面の名前 → 紛らわしい隣人」の3ステップ</strong>で進みます。近い概念が3つ出てくるので、1段ずつ確認してください。</p>
+
+  <h3>STEP 1 — 概念：Reach は 0〜100% のブレンド比率</h3>
 
   <div class="reach-demo">
     <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.5rem;">
@@ -378,8 +400,13 @@
     <tr><td><strong style="color:var(--accent-2)">100%</strong></td><td>エフェクターに完全に従う</td><td>Pinningと組み合わせた修正、向きを固定するとき</td></tr>
   </table>
 
-  <h3>UIでの実際の名前（Properties パネル）</h3>
-  <p>「Reach」は概念上の呼び方で、エフェクターを選択したときの Properties パネルでは以下の名前で表示されます。</p>
+  <div class="callout try">
+    <span class="callout-icon">🖐</span>
+    <p><strong>試してみる：</strong> Head Effector の Translation Reach を 0% → 100% に変えながら再生する。頭がMocapの動きからエフェクター位置に「引っ張られる」様子が確認できる。</p>
+  </div>
+
+  <h3>STEP 2 — 実画面：UI では「IK Blend T / R」という名前</h3>
+  <p>「Reach」は概念上の呼び方で、エフェクターを選択したときの Properties パネルでは以下の名前で表示されます。<strong>ドキュメントの言葉と UI の言葉が違う</strong>——ここが最初の混乱ポイントです。</p>
 
   <table>
     <tr>
@@ -397,11 +424,6 @@
       <td>Reach（回転）</td>
       <td>エフェクターのIK回転がFKソースをどれだけ上書きするか。T と R は独立して設定できる</td>
     </tr>
-    <tr>
-      <td><strong>IK Pull</strong></td>
-      <td>（Reachとは別の概念）</td>
-      <td>エフェクターを動かしたとき肘・膝などの中間ボーンをどれだけ引き寄せるか。ブレンドではなくチェーンの硬さ</td>
-    </tr>
   </table>
 
   <div class="callout note">
@@ -409,10 +431,31 @@
     IK Blend T/R は「FK側（Mocapなどのソース）とエフェクター位置の合成比率」です。Mocapデータがない状態ではブレンド元が存在しないため、値を変えても見かけ上ほとんど変わりません。ゼロから手付けする場合は T/R とも 100% のまま放置して、エフェクターを動かすことに集中すればOKです。
   </div>
 
-  <div class="callout try">
-    <span class="callout-icon">🖐</span>
-    <p><strong>試してみる：</strong> Head Effector の Translation Reach を 0% → 100% に変えながら再生する。頭がMocapの動きからエフェクター位置に「引っ張られる」様子が確認できる。</p>
-  </div>
+  <h3>STEP 3 — 混同注意：IK Pull は Reach ではない</h3>
+  <p>Properties パネルで IK Blend T/R のすぐ近くに <strong>IK Pull</strong> という似た名前のパラメータが並んでいますが、これは<strong>別の軸の設定</strong>です。</p>
+
+  <table>
+    <tr>
+      <th></th>
+      <th>IK Blend T / R（= Reach）</th>
+      <th>IK Pull</th>
+    </tr>
+    <tr>
+      <td><strong>何を決める</strong></td>
+      <td>ソース（Mocap）とエフェクターの合成比率</td>
+      <td>エフェクターを動かしたとき、肘・膝などの中間ボーンをどれだけ引き寄せるか</td>
+    </tr>
+    <tr>
+      <td><strong>例えるなら</strong></td>
+      <td>上書きの濃さ</td>
+      <td>チェーンの硬さ</td>
+    </tr>
+    <tr>
+      <td><strong>0% にすると</strong></td>
+      <td>元の Mocap 通りに戻る</td>
+      <td>エフェクターを動かしても周辺ボーンを引き寄せなくなる</td>
+    </tr>
+  </table>
 
   <!-- ⑥ Pinning -->
   <h2 id="pinning">⑥ Pinning — 足を地面に固定する</h2>
@@ -498,6 +541,49 @@
       <a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/02-mocap/" target="_blank" class="doc">📄 AREA JAPAN: カットシーン制作 第2回 ～Mocap収録とリターゲット～</a>
       <a href="https://zenn.dev/guncys/articles/363883ae075b90" target="_blank" class="ext">📖 GUNCY'S（Zenn）: 第7回 ～モデルデータとモーションデータを繋げる～</a>
     </div>
+  </div>
+
+  <!-- ⑨ よくある失敗と対処 -->
+  <h2 id="troubleshoot">⑨ よくある失敗と対処</h2>
+  <p>Control Rig の学習中に高確率で当たる「動かない・変になる」の原因一覧です。実機セッション中に詰まったら、まずここに戻ってくる。</p>
+
+  <table>
+    <tr><th>症状</th><th>原因</th><th>対処</th></tr>
+    <tr>
+      <td>エフェクターを動かしてもキャラが動かない</td>
+      <td>Control Rig が有効になっていない</td>
+      <td>Character Controls で Control Rig が ON（ソースが Control Rig）になっているか確認する</td>
+    </tr>
+    <tr>
+      <td>IK Blend（Reach）を変えても見た目が変わらない</td>
+      <td>ブレンド元のソースアニメーションがない</td>
+      <td><a href="#reach">⑤ STEP 2</a> の注意を参照。ゼロから手付けするなら 100% のままで問題ない</td>
+    </tr>
+    <tr>
+      <td>一部を動かしたら関係ない部位まで動いた</td>
+      <td>FBIK は全身を連動して解く（仕様）</td>
+      <td>動いてほしくない部位（足など）を <a href="#pinning">⑥ Pinning</a> で固定してから操作する</td>
+    </tr>
+    <tr>
+      <td>膝・肘があらぬ方向に曲がる</td>
+      <td><a class="term" href="glossary.html#pole-vector">ポールベクター</a>の向きが合っていない</td>
+      <td><a href="#effectors">④ Auxiliary Effector</a>（Knee / Elbow）で曲がる方向を調整する</td>
+    </tr>
+    <tr>
+      <td>足が滑る・床にめり込む</td>
+      <td>フットプラント未処理・床制約なし</td>
+      <td>フレームを狙って直すなら <a href="#pinning">⑥ Pinning</a>、床全体の制約なら <a href="#floor">⑦ Floor Contact</a></td>
+    </tr>
+    <tr>
+      <td>Plot したら Control Rig で再修正できなくなった</td>
+      <td>Plot to Skeleton は確定操作（仕様）</td>
+      <td><a href="mb_animation_workflows.html#plot">Plot to Control Rig</a> で焼き戻せば再編集できる</td>
+    </tr>
+  </table>
+
+  <div class="callout tip">
+    <span class="callout-icon">🧭</span>
+    <p><strong>切り分けのコツ：</strong> 詰まったら「どのレイヤーの問題か」を<a href="#structure">③の3層図</a>で考える。エフェクター操作の問題（Layer 3）か、Characterize の問題（Layer 2）か、すでに Plot 済み（Layer 1 に確定済み）かで、対処がまるごと変わる。</p>
   </div>
 
   <a href="mb_animation_basics.html" class="next-link">
