@@ -39,6 +39,16 @@
   .ui-diagram { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; overflow: hidden; }
   .ui-diagram svg { width: 100%; display: block; max-width: 680px; margin: 0 auto; }
 
+  /* Animation production map (⑥) */
+  .flow-band {
+    background: rgba(34,211,238,0.05); border: 1px solid rgba(34,211,238,0.2);
+    border-radius: var(--radius); padding: 1rem 1.3rem; margin-bottom: 1.5rem;
+  }
+  .flow-band .fb-label { font-size: 0.78rem; font-weight: 700; color: var(--accent-2); margin-bottom: 0.6rem; }
+  .fb-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+  .fb-step { background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.7rem; font-size: 0.8rem; }
+  .fb-arr { color: var(--muted); }
+
   /* TOC */
   .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
   .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
@@ -77,6 +87,7 @@
       <li><a href="#nav">基本ナビゲーション</a></li>
       <li><a href="#takes">テイクシステム</a></li>
       <li><a href="#workflow">あなたが知っているワークフロー</a></li>
+      <li><a href="#map">アニメ制作の全体地図 — Mocap修正とゼロ制作</a></li>
       <li><a href="#story">Story ウィンドウ</a></li>
     </ol>
   </div>
@@ -99,15 +110,15 @@
       <div class="concept-arrow">→</div>
       <div class="concept-cell feature"><strong>Characterize + Retarget</strong></div>
       <div class="concept-arrow">→</div>
-      <div class="concept-cell logic">両方を「共通の参照ポーズ（T-pose）」で定義することで、骨格の長さ・向きの差異を吸収できる。異なる骨格を同じ中間言語に変換する構造。</div>
+      <div class="concept-cell logic">両方を「共通の参照ポーズ（<a class="term" href="glossary.html#tpose">T-pose</a>）」で定義することで、骨格の長さ・向きの差異を吸収できる。異なる骨格を同じ中間言語に変換する構造。</div>
     </div>
 
     <div class="concept-row">
       <div class="concept-cell goal"><strong>リターゲット後の不自然な動きを<br>修正したい</strong></div>
       <div class="concept-arrow">→</div>
-      <div class="concept-cell feature"><strong>Control Rig（FBIK）</strong></div>
+      <div class="concept-cell feature"><strong>Control Rig（<a class="term" href="glossary.html#fbik">FBIK</a>）</strong></div>
       <div class="concept-arrow">→</div>
-      <div class="concept-cell logic">IKは「末端位置を指定 → 間の関節角度をソルバーが逆算」する仕組み。「手をここに置きたい」という意図1点だけで全腕が解ける。数百フレームのボーンを直接弄らずに済む。</div>
+      <div class="concept-cell logic">IKは「末端位置を指定 → 間の関節角度を<a class="term" href="glossary.html#solver">ソルバー</a>が逆算」する仕組み。「手をここに置きたい」という意図1点だけで全腕が解ける。数百フレームのボーンを直接弄らずに済む。</div>
     </div>
 
     <div class="concept-row">
@@ -131,7 +142,7 @@
       <div class="concept-arrow">→</div>
       <div class="concept-cell feature"><strong>Story Window</strong></div>
       <div class="concept-arrow">→</div>
-      <div class="concept-cell logic">NLE（非線形編集）構造で元クリップを変えずにタイムライン上に並べ・ブレンドできる。Premiereのタイムラインと同じ概念。</div>
+      <div class="concept-cell logic"><a class="term" href="glossary.html#nle">NLE（非線形編集）</a>構造で元クリップを変えずにタイムライン上に並べ・ブレンドできる。Premiereのタイムラインと同じ概念。</div>
     </div>
 
     <div class="concept-row">
@@ -269,7 +280,7 @@
       <div class="step-left"><div class="step-num done">2</div><div class="step-line"></div></div>
       <div class="step-body">
         <h4>Mocap側のキャラクタライズ <span class="known-badge">✅ 既知</span></h4>
-        <p>骨格のボーンをCharacter Definitionにマッピング。「このボーンが腰、これが左手首…」とMBに教える。<strong>T-poseに対する相対的な位置関係</strong>として記録される。</p>
+        <p>骨格のボーンを<a class="term" href="glossary.html#character-definition">Character Definition</a>にマッピング。「このボーンが腰、これが左手首…」とMBに教える。<strong>T-poseに対する相対的な位置関係</strong>として記録される。</p>
       </div>
     </div>
     <div class="step">
@@ -317,8 +328,95 @@
     </div>
   </div>
 
-  <!-- ⑥ Story -->
-  <h2 id="story">⑥ Story ウィンドウ（NLE）</h2>
+  <!-- ⑥ アニメ制作の全体地図 -->
+  <h2 id="map">⑥ アニメ制作の全体地図 — Mocap修正とゼロ制作</h2>
+  <p>MB でのアニメーション制作には大きく2つのモードがあります。あなたが仕事でやってきたのは左側（<a class="term" href="glossary.html#mocap">Mocap</a> 修正）。右側（ゼロから制作）も、実は<strong>同じ道具の上に載っています</strong>。ここでは個別の操作には入らず、地図だけ持って次のページへ進みます。</p>
+
+  <div class="cards-2">
+    <div class="card">
+      <h4 style="font-size:0.92rem; margin-bottom:0.5rem;">🎥 Mocap 修正</h4>
+      <ul style="line-height:1.9;">
+        <li><strong>入力：</strong>Mocap データ（動きの素材）がある</li>
+        <li><strong>やること：</strong>問題箇所だけを直す。作業量は比較的少ない</li>
+        <li><strong>強み：</strong>リアルな重量感・慣性が最初から入っている</li>
+        <li><strong>向く場面：</strong>大量データ処理・人の自然な動き・実写リファレンスあり</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="font-size:0.92rem; margin-bottom:0.5rem;">✏️ ゼロから制作</h4>
+      <ul style="line-height:1.9;">
+        <li><strong>入力：</strong>なし。白紙からポーズを組み立てる</li>
+        <li><strong>やること：</strong>全フレームを自分で設計する。作業量は多い</li>
+        <li><strong>強み：</strong>意図を100%反映できる。物理法則を無視してよい</li>
+        <li><strong>向く場面：</strong>完全オリジナル動作・誇張表現・Mocap が撮れない動き</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flow-band">
+    <div class="fb-label">🤝 どちらでも変わらない共通構造</div>
+    <div class="fb-flow">
+      <span class="fb-step"><a class="term" href="glossary.html#characterize">Characterize</a></span>
+      <span class="fb-arr">→</span>
+      <span class="fb-step"><a class="term" href="glossary.html#control-rig">Control Rig</a> 作成</span>
+      <span class="fb-arr">→</span>
+      <span class="fb-step">ポーズ・動きの指定</span>
+      <span class="fb-arr">→</span>
+      <span class="fb-step"><a class="term" href="glossary.html#plot">Plot</a>（確定）</span>
+      <span class="fb-arr">→</span>
+      <span class="fb-step"><a class="term" href="glossary.html#fbx">FBX</a> 書き出し</span>
+    </div>
+  </div>
+
+  <p>構造が同じということは、<strong>Control Rig の使い方を一度覚えれば、Mocap 修正にもゼロ制作にも使い回せる</strong>ということです。変わるのは「入力の素材があるかないか」と「元の動きをどれだけ残すか（<a class="term" href="glossary.html#reach">Reach</a>）」だけ。</p>
+
+  <h3>編集の道具箱 — 何をどこで学ぶか</h3>
+  <table>
+    <tr><th>道具</th><th>役割（一言で）</th><th>学ぶ場所</th></tr>
+    <tr>
+      <td><a class="term" href="glossary.html#control-rig">Control Rig</a></td>
+      <td>ポーズを作る・直すための操作リグ。<strong>すべての土台</strong></td>
+      <td><a href="mb_control_rig.html">Control Rig 入門（次ページ）</a></td>
+    </tr>
+    <tr>
+      <td><a class="term" href="glossary.html#reach">Reach</a></td>
+      <td>元の動きと自分の修正のブレンド比率</td>
+      <td><a href="mb_control_rig.html#reach">Control Rig ⑤</a></td>
+    </tr>
+    <tr>
+      <td><a class="term" href="glossary.html#fcurve">FCurve</a></td>
+      <td>動きの質（速さ・タメ）をカーブで磨く</td>
+      <td><a href="mb_animation.html#fcurve">アニメ制作の基本</a></td>
+    </tr>
+    <tr>
+      <td><a class="term" href="glossary.html#pose-to-pose">Pose to Pose</a></td>
+      <td>主要ポーズから組み立てる制作の進め方</td>
+      <td><a href="mb_animation.html#posetopase">アニメ制作の基本</a></td>
+    </tr>
+    <tr>
+      <td><a class="term" href="glossary.html#animation-layer">Animation Layer</a></td>
+      <td>元データを壊さず差分を重ねる</td>
+      <td><a href="mb_animation.html#animlayer">実践ワークフロー</a></td>
+    </tr>
+    <tr>
+      <td><a class="term" href="glossary.html#story">Story</a></td>
+      <td>クリップを並べて繋ぐ NLE</td>
+      <td><a href="#story">このページ ⑦</a></td>
+    </tr>
+    <tr>
+      <td><a class="term" href="glossary.html#plot">Plot</a></td>
+      <td>編集結果をキーフレームとして確定する</td>
+      <td><a href="mb_animation.html#plot">実践ワークフロー</a></td>
+    </tr>
+  </table>
+
+  <div class="callout tip">
+    <span class="callout-icon">🗺️</span>
+    <p><strong>このガイドの読み進め方：</strong>この地図 → <strong>Control Rig（道具の習得）</strong> → <strong>アニメ制作の基本（単一スキル）</strong> → <strong>実践ワークフロー（現場の組み合わせ技）</strong>。用語に詰まったら <a href="glossary.html">用語集</a> へ。</p>
+  </div>
+
+  <!-- ⑦ Story -->
+  <h2 id="story">⑦ Story ウィンドウ（NLE）</h2>
   <p>複数テイクを並べて編集・ブレンドするための非線形エディタです。Premiereのタイムラインと同じ構造で考えると掴みやすい。</p>
   <ul style="margin-bottom:1rem;">
     <li><strong>開き方：</strong> <kbd>Window → Story</kbd></li>
