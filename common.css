@@ -215,3 +215,65 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 3r
   .concept-cell:last-child { border-bottom: none; }
   .concept-arrow { display: none; }
 }
+
+/* ─────────────────────────────────────────────────────────
+   Prereq Block — ページ冒頭「このページの前提」
+   ───────────────────────────────────────────────────────── */
+.prereq {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius); padding: 1rem 1.3rem; margin-bottom: 2rem;
+}
+.prereq-title {
+  font-size: 0.72rem; color: var(--muted); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.55rem;
+}
+.prereq-pages { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.6rem; }
+.prereq-pages a {
+  display: inline-block; text-decoration: none; font-size: 0.8rem;
+  color: var(--accent); background: rgba(139,92,246,0.08);
+  border: 1px solid rgba(139,92,246,0.22);
+  padding: 0.28rem 0.7rem; border-radius: 5px; transition: all 0.18s;
+}
+.prereq-pages a:hover { background: rgba(139,92,246,0.2); }
+.prereq-terms { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.prereq-terms span {
+  display: inline-block; font-size: 0.76rem; color: var(--muted);
+  background: var(--surface-2); border: 1px solid var(--border);
+  padding: 0.15rem 0.6rem; border-radius: 999px;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Term Link — 用語集（glossary.html）への本文内リンク
+   ───────────────────────────────────────────────────────── */
+a.term {
+  color: var(--accent-2); text-decoration: none;
+  border-bottom: 1px dashed rgba(34,211,238,0.45);
+  transition: border-color 0.18s;
+}
+a.term:hover { border-bottom-style: solid; border-bottom-color: var(--accent-2); }
+
+/* ─────────────────────────────────────────────────────────
+   Checkpoint — 「ここで一区切り」セッション境界の目安
+   ───────────────────────────────────────────────────────── */
+.checkpoint {
+  background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.25);
+  border-radius: var(--radius); padding: 1.1rem 1.4rem; margin: 2rem 0;
+}
+.checkpoint-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.9rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem;
+}
+.checkpoint ul { padding-left: 1.3rem; line-height: 1.9; margin: 0; }
+.checkpoint li { font-size: 0.85rem; }
+
+/* ─────────────────────────────────────────────────────────
+   Figure Slot — スクリーンショット差し込み用プレースホルダ
+   （実機で撮影した日に <img> を入れる。それまでは説明文のみ表示）
+   ───────────────────────────────────────────────────────── */
+.fig-slot {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 1.4rem 1.2rem; margin: 1rem 0 1.5rem;
+  text-align: center; color: var(--muted); font-size: 0.8rem;
+}
+.fig-slot img { max-width: 100%; border-radius: 8px; }
