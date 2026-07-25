@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用語集 — Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .gloss-intro { color: var(--muted); font-size: 0.9rem; max-width: 640px; margin-bottom: 2rem; }
+
+  .gloss-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.9rem 1.2rem; margin-bottom: 0.6rem;
+    scroll-margin-top: 72px;
+  }
+  .gloss-item:target { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .gloss-term { font-weight: 700; font-size: 0.95rem; }
+  .gloss-term .en { color: var(--muted); font-weight: 400; font-size: 0.8rem; margin-left: 0.4rem; }
+  .gloss-def { font-size: 0.86rem; color: var(--muted); margin: 0.25rem 0 0; }
+  .gloss-def strong { color: var(--text); }
+  .gloss-more {
+    display: inline-block; margin-top: 0.35rem; font-size: 0.78rem;
+    color: var(--accent); text-decoration: none;
+    border-bottom: 1px dashed rgba(139,92,246,0.5);
+  }
+  .gloss-more:hover { border-bottom-style: solid; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_animation.html">MB アニメ</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+  <a href="glossary.html" class="active">用語集</a>
+</nav>
+
+<div class="page-hero">
+  <span class="tag">参考 · 用語集</span>
+  <h1>用語集 <span>Glossary</span></h1>
+  <p>本文で出てくる用語の1行定義集。まず「一言でいうと何か」をここで掴み、詳しい説明は各ページへ。本文中の<a href="#" class="term" onclick="return false;">破線つきの用語</a>をクリックするとここに飛んでくる。</p>
+</div>
+
+<div class="content">
+
+  <h2>MotionBuilder の基本概念</h2>
+
+  <div class="gloss-item" id="mocap">
+    <div class="gloss-term">Mocap<span class="en">Motion Capture / モーションキャプチャ</span></div>
+    <p class="gloss-def">実演者の動きをセンサーやカメラで記録したデータ。そのままでは「素材」であり、修正・編集を経て使える状態になる。</p>
+  </div>
+
+  <div class="gloss-item" id="characterize">
+    <div class="gloss-term">Characterize<span class="en">キャラクタライズ</span></div>
+    <p class="gloss-def">キャラクターのスケルトンを MB 標準の人体定義に対応付ける作業。「このボーンは腰、これは左腕」と教えることで、Retarget や Control Rig が使えるようになる。</p>
+    <a class="gloss-more" href="mb_overview.html#workflow">→ MB 概要 ⑤ ワークフロー整理</a>
+  </div>
+
+  <div class="gloss-item" id="character-definition">
+    <div class="gloss-term">Character Definition<span class="en">キャラクター定義</span></div>
+    <p class="gloss-def">Characterize の結果できる「どのボーンが体のどの部位か」の対応表。これがあるキャラクター同士はモーションを行き来させられる。</p>
+  </div>
+
+  <div class="gloss-item" id="retarget">
+    <div class="gloss-term">Retarget<span class="en">リターゲット</span></div>
+    <p class="gloss-def">あるキャラクターのモーションを、体格の違う別のキャラクターに移し替えること。Characterize 済み同士なら MB が体格差を吸収してくれる。</p>
+    <a class="gloss-more" href="mb_overview.html#workflow">→ MB 概要 ⑤ ワークフロー整理</a>
+  </div>
+
+  <div class="gloss-item" id="tpose">
+    <div class="gloss-term">T-pose<span class="en">Tポーズ</span></div>
+    <p class="gloss-def">直立して両腕を水平に広げた基準姿勢。Characterize はこの姿勢を基準に対応付けを行うため、崩れているとマッピングがずれる。</p>
+  </div>
+
+  <div class="gloss-item" id="take">
+    <div class="gloss-term">Take<span class="en">テイク</span></div>
+    <p class="gloss-def">1つのシーンファイルの中に複数持てるアニメーションの「録画トラック」。テイクを切り替えると同じキャラクターで別のモーションを扱える。</p>
+    <a class="gloss-more" href="mb_overview.html#takes">→ MB 概要 ④ テイクシステム</a>
+  </div>
+
+  <div class="gloss-item" id="story">
+    <div class="gloss-term">Story ウィンドウ<span class="en">Story Window</span></div>
+    <p class="gloss-def">複数のテイクやクリップを時間軸に並べて、つなぎ・ブレンド・組み替えを行う MB の編集画面。</p>
+    <a class="gloss-more" href="mb_overview.html#story">→ MB 概要 ⑥ Story ウィンドウ</a>
+  </div>
+
+  <div class="gloss-item" id="nle">
+    <div class="gloss-term">NLE<span class="en">Non-Linear Editing / 非線形編集</span></div>
+    <p class="gloss-def">クリップを時間軸上に並べて自由に組み替える編集方式。Premiere など動画編集ソフトのタイムラインと同じ考え方で、Story ウィンドウはこれのアニメーション版。</p>
+  </div>
+
+  <div class="gloss-item" id="humanik">
+    <div class="gloss-term">HumanIK<span class="en">ヒューマンアイケー</span></div>
+    <p class="gloss-def">Autodesk 共通の人体 IK システム。MB の Characterize / Control Rig も Maya の HumanIK も同じ仕組みの上にあり、だからキャラクターデータを両ソフト間で行き来させられる。</p>
+  </div>
+
+  <h2>Control Rig 関連</h2>
+
+  <div class="gloss-item" id="control-rig">
+    <div class="gloss-term">Control Rig<span class="en">コントロールリグ</span></div>
+    <p class="gloss-def">スケルトンのボーンを直接触らずにアニメーションを編集するための操作用リグ。Mocap 修正もゼロからの手付けも、MB ではこれが共通の土台になる。</p>
+    <a class="gloss-more" href="mb_control_rig.html#why">→ Control Rig ① なぜ必要か</a>
+  </div>
+
+  <div class="gloss-item" id="fk">
+    <div class="gloss-term">FK<span class="en">Forward Kinematics / フォワードキネマティクス</span></div>
+    <p class="gloss-def">根元から順に各関節の角度を自分で指定して姿勢を作る方式。「肩を回し、肘を曲げ、手首をひねる」の順で決めていく。</p>
+    <a class="gloss-more" href="mb_control_rig.html#ik-theory">→ Control Rig ② IK の理屈</a>
+  </div>
+
+  <div class="gloss-item" id="ik">
+    <div class="gloss-term">IK<span class="en">Inverse Kinematics / インバースキネマティクス</span></div>
+    <p class="gloss-def">末端（手先・足先）の位置を指定し、途中の関節角度をソフトに逆算させる方式。「手をここに置きたい」から先に決められる。</p>
+    <a class="gloss-more" href="mb_control_rig.html#ik-theory">→ Control Rig ② IK の理屈</a>
+  </div>
+
+  <div class="gloss-item" id="fbik">
+    <div class="gloss-term">FBIK<span class="en">Full-Body IK / フルボディIK</span></div>
+    <p class="gloss-def">1本の腕・脚だけでなく全身のエフェクターが連動する MB の IK。手を引っ張ると必要に応じて体幹までついてくる。</p>
+  </div>
+
+  <div class="gloss-item" id="solver">
+    <div class="gloss-term">ソルバー<span class="en">Solver</span></div>
+    <p class="gloss-def">「末端をここに置く」などの条件を満たす関節角度を計算するプログラム。IK はソルバーが逆算してくれるから成り立つ。</p>
+  </div>
+
+  <div class="gloss-item" id="effector">
+    <div class="gloss-term">エフェクター<span class="en">Effector</span></div>
+    <p class="gloss-def">Control Rig 上でつかんで動かす操作点。手首・足首・腰など体の要所に配置され、これを動かすとソルバーが体を追従させる。</p>
+    <a class="gloss-more" href="mb_control_rig.html#effectors">→ Control Rig ④ エフェクターの種類</a>
+  </div>
+
+  <div class="gloss-item" id="auxiliary-effector">
+    <div class="gloss-term">Auxiliary Effector<span class="en">補助エフェクター</span></div>
+    <p class="gloss-def">膝・肘などの「曲がる向き」を調整するための補助的なエフェクター。主要エフェクターだけでは決まらない中間関節の姿勢を制御する。</p>
+    <a class="gloss-more" href="mb_control_rig.html#effectors">→ Control Rig ④ エフェクターの種類</a>
+  </div>
+
+  <div class="gloss-item" id="pole-vector">
+    <div class="gloss-term">ポールベクター<span class="en">Pole Vector</span></div>
+    <p class="gloss-def">IK で膝・肘がどの方向へ曲がるかを指示する矢印（ベクトル）。IK は末端位置だけでは関節の向きが一意に決まらないため、この指示が要る。</p>
+  </div>
+
+  <div class="gloss-item" id="reach">
+    <div class="gloss-term">Reach<span class="en">リーチ</span></div>
+    <p class="gloss-def">エフェクターが体を引っ張る強さ（0〜100%）。100% なら完全に IK に従い、0% なら元のモーションのまま。部分的な上書きの強度調整に使う。</p>
+    <a class="gloss-more" href="mb_control_rig.html#reach">→ Control Rig ⑤ Reach</a>
+  </div>
+
+  <div class="gloss-item" id="ik-blend">
+    <div class="gloss-term">IK Blend T / IK Blend R<span class="en">アイケーブレンド</span></div>
+    <p class="gloss-def">Reach の Properties パネル上での実際の名前。T が移動（Translation）、R が回転（Rotation）の上書き強度に対応する。</p>
+    <a class="gloss-more" href="mb_control_rig.html#reach">→ Control Rig ⑤ Reach</a>
+  </div>
+
+  <div class="gloss-item" id="ik-pull">
+    <div class="gloss-term">IK Pull<span class="en">アイケープル</span></div>
+    <p class="gloss-def">エフェクターが「体全体」をどれだけ引っ張るかの設定。Reach（そのエフェクター自身の追従度）とは別の概念なので注意。</p>
+    <a class="gloss-more" href="mb_control_rig.html#reach">→ Control Rig ⑤ Reach</a>
+  </div>
+
+  <div class="gloss-item" id="pinning">
+    <div class="gloss-term">Pinning<span class="en">ピン留め</span></div>
+    <p class="gloss-def">エフェクターを空間に固定する機能。足を床にピン留めすれば、体を動かしても足が滑らない。</p>
+    <a class="gloss-more" href="mb_control_rig.html#pinning">→ Control Rig ⑥ Pinning</a>
+  </div>
+
+  <div class="gloss-item" id="floor-contact">
+    <div class="gloss-term">Floor Contact<span class="en">フロアコンタクト</span></div>
+    <p class="gloss-def">足や手が床にめり込まないよう自動で押し戻す機能。1フレームずつ直す代わりに、床面との接触をルールとして与える。</p>
+    <a class="gloss-more" href="mb_control_rig.html#floor">→ Control Rig ⑦ Floor Contact</a>
+  </div>
+
+  <h2>アニメーション編集</h2>
+
+  <div class="gloss-item" id="keyframe">
+    <div class="gloss-term">キーフレーム<span class="en">Keyframe</span></div>
+    <p class="gloss-def">「このフレームでこの値」という記録点。キーとキーの間はソフトが補間で埋めるので、全フレームに値を打つ必要はない。</p>
+    <a class="gloss-more" href="maya_basics.html#keyframe">→ Maya 基礎 ⑦ キーフレーム</a>
+  </div>
+
+  <div class="gloss-item" id="fcurve">
+    <div class="gloss-term">FCurve<span class="en">Function Curve / ファンクションカーブ</span></div>
+    <p class="gloss-def">値（位置・回転など）の時間変化を表す曲線。MB のカーブ編集画面の名前でもある。カーブの形＝動きの質。</p>
+    <a class="gloss-more" href="mb_animation.html#fcurve">→ MB アニメ ④ FCurve エディタ</a>
+  </div>
+
+  <div class="gloss-item" id="graph-editor">
+    <div class="gloss-term">Graph Editor<span class="en">グラフエディタ</span></div>
+    <p class="gloss-def">Maya のカーブ編集画面。役割は MB の FCurve エディタと同じで、名前と操作系が違う。</p>
+    <a class="gloss-more" href="maya_basics.html#graph">→ Maya 基礎 ⑧ Graph Editor</a>
+  </div>
+
+  <div class="gloss-item" id="tangent">
+    <div class="gloss-term">タンジェント<span class="en">Tangent</span></div>
+    <p class="gloss-def">キーの前後でカーブがどんな傾きで出入りするかの設定。滑らか（Spline）・停止（Flat）・カクカク（Stepped）などで動きの性格が変わる。</p>
+    <a class="gloss-more" href="maya_basics.html#graph">→ Maya 基礎 ⑧ Graph Editor</a>
+  </div>
+
+  <div class="gloss-item" id="dope-sheet">
+    <div class="gloss-term">Dope Sheet<span class="en">ドープシート</span></div>
+    <p class="gloss-def">キーの「タイミングだけ」を一覧して移動できる編集画面。値の形はカーブエディタ、間の詰め方は Dope Sheet と使い分ける。</p>
+  </div>
+
+  <div class="gloss-item" id="pose-to-pose">
+    <div class="gloss-term">Pose to Pose<span class="en">ポーズ・トゥ・ポーズ</span></div>
+    <p class="gloss-def">主要なポーズ（キーポーズ）を先に全部置いてから、間のタイミングを後から詰めていく組み立て方。行き当たりばったりに頭から作るより破綻しにくい。</p>
+    <a class="gloss-more" href="mb_animation.html#posetopase">→ MB アニメ ⑩ Pose to Pose</a>
+  </div>
+
+  <div class="gloss-item" id="animation-layer">
+    <div class="gloss-term">Animation Layer<span class="en">アニメーションレイヤー</span></div>
+    <p class="gloss-def">元のアニメーションカーブを壊さず、差分だけを上のレイヤーに重ねて修正する仕組み。失敗してもレイヤーごと消せば元通り。</p>
+    <a class="gloss-more" href="mb_animation.html#animlayer">→ MB アニメ ⑪ Animation Layer</a>
+  </div>
+
+  <div class="gloss-item" id="plot">
+    <div class="gloss-term">Plot<span class="en">プロット（ベイク / Bake）</span></div>
+    <p class="gloss-def">リグやレイヤーの計算結果を、各フレームのキーとしてスケルトンやリグに焼き付けること。焼いた後は計算元がなくても同じ動きが再生できる。</p>
+    <a class="gloss-more" href="mb_animation.html#plot">→ MB アニメ ⑨ Plot</a>
+  </div>
+
+  <div class="gloss-item" id="butterworth">
+    <div class="gloss-term">Butterworth フィルター<span class="en">バターワースフィルター</span></div>
+    <p class="gloss-def">カーブの細かい振動（高周波成分）を落として滑らかにするフィルター。Mocap のノイズ取りや、修正でできた急な段差をならすのに使う。</p>
+  </div>
+
+  <div class="gloss-item" id="playblast">
+    <div class="gloss-term">Playblast<span class="en">プレイブラスト</span></div>
+    <p class="gloss-def">Maya のビューポート表示をそのまま動画として書き出すプレビュー機能。レンダリングを待たずに動きの確認ができる。</p>
+  </div>
+
+  <h2>パイプライン・ファイル形式</h2>
+
+  <div class="gloss-item" id="pipeline">
+    <div class="gloss-term">パイプライン<span class="en">Pipeline</span></div>
+    <p class="gloss-def">制作工程の連なり（収録 → 編集 → 仕上げ → 納品）と、その間でデータを受け渡す仕組みのこと。</p>
+    <a class="gloss-more" href="industry.html#position">→ 業界 ① MB の立ち位置</a>
+  </div>
+
+  <div class="gloss-item" id="fbx">
+    <div class="gloss-term">FBX<span class="en">エフビーエックス</span></div>
+    <p class="gloss-def">Autodesk のシーン交換フォーマット。モデル・スケルトン・アニメーションをまとめて運べる。MB を使う限り最初に覚えるべき形式。</p>
+    <a class="gloss-more" href="industry.html#delivery">→ 業界 ③ 納品形態・ファイル形式</a>
+  </div>
+
+  <div class="gloss-item" id="bvh">
+    <div class="gloss-term">BVH<span class="en">ビーブイエイチ</span></div>
+    <p class="gloss-def">スケルトンとモーションだけを持つ古くからある Mocap 用フォーマット。キャプチャ機材からの出力によく使われる。</p>
+    <a class="gloss-more" href="industry.html#delivery">→ 業界 ③ 納品形態・ファイル形式</a>
+  </div>
+
+  <div class="gloss-item" id="c3d">
+    <div class="gloss-term">C3D<span class="en">シースリーディー</span></div>
+    <p class="gloss-def">光学式 Mocap の生データ形式。ボーンではなくマーカー（体に貼った点）の位置座標が入っている。</p>
+  </div>
+
+  <div class="gloss-item" id="alembic">
+    <div class="gloss-term">Alembic<span class="en">アレンビック（.abc）</span></div>
+    <p class="gloss-def">頂点の動きを毎フレーム焼き込んで運ぶフォーマット。リグを持ち出せない/持ち出さない映像系の受け渡しで使われる。</p>
+    <a class="gloss-more" href="industry.html#delivery">→ 業界 ③ 納品形態・ファイル形式</a>
+  </div>
+
+  <div class="gloss-item" id="usd">
+    <div class="gloss-term">USD<span class="en">Universal Scene Description</span></div>
+    <p class="gloss-def">Pixar 発のシーン記述フォーマット。大規模制作でシーン全体を工程間で共有するための業界標準になりつつある。</p>
+    <a class="gloss-more" href="industry.html#delivery">→ 業界 ③ 納品形態・ファイル形式</a>
+  </div>
+
+  <div class="gloss-item" id="gltf">
+    <div class="gloss-term">glTF<span class="en">ジーエルティーエフ</span></div>
+    <p class="gloss-def">Web・リアルタイム表示向けの軽量 3D フォーマット。ブラウザやアプリでの表示用途で使われる。</p>
+    <a class="gloss-more" href="industry.html#delivery">→ 業界 ③ 納品形態・ファイル形式</a>
+  </div>
+
+  <div class="gloss-item" id="quaternion">
+    <div class="gloss-term">Quaternion<span class="en">クォータニオン</span></div>
+    <p class="gloss-def">回転を4つの数値で表す方式。角度3つ（オイラー角）より補間が安定する。FBX 読み込み時の「回転の補間をどう扱うか」の設定に登場する。</p>
+    <a class="gloss-more" href="maya_basics.html#fbx">→ Maya 基礎 ⑨ FBX パイプライン</a>
+  </div>
+
+  <h2>Maya</h2>
+
+  <div class="gloss-item" id="outliner">
+    <div class="gloss-term">Outliner<span class="en">アウトライナー</span></div>
+    <p class="gloss-def">シーン内の全オブジェクトを階層ツリーで一覧する Maya のパネル。MB の Scene ブラウザに近い役割。</p>
+    <a class="gloss-more" href="maya_basics.html#outliner">→ Maya 基礎 ⑥ Outliner &amp; Channel Box</a>
+  </div>
+
+  <div class="gloss-item" id="channel-box">
+    <div class="gloss-term">Channel Box<span class="en">チャンネルボックス</span></div>
+    <p class="gloss-def">選択中オブジェクトの移動・回転・スケールなどの数値を直接見て打ち込める Maya のパネル。キーを打つ対象（チャンネル）の選択もここで行う。</p>
+    <a class="gloss-more" href="maya_basics.html#outliner">→ Maya 基礎 ⑥ Outliner &amp; Channel Box</a>
+  </div>
+
+  <div class="gloss-item" id="dependency-graph">
+    <div class="gloss-term">Dependency Graph<span class="en">ディペンデンシーグラフ</span></div>
+    <p class="gloss-def">Maya の内部がノード（計算単位）のつながりでできているという仕組みの名前。アニメーション操作を覚える段階では「そういう土台がある」程度の理解でよい。</p>
+  </div>
+
+</div>
+
+<footer>
+  <p>Autodesk 学習ガイド — 用語集 | 本文中の破線リンクからここへ飛べます</p>
+</footer>
+</body>
+</html>
