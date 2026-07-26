@@ -35,7 +35,9 @@
   <a href="mb_control_rig.html">Control Rig</a>
   <a href="mb_animation_basics.html">アニメ基本</a>
   <a href="mb_animation_workflows.html">アニメ実践</a>
-  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="maya_overview.html">Maya 概要</a>
+  <a href="maya_modeling.html">モデリング</a>
+  <a href="maya_animation.html">Maya アニメ</a>
   <a href="industry.html">業界</a>
   <a href="study_plan.html">学習プラン</a>
   <a href="glossary.html" class="active">用語集</a>
@@ -182,7 +184,7 @@
   <div class="gloss-item" id="keyframe">
     <div class="gloss-term">キーフレーム<span class="en">Keyframe</span></div>
     <p class="gloss-def">「このフレームでこの値」という記録点。キーとキーの間はソフトが補間で埋めるので、全フレームに値を打つ必要はない。</p>
-    <a class="gloss-more" href="maya_basics.html#keyframe">→ Maya 基礎 ⑦ キーフレーム</a>
+    <a class="gloss-more" href="maya_animation.html#keyframe">→ Maya アニメ ② キーフレーム</a>
   </div>
 
   <div class="gloss-item" id="fcurve">
@@ -194,13 +196,13 @@
   <div class="gloss-item" id="graph-editor">
     <div class="gloss-term">Graph Editor<span class="en">グラフエディタ</span></div>
     <p class="gloss-def">Maya のカーブ編集画面。役割は MB の FCurve エディタと同じで、名前と操作系が違う。</p>
-    <a class="gloss-more" href="maya_basics.html#graph">→ Maya 基礎 ⑧ Graph Editor</a>
+    <a class="gloss-more" href="maya_animation.html#graph">→ Maya アニメ ③ Graph Editor</a>
   </div>
 
   <div class="gloss-item" id="tangent">
     <div class="gloss-term">タンジェント<span class="en">Tangent</span></div>
     <p class="gloss-def">キーの前後でカーブがどんな傾きで出入りするかの設定。滑らか（Spline）・停止（Flat）・カクカク（Stepped）などで動きの性格が変わる。</p>
-    <a class="gloss-more" href="maya_basics.html#graph">→ Maya 基礎 ⑧ Graph Editor</a>
+    <a class="gloss-more" href="maya_animation.html#graph">→ Maya アニメ ③ Graph Editor</a>
   </div>
 
   <div class="gloss-item" id="dope-sheet">
@@ -282,7 +284,7 @@
   <div class="gloss-item" id="quaternion">
     <div class="gloss-term">Quaternion<span class="en">クォータニオン</span></div>
     <p class="gloss-def">回転を4つの数値で表す方式。角度3つ（オイラー角）より補間が安定する。FBX 読み込み時の「回転の補間をどう扱うか」の設定に登場する。</p>
-    <a class="gloss-more" href="maya_basics.html#fbx">→ Maya 基礎 ⑨ FBX パイプライン</a>
+    <a class="gloss-more" href="maya_animation.html#fbx">→ Maya アニメ ④ FBX パイプライン</a>
   </div>
 
   <h2>Maya</h2>
@@ -290,18 +292,42 @@
   <div class="gloss-item" id="outliner">
     <div class="gloss-term">Outliner<span class="en">アウトライナー</span></div>
     <p class="gloss-def">シーン内の全オブジェクトを階層ツリーで一覧する Maya のパネル。MB の Scene ブラウザに近い役割。</p>
-    <a class="gloss-more" href="maya_basics.html#outliner">→ Maya 基礎 ⑥ Outliner &amp; Channel Box</a>
+    <a class="gloss-more" href="maya_overview.html#outliner">→ Maya 概要 ⑥ Outliner &amp; Channel Box</a>
   </div>
 
   <div class="gloss-item" id="channel-box">
     <div class="gloss-term">Channel Box<span class="en">チャンネルボックス</span></div>
     <p class="gloss-def">選択中オブジェクトの移動・回転・スケールなどの数値を直接見て打ち込める Maya のパネル。キーを打つ対象（チャンネル）の選択もここで行う。</p>
-    <a class="gloss-more" href="maya_basics.html#outliner">→ Maya 基礎 ⑥ Outliner &amp; Channel Box</a>
+    <a class="gloss-more" href="maya_overview.html#outliner">→ Maya 概要 ⑥ Outliner &amp; Channel Box</a>
   </div>
 
   <div class="gloss-item" id="dependency-graph">
     <div class="gloss-term">Dependency Graph<span class="en">ディペンデンシーグラフ</span></div>
     <p class="gloss-def">Maya の内部がノード（計算単位）のつながりでできているという仕組みの名前。アニメーション操作を覚える段階では「そういう土台がある」程度の理解でよい。</p>
+  </div>
+
+  <div class="gloss-item" id="topology">
+    <div class="gloss-term">トポロジー<span class="en">Topology</span></div>
+    <p class="gloss-def">頂点・エッジ・フェースのつながり方（面の流れ）のこと。四角形主体のトポロジーだと細分割や変形がきれいに通り、三角形・多角形が混ざると崩れやすい。</p>
+    <a class="gloss-more" href="maya_modeling.html#poly">→ モデリング ② ポリゴンの構造</a>
+  </div>
+
+  <div class="gloss-item" id="construction-history">
+    <div class="gloss-term">コンストラクションヒストリー<span class="en">Construction History</span></div>
+    <p class="gloss-def">Maya が操作の手順を覚えている仕組み。Channel Box の INPUTS から作成後でも分割数などを変えられる反面、溜まると動作が重くなる（Delete History で確定）。</p>
+    <a class="gloss-more" href="maya_modeling.html#primitives">→ モデリング ③ プリミティブ</a>
+  </div>
+
+  <div class="gloss-item" id="uv">
+    <div class="gloss-term">UV<span class="en">ユーブイ</span></div>
+    <p class="gloss-def">テクスチャを貼るための 2D 座標。3D 表面の各頂点が「テクスチャ画像のどこを参照するか」を持つ。Unity の <code>Mesh.uv</code> で見ていたものと同じデータ。</p>
+    <a class="gloss-more" href="maya_modeling.html#uv">→ モデリング ⑤ UV 展開</a>
+  </div>
+
+  <div class="gloss-item" id="seam">
+    <div class="gloss-term">シーム<span class="en">Seam</span></div>
+    <p class="gloss-def">UV 展開の切れ目。立体をどこで切って平らに開くかを決める、展開図のハサミの位置。歪みの大半はシーム不足が原因。</p>
+    <a class="gloss-more" href="maya_modeling.html#uv">→ モデリング ⑤ UV 展開</a>
   </div>
 
 </div>

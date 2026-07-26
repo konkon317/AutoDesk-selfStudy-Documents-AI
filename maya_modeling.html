@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maya モデリング & UV | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--accent-2); }
+  .page-hero .tag { background: rgba(34,211,238,0.15); border-color: rgba(34,211,238,0.3); color: var(--accent-2); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(34,211,238,0.1), transparent); }
+
+  .comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  @media(max-width:580px){ .comp-grid { grid-template-columns: 1fr; } }
+  .comp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; }
+  .comp-card h4 { font-size: 0.87rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .comp-card svg { width: 100%; display: block; margin-bottom: 0.5rem; }
+  .comp-card p { font-size: 0.78rem; color: var(--muted); margin: 0; }
+
+  .uv-diagram { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem; margin-bottom: 1.5rem; overflow: hidden; }
+  .uv-diagram svg { width: 100%; max-width: 640px; display: block; margin: 0 auto; }
+
+  .flow-steps { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; counter-reset: step; }
+  .flow-step { display: flex; gap: 0.9rem; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1.1rem; }
+  .flow-step::before { counter-increment: step; content: counter(step); flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: rgba(34,211,238,0.15); border: 1px solid rgba(34,211,238,0.35); color: var(--accent-2); font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; justify-content: center; margin-top: 0.1rem; }
+  .flow-step h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .flow-step p { font-size: 0.8rem; color: var(--muted); margin: 0; }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--accent-2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="mb_animation_basics.html">アニメ基本</a>
+  <a href="mb_animation_workflows.html">アニメ実践</a>
+  <a href="maya_overview.html">Maya 概要</a>
+  <a href="maya_modeling.html" class="active">モデリング</a>
+  <a href="maya_animation.html">Maya アニメ</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+  <a href="glossary.html">用語集</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">Maya · 02</div>
+  <h1><span>Maya</span> モデリング &amp; UV</h1>
+  <p>ポリゴンで形を作り、UVを展開してテクスチャ座標を与えるまで。Unity でメッシュを「使う側」だった人が、Maya で「作る側」に回るための工程入門です。</p>
+  <div class="session-info">🪙 推奨セッション：Maya × 2（MY-S2〜S3）</div>
+</div>
+
+<div class="content">
+
+  <div class="prereq">
+    <div class="prereq-title">📋 このページの前提</div>
+    <div class="prereq-pages">
+      <a href="maya_overview.html#tools">Maya 概要 ⑤ 基本ツール（Q/W/E/R）</a>
+      <a href="maya_overview.html#outliner">Maya 概要 ⑥ Outliner &amp; Channel Box</a>
+    </div>
+    <div class="prereq-terms">
+      <span>メッシュ</span><span>UV（概念は Unity 文脈で既知の前提）</span><span>マテリアル</span>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin:0.6rem 0 0;">「UV とは何か」の概念説明は最小限にして、Maya での<strong>編集操作</strong>に集中します。用語に詰まったら<a class="term" href="glossary.html">用語集</a>へ。</p>
+  </div>
+
+  <div class="toc">
+    <h4>このページの内容</h4>
+    <ol>
+      <li><a href="#map">モデリングが解く問題と機能・理屈のマップ</a></li>
+      <li><a href="#poly">ポリゴンの構造とコンポーネント選択</a></li>
+      <li><a href="#primitives">プリミティブから形を作る</a></li>
+      <li><a href="#tools">主要編集ツール（Extrude / Bevel / Multi-Cut）</a></li>
+      <li><a href="#uv">UV 展開 — UV Editor の使い方</a></li>
+      <li><a href="#material">マテリアルとテクスチャで UV を確認する</a></li>
+      <li><a href="#troubleshoot">よくある詰まりと対処</a></li>
+    </ol>
+  </div>
+
+  <!-- ① 機能マップ -->
+  <h2 id="map">① モデリングが解く問題と機能・理屈のマップ</h2>
+  <p>「なぜその機能が存在するか」から入ります。モデリングツールは多いですが、根っこは「メッシュのデータ構造を組み替える」の一点です。</p>
+
+  <div class="concept-map">
+    <div class="concept-header">
+      <div class="ch-goal">🎯 やりたいこと</div>
+      <div class="ch-arr"></div>
+      <div class="ch-feat">🔧 機能</div>
+      <div class="ch-arr"></div>
+      <div class="ch-logic">⚙️ 理屈</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>ベースになる形が欲しい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>Polygon Primitives</strong><br>（Create → Polygon Primitives）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">Cube や Cylinder は「編集の出発点」。Channel Box の INPUTS で分割数（Subdivisions）を後から変えられる。分割数＝編集の解像度。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>形を彫り込みたい・<br>伸ばしたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>コンポーネント編集 + Extrude / Bevel / Multi-Cut</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">メッシュは頂点・エッジ・フェースのデータ構造。各ツールは「面を複製して押し出す」「エッジを分割する」など、構造の組み替え操作にすぎない。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>なめらかな曲面にしたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>Smooth プレビュー</strong>（<kbd>3</kbd> キー / <kbd>1</kbd> で戻す）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">ポリゴンを細分割して曲面を近似する。四角形（quad）主体のトポロジーだと破綻しにくく、三角形・多角形が混ざると歪みやすい。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>テクスチャを正しく貼りたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>UV 展開（UV Editor）</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">3D 表面を 2D に切り開いて各頂点に UV 座標を与える。歪み＝3D 上の面積比と 2D 上の面積比のズレ。切れ目（シーム）をどこに入れるかが品質を決める。</div>
+    </div>
+  </div>
+
+  <!-- ② ポリゴンの構造 -->
+  <h2 id="poly">② ポリゴンの構造とコンポーネント選択</h2>
+  <p>メッシュは3種類の要素でできています。<strong>オブジェクトの上で右クリック長押し</strong>のマーキングメニューで、どの要素を選択・編集するかを切り替えます。これがモデリングの基本動作です。</p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <h4 style="color:var(--accent-2)">Vertex（頂点）</h4>
+      <svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg">
+        <rect width="140" height="90" fill="#080818"/>
+        <path d="M 30,70 L 70,60 L 110,70 L 110,30 L 70,20 L 30,30 Z" fill="none" stroke="#3a3a65" stroke-width="1.5"/>
+        <line x1="70" y1="20" x2="70" y2="60" stroke="#3a3a65" stroke-width="1.5"/>
+        <circle cx="30" cy="70" r="4" fill="#22d3ee"/>
+        <circle cx="70" cy="60" r="4" fill="#22d3ee"/>
+        <circle cx="110" cy="70" r="4" fill="#22d3ee"/>
+        <circle cx="110" cy="30" r="4" fill="#22d3ee"/>
+        <circle cx="70" cy="20" r="4" fill="#22d3ee"/>
+        <circle cx="30" cy="30" r="4" fill="#22d3ee"/>
+      </svg>
+      <p>位置を持つ点。UV や頂点カラーもここにぶら下がる（Unity の Mesh で見た「頂点属性」と同じもの）。</p>
+    </div>
+    <div class="comp-card">
+      <h4 style="color:var(--amber)">Edge（エッジ）</h4>
+      <svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg">
+        <rect width="140" height="90" fill="#080818"/>
+        <path d="M 30,70 L 70,60 L 110,70 L 110,30 L 70,20 L 30,30 Z" fill="none" stroke="#3a3a65" stroke-width="1.5"/>
+        <line x1="70" y1="20" x2="70" y2="60" stroke="#f59e0b" stroke-width="3"/>
+        <line x1="30" y1="30" x2="70" y2="20" stroke="#f59e0b" stroke-width="3"/>
+      </svg>
+      <p>頂点をつなぐ線。ループ選択（ダブルクリック）で一周分をまとめて選べる。ベベルやシーム指定の単位。</p>
+    </div>
+    <div class="comp-card">
+      <h4 style="color:var(--accent)">Face（フェース）</h4>
+      <svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg">
+        <rect width="140" height="90" fill="#080818"/>
+        <path d="M 30,70 L 70,60 L 110,70 L 110,30 L 70,20 L 30,30 Z" fill="none" stroke="#3a3a65" stroke-width="1.5"/>
+        <path d="M 30,70 L 70,60 L 70,20 L 30,30 Z" fill="rgba(139,92,246,0.35)" stroke="#8b5cf6" stroke-width="2"/>
+        <line x1="70" y1="20" x2="70" y2="60" stroke="#3a3a65" stroke-width="1.5"/>
+      </svg>
+      <p>エッジで囲まれた面。押し出し（Extrude）の対象。レンダリングされるのはこの面。</p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>操作</th><th>入力</th></tr>
+    <tr><td>コンポーネントモード切替</td><td>オブジェクト上で右クリック長押し → Vertex / Edge / Face / Object Mode</td></tr>
+    <tr><td>エッジループ選択</td><td>エッジをダブルクリック</td></tr>
+    <tr><td>ソフト選択のオン/オフ</td><td><kbd>B</kbd>（周辺の頂点を減衰付きで一緒に動かす）</td></tr>
+    <tr><td>選択の追加 / 除外</td><td><kbd>Shift</kbd>+クリック / <kbd>Ctrl</kbd>+クリック</td></tr>
+  </table>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>Unity との視点の違い：</strong> Unity では Mesh は「完成品のアセット」で、頂点・UV は Mesh API 越しに読む対象でした。Maya ではその同じデータを<strong>手で直接編集</strong>します。「Unity で見ていたあの頂点配列を、今ビューポートで掴んでいる」と読み替えると早いです。</p>
+  </div>
+
+  <!-- ③ プリミティブ -->
+  <h2 id="primitives">③ プリミティブから形を作る</h2>
+  <p><strong>Create → Polygon Primitives</strong> から Cube / Sphere / Cylinder / Plane などを作成します。ほとんどのモデリングは「一番近いプリミティブから彫り始める」が出発点です。</p>
+
+  <ul style="margin-bottom:1rem;">
+    <li>作成直後に Channel Box 下段の <strong>INPUTS</strong>（polyCube1 など）を開くと、<strong>Subdivisions Width / Height / Depth</strong> を後から変更できる</li>
+    <li>これは Maya の<strong>コンストラクションヒストリー</strong>（作成手順を覚えている仕組み）によるもの。形が確定したら <strong>Edit → Delete by Type → History</strong> で履歴を確定・軽量化する</li>
+    <li>単位・グリッドは MB→Maya パイプラインと同じ設定（Working Units）を使う</li>
+  </ul>
+
+  <div class="callout try">
+    <span class="callout-icon">🖐</span>
+    <p><strong>試してみる：</strong> Cube を作り、右クリック長押し → Vertex で頂点を1つ選んで <kbd>W</kbd> で動かす。次に <kbd>B</kbd> を押してソフト選択にして同じ頂点を動かし、周りがなだらかに付いてくる違いを確認。<kbd>B</kbd> の再押下で解除。</p>
+  </div>
+
+  <!-- ④ 編集ツール -->
+  <h2 id="tools">④ 主要編集ツール（Extrude / Bevel / Multi-Cut）</h2>
+  <p>ツールは多数ありますが、まずこの表の範囲で「小物を1個作れる」状態を目指します。メニューは<strong>メニューセットを Modeling</strong>（<kbd>F2</kbd>）にして Edit Mesh / Mesh Tools から。</p>
+
+  <table>
+    <tr><th>ツール</th><th>場所 / ショートカット</th><th>何をするか</th></tr>
+    <tr><td><strong>Extrude（押し出し）</strong></td><td>Edit Mesh → Extrude / <kbd>Ctrl</kbd>+<kbd>E</kbd></td><td>選択フェース・エッジを複製して押し出す。形を「伸ばす・彫る」の主役</td></tr>
+    <tr><td><strong>Bevel（面取り）</strong></td><td>Edit Mesh → Bevel / <kbd>Ctrl</kbd>+<kbd>B</kbd></td><td>エッジに面取りを入れる。硬い角に微小な面を足すと光が乗って見栄えが上がる</td></tr>
+    <tr><td><strong>Multi-Cut</strong></td><td>Mesh Tools → Multi-Cut</td><td>エッジ・フェースを自由に切って分割線を足す。<kbd>Ctrl</kbd>+クリックでループ挿入</td></tr>
+    <tr><td><strong>Insert Edge Loop</strong></td><td>Mesh Tools → Insert Edge Loop</td><td>一周分のエッジをまとめて挿入。分割の解像度を上げる定番</td></tr>
+    <tr><td><strong>Merge（結合）</strong></td><td>Edit Mesh → Merge</td><td>重なった頂点を1つに結合。パーツを繋いだ後の後始末に使う</td></tr>
+  </table>
+
+  <div class="callout try">
+    <span class="callout-icon">🖐</span>
+    <p><strong>試してみる（マグカップの入り口）：</strong> Cylinder を作成 → 右クリック長押し → Face で上面を選択 → <kbd>Ctrl</kbd>+<kbd>E</kbd> で Extrude し、表示されるマニピュレータの <strong>Offset</strong> を内側に少し縮める → もう一度 <kbd>Ctrl</kbd>+<kbd>E</kbd> して下方向に押し込む。これで「器」になります。Extrude を2回に分けるのがポイント（縮める→押し込む）。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — モデリング基礎</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/movie/start-at-maya/" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya シリーズ（モデリング回を含む入門ムービー集）</a>
+      <a href="https://help.autodesk.com/view/MAYAUL/2024/JPN/" target="_blank" class="doc">📄 Maya 公式ヘルプ（日本語）— モデリング / UV の一次資料</a>
+    </div>
+  </div>
+
+  <!-- ⑤ UV -->
+  <h2 id="uv">⑤ UV 展開 — UV Editor の使い方</h2>
+  <p>UV が「テクスチャを貼るための 2D 座標」であることは Unity の文脈で把握している前提で、ここでは <strong>Maya でどう切って、どう開くか</strong>だけを扱います。Unity で言えば、ここで作るものがそのまま <code>Mesh.uv</code> になります。</p>
+
+  <div class="uv-diagram">
+    <p style="font-size:0.75rem; color:var(--muted); margin-bottom:0.75rem;">── UV 展開 ＝ 立体の展開図を作る作業 ──</p>
+    <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+      <rect width="640" height="220" fill="#080818" rx="6"/>
+      <!-- 3D cube -->
+      <path d="M 60,150 L 130,165 L 200,150 L 200,80 L 130,65 L 60,80 Z" fill="none" stroke="#3a3a65" stroke-width="1.5"/>
+      <path d="M 60,80 L 130,95 L 200,80 M 130,95 L 130,165" fill="none" stroke="#3a3a65" stroke-width="1.5"/>
+      <line x1="130" y1="65" x2="130" y2="95" stroke="#ef4444" stroke-width="2.5"/>
+      <line x1="60" y1="80" x2="130" y2="95" stroke="#ef4444" stroke-width="2.5"/>
+      <text x="130" y="195" fill="#7c8ba1" font-size="11" text-anchor="middle">3D メッシュ</text>
+      <text x="130" y="52" fill="#ef4444" font-size="9" text-anchor="middle">シーム（切れ目）を入れる</text>
+      <!-- arrow -->
+      <text x="255" y="120" fill="#22d3ee" font-size="13" text-anchor="middle">Unfold →</text>
+      <!-- unfolded cross -->
+      <g stroke="#22d3ee" stroke-width="1.2" fill="rgba(34,211,238,0.08)">
+        <rect x="380" y="30" width="50" height="50"/>
+        <rect x="330" y="80" width="50" height="50"/>
+        <rect x="380" y="80" width="50" height="50"/>
+        <rect x="430" y="80" width="50" height="50"/>
+        <rect x="480" y="80" width="50" height="50"/>
+        <rect x="380" y="130" width="50" height="50"/>
+      </g>
+      <text x="430" y="195" fill="#7c8ba1" font-size="11" text-anchor="middle">2D の UV（0〜1 空間）に開く</text>
+      <text x="560" y="45" fill="#7c8ba1" font-size="9" text-anchor="end">切れ目の位置で</text>
+      <text x="560" y="58" fill="#7c8ba1" font-size="9" text-anchor="end">開き方が決まる</text>
+    </svg>
+  </div>
+
+  <p><strong>開き方：</strong> <span style="font-family:monospace; background:var(--surface-2); padding:0.1rem 0.5rem; border-radius:4px; font-size:0.85rem; color:var(--accent-2)">Windows → Modeling Editors → UV Editor</span>（横に UV Toolkit パネルが付いてきます。主要操作はほぼ UV Toolkit から実行します）</p>
+
+  <h3>UV 展開の手順の型（この順で覚える）</h3>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div>
+        <h4>投影でリセットする（Projection）</h4>
+        <p>UV → Planar / Cylindrical / Automatic。乱れた UV をいったん素直な状態に投影し直す。「形に一番近い投影」を選ぶ（箱物なら Automatic、筒物なら Cylindrical）。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div>
+        <h4>シームを切る（Cut / Sew）</h4>
+        <p>展開の切れ目にしたいエッジを選び、UV Toolkit の <strong>Cut</strong>。切りすぎたら <strong>Sew</strong> で縫い戻す。目立たない場所（底・裏・服の脇線）に切れ目を置くのが定石。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div>
+        <h4>Unfold で開く</h4>
+        <p>UV シェルを選択して UV Toolkit の <strong>Unfold</strong>。シームで切った通りに、歪みが最小になるよう自動で平らに開いてくれる。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div>
+        <h4>Layout で 0〜1 に敷き詰める</h4>
+        <p>UV Toolkit の <strong>Layout</strong>。全シェルを重なりなく 0〜1 の UV 空間に配置する。テクスチャ解像度を稼ぎたいシェルは手動で大きめに置く。</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div>
+        <h4>チェッカーで歪みを確認する</h4>
+        <p>UV Editor のチェッカーマップ表示をオンにして、ビューポート上で<strong>正方形が正方形に見えるか</strong>を確認。伸びて長方形に見える場所＝歪み。シームを足して Unfold し直す。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <p><strong>シーム＝展開図のハサミの位置：</strong> UV 展開が上手くいかない原因はほぼ「切れ目が足りない or 位置が悪い」です。紙の箱をハサミで開くイメージで、「どこを切れば平らに置けるか」を先に考えると Unfold が素直に通ります。</p>
+  </div>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>Unity への接続：</strong> ここで作った UV が FBX 経由で Unity の <code>Mesh.uv</code>（UV0）になります。ライトマップ用の UV2 は Unity のインポート設定「Generate Lightmap UVs」で自動生成させる手もあるので、手で作り込むのはまず UV0 だけで十分です。</p>
+  </div>
+
+  <!-- ⑥ マテリアル -->
+  <h2 id="material">⑥ マテリアルとテクスチャで UV を確認する</h2>
+  <p>UV の出来はテクスチャを貼って初めて確認できます。ここではレンダリング品質ではなく「UV 確認のための最小限」だけ扱います。</p>
+
+  <ul style="margin-bottom:1rem;">
+    <li>オブジェクト上で<strong>右クリック長押し → Assign New Material</strong> → Lambert（または aiStandardSurface）を割り当てる</li>
+    <li>マテリアルの <strong>Color</strong> の右のチェッカーボタン → <strong>File</strong> を選び、画像テクスチャを読み込む</li>
+    <li>ビューポート上部の表示切替、またはショートカット <kbd>6</kbd>（テクスチャ表示）/ <kbd>5</kbd>（シェーディングのみ）で貼り付き具合を確認する</li>
+    <li>マテリアルの一覧・接続を眺めたくなったら <strong>Hypershade</strong>（Windows → Rendering Editors）——今の段階では「そういう物がある」でOK</li>
+  </ul>
+
+  <!-- ⑦ トラブルシュート -->
+  <h2 id="troubleshoot">⑦ よくある詰まりと対処</h2>
+  <table>
+    <tr><th>詰まり</th><th>原因・対処</th></tr>
+    <tr><td>Extrude したら面が二重になった / 動かすと角が汚く割れる</td><td>Extrude を実行した直後に何もせずもう一度実行している（ゼロ距離の押し出しが重なる）。<kbd>Ctrl</kbd>+<kbd>Z</kbd> で戻り、押し出しは「実行 → その場でマニピュレータを操作」を1セットで行う。</td></tr>
+    <tr><td><kbd>3</kbd> キーで滑らかにしたら形が崩れる</td><td>三角形・五角形以上（ngon）が混ざっている。細分割は四角形主体だときれいに近似される。Multi-Cut で切り直して四角形に整える。</td></tr>
+    <tr><td>テクスチャを付けたのに表示されない</td><td>ビューポートがテクスチャ表示モードになっていない。<kbd>6</kbd> キーを押す。</td></tr>
+    <tr><td>UV を開いたのにテクスチャが伸びる・歪む</td><td>シーム不足のまま無理に開いている。歪んでいる場所の近くのエッジを Cut に追加して Unfold し直す。チェッカーの正方形が目安。</td></tr>
+    <tr><td>編集していると動作がどんどん重くなる</td><td>コンストラクションヒストリーが溜まっている。形が確定した段階で Edit → Delete by Type → History を実行する。</td></tr>
+  </table>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — UV・テクスチャ</div>
+    <div class="ref-links">
+      <a href="https://help.autodesk.com/view/MAYAUL/2024/JPN/" target="_blank" class="doc">📄 Maya 公式ヘルプ（日本語）— UV Editor / UV Toolkit の一次資料</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya シリーズ（UV・マテリアル回を含む）</a>
+    </div>
+  </div>
+
+  <a href="maya_animation.html" class="next-link">
+    <div><div class="next-label">次のページ</div><div class="next-title">🎞️ Maya アニメーション — キーフレーム・Graph Editor・FBX</div></div>
+    <span class="next-arrow">→</span>
+  </a>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>

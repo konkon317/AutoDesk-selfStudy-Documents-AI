@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maya 概要と基本操作 | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--accent-2); }
+  .page-hero .tag { background: rgba(34,211,238,0.15); border-color: rgba(34,211,238,0.3); color: var(--accent-2); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(34,211,238,0.1), transparent); }
+
+  .tool-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .tool-btn { display: flex; flex-direction: column; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 1rem; min-width: 80px; font-size: 0.78rem; gap: 0.3rem; }
+  .tool-btn .key { font-size: 1.1rem; font-weight: 800; color: var(--accent-2); font-family: monospace; }
+  .tool-btn .tool-name { color: var(--muted); }
+
+  .ui-diagram { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; overflow: hidden; }
+  .ui-diagram svg { width: 100%; max-width: 680px; display: block; margin: 0 auto; }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--accent-2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="mb_animation_basics.html">アニメ基本</a>
+  <a href="mb_animation_workflows.html">アニメ実践</a>
+  <a href="maya_overview.html" class="active">Maya 概要</a>
+  <a href="maya_modeling.html">モデリング</a>
+  <a href="maya_animation.html">Maya アニメ</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+  <a href="glossary.html">用語集</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">Maya · 01</div>
+  <h1><span>Maya</span> 概要と基本操作</h1>
+  <p>Maya パスの入口。ソフト全体の工程マップと、どの工程でも共通で使う UI・ナビゲーション・基本ツールをここで押さえます。工程ごとの詳細は「モデリング & UV」「アニメーション」の各ページへ。</p>
+  <div class="session-info">🪙 推奨セッション：Maya × 1（MY-S1）</div>
+</div>
+
+<div class="content">
+
+  <div class="prereq">
+    <div class="prereq-title">📋 このページの前提</div>
+    <div class="prereq-pages">
+      <a href="mb_overview.html">MB 全体像と UI</a>
+    </div>
+    <div class="prereq-terms">
+      <span>ビューポート</span><span>FBX</span>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin:0.6rem 0 0;">MotionBuilder の操作感覚を知っている前提で「MB との差分」を中心に進みます。用語に詰まったら<a class="term" href="glossary.html">用語集</a>へ。</p>
+  </div>
+
+  <div class="toc">
+    <h4>このページの内容</h4>
+    <ol>
+      <li><a href="#map">Maya の工程マップ — このガイドの歩き方</a></li>
+      <li><a href="#position">Maya の位置づけ（MBとの違い）</a></li>
+      <li><a href="#ui">インターフェース構成（図解）</a></li>
+      <li><a href="#nav">ビューポートナビゲーション</a></li>
+      <li><a href="#tools">基本ツール（Q/W/E/R）</a></li>
+      <li><a href="#outliner">Outliner &amp; Channel Box</a></li>
+    </ol>
+  </div>
+
+  <!-- ① 工程マップ -->
+  <h2 id="map">① Maya の工程マップ — このガイドの歩き方</h2>
+  <p>Maya は「モデルを作る」から「動かす」「絵にする」まで一通り入った統合ソフトです。やりたいことがどの工程・どのページに対応するかを先に掴みます。</p>
+
+  <div class="concept-map">
+    <div class="concept-header">
+      <div class="ch-goal">🎯 やりたいこと</div>
+      <div class="ch-arr"></div>
+      <div class="ch-feat">🔧 工程・機能</div>
+      <div class="ch-arr"></div>
+      <div class="ch-logic">⚙️ 理屈</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>形を作りたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>ポリゴンモデリング</strong><br>（→ <a href="maya_modeling.html">モデリング & UV ②〜④</a>）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">メッシュは頂点・エッジ・フェースのデータ構造。モデリングツールはこの構造を組み替える操作の集まり。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>テクスチャを<br>正しく貼りたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>UV 展開（UV Editor）</strong><br>（→ <a href="maya_modeling.html#uv">モデリング & UV ⑤</a>）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">3D の表面を 2D 平面に切り開き、各頂点に 2D 座標（UV）を与える。展開図を作る作業に相当する。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>動きを作りたい・<br>直したい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>キーフレーム + Graph Editor</strong><br>（→ <a href="maya_animation.html">アニメーション ②〜③</a>）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">アニメーションは「時間 × 値」のカーブの集まり。キーを打ち、カーブの形で動きの質を制御する。</div>
+    </div>
+
+    <div class="concept-row">
+      <div class="concept-cell goal"><strong>MB の成果を<br>持ち込みたい</strong></div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell feature"><strong>FBX Import</strong><br>（→ <a href="maya_animation.html#fbx">アニメーション ④</a>）</div>
+      <div class="concept-arrow">→</div>
+      <div class="concept-cell logic">FBX は「スケルトン定義 + ボーンのキーフレーム」を一つのファイルに包む共通フォーマット。MB で Plot した結果がキーフレームとして入ってくる。</div>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>このページの残り（②〜⑥）は全工程の共通基礎です。</strong> UI・ナビゲーション・基本ツールはモデリングでもアニメーションでも同じものを使うので、先にここだけ体に入れて、あとは工程ページに進みながら思い出せば十分です。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — Maya 概要・始め方</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya 入門ムービー（UI・基本操作）</a>
+      <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/" target="_blank" class="ext">📖 アニもぐCG: CGアニメーターが覚えるべきMayaの基本操作【前編】</a>
+    </div>
+  </div>
+
+  <!-- ② 位置づけ -->
+  <h2 id="position">② Maya の位置づけ</h2>
+
+  <div class="cards-2">
+    <div class="card">
+      <h3 style="margin-top:0;">MotionBuilderとの違い</h3>
+      <ul>
+        <li>モデリング・シェーダー・レンダリングまで一通りできる</li>
+        <li>リギングシステムが柔軟（カスタムリグを作れる）</li>
+        <li>ノードベースの<a class="term" href="glossary.html#dependency-graph">Dependency Graph</a> が基盤（操作を覚える段階では「そういう土台がある」程度でOK）</li>
+        <li>MEL/Pythonで自動化できる</li>
+        <li>Mocap処理はMBほど直感的でない</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0;">MBとの役割分担（よくある例）</h3>
+      <ul>
+        <li>Mocap収録・クリーンアップ → <strong>MotionBuilder</strong></li>
+        <li>リターゲット・Control Rig編集 → <strong>MotionBuilder</strong></li>
+        <li>モデル・UV 作成 → <strong>Maya</strong></li>
+        <li>シーン組み・カメラワーク → <strong>Maya</strong></li>
+        <li>キャラクター最終調整・レンダリング → <strong>Maya（Arnold等）</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ③ UI -->
+  <h2 id="ui">③ インターフェース構成（図解）</h2>
+
+  <div class="ui-diagram">
+    <svg viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+      <rect width="680" height="400" fill="#0a0a1a" rx="8"/>
+      <rect x="8" y="8" width="664" height="28" rx="4" fill="#12122a" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.5"/>
+      <text x="340" y="27" fill="#f59e0b" font-size="10" font-weight="700" text-anchor="middle">メニューバー — モード切替で内容が変わる（Modeling / Rigging / Animation / FX …）</text>
+      <rect x="8" y="42" width="664" height="32" rx="4" fill="#0f0f28" stroke="#10b981" stroke-width="1.2" stroke-opacity="0.5"/>
+      <text x="30" y="64" fill="#10b981" font-size="10" font-weight="700">シェルフ（Shelf）</text>
+      <text x="160" y="64" fill="#7c8ba1" font-size="9">よく使うツールのアイコン。タブで切り替え。カスタマイズ可</text>
+      <rect x="380" y="48" width="22" height="20" rx="3" fill="#1c1c3a"/>
+      <rect x="406" y="48" width="22" height="20" rx="3" fill="#1c1c3a"/>
+      <rect x="432" y="48" width="22" height="20" rx="3" fill="#1c1c3a"/>
+      <rect x="458" y="48" width="22" height="20" rx="3" fill="#1c1c3a"/>
+      <text x="390" y="62" fill="#10b981" font-size="9">□</text>
+      <text x="415" y="62" fill="#10b981" font-size="9">○</text>
+      <text x="441" y="62" fill="#10b981" font-size="9">△</text>
+      <text x="467" y="62" fill="#10b981" font-size="9">↺</text>
+      <rect x="8" y="80" width="150" height="256" rx="4" fill="#12122a" stroke="#8b5cf6" stroke-width="1.2" stroke-opacity="0.5"/>
+      <text x="83" y="98" fill="#8b5cf6" font-size="11" font-weight="700" text-anchor="middle">Outliner</text>
+      <text x="83" y="112" fill="#7c8ba1" font-size="9" text-anchor="middle">シーン階層ツリー</text>
+      <text x="18" y="132" fill="#7c8ba1" font-size="9">▼ defaultCamera</text>
+      <text x="18" y="148" fill="#22d3ee" font-size="9">▼ Character_Root</text>
+      <text x="26" y="163" fill="#22d3ee" font-size="9">▼ Hips</text>
+      <text x="34" y="178" fill="#7c8ba1" font-size="9">  Spine</text>
+      <text x="34" y="193" fill="#7c8ba1" font-size="9">  LeftLeg</text>
+      <text x="34" y="208" fill="#7c8ba1" font-size="9">  RightLeg</text>
+      <text x="18" y="225" fill="#7c8ba1" font-size="9">▶ Mesh_Body</text>
+      <rect x="164" y="80" width="346" height="256" rx="4" fill="#0b0b1e" stroke="#22d3ee" stroke-width="1.5" stroke-opacity="0.6"/>
+      <text x="337" y="104" fill="#22d3ee" font-size="12" font-weight="700" text-anchor="middle">Viewport（3D ビュー）</text>
+      <text x="337" y="118" fill="#7c8ba1" font-size="9" text-anchor="middle">メインの3D操作エリア。Space で4分割切替</text>
+      <line x1="164" y1="192" x2="510" y2="192" stroke="#1a1a38" stroke-width="1"/>
+      <line x1="337" y1="80" x2="337" y2="336" stroke="#1a1a38" stroke-width="1"/>
+      <rect x="280" y="140" width="114" height="100" rx="4" fill="none" stroke="#3a3a65" stroke-width="1.5"/>
+      <text x="337" y="197" fill="#3a3a65" font-size="9" text-anchor="middle">pSphere1</text>
+      <text x="170" y="96" fill="#3a3a65" font-size="9">persp ▼</text>
+      <text x="170" y="330" fill="#22d3ee" font-size="9">Q W E R</text>
+      <text x="215" y="330" fill="#7c8ba1" font-size="9">← ツールショートカット</text>
+      <rect x="516" y="80" width="156" height="256" rx="4" fill="#12122a" stroke="#8b5cf6" stroke-width="1.2" stroke-opacity="0.5"/>
+      <text x="594" y="98" fill="#8b5cf6" font-size="10" font-weight="700" text-anchor="middle">Channel Box</text>
+      <text x="594" y="111" fill="#7c8ba1" font-size="9" text-anchor="middle">数値・アトリビュート</text>
+      <rect x="526" y="120" width="136" height="1" fill="#2a2a50"/>
+      <text x="530" y="137" fill="#7c8ba1" font-size="9">pSphere1</text>
+      <text x="530" y="153" fill="#22d3ee" font-size="9">Translate X  0.000</text>
+      <text x="530" y="168" fill="#22d3ee" font-size="9">Translate Y  2.500</text>
+      <text x="530" y="183" fill="#7c8ba1" font-size="9">Translate Z  0.000</text>
+      <text x="530" y="199" fill="#7c8ba1" font-size="9">Rotate X     0.000</text>
+      <text x="530" y="214" fill="#7c8ba1" font-size="9">Rotate Y     0.000</text>
+      <text x="530" y="229" fill="#7c8ba1" font-size="9">Rotate Z     0.000</text>
+      <rect x="526" y="238" width="136" height="1" fill="#2a2a50"/>
+      <text x="530" y="253" fill="#7c8ba1" font-size="9">Scale X      1.000</text>
+      <rect x="8" y="342" width="664" height="50" rx="4" fill="#12122a" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.5"/>
+      <text x="30" y="360" fill="#f59e0b" font-size="10" font-weight="700">タイムライン / Time Slider</text>
+      <text x="200" y="360" fill="#7c8ba1" font-size="9">キーフレームが赤点で表示される。クリック＆ドラッグでスクラブ</text>
+      <rect x="8" y="367" width="664" height="17" rx="0" fill="#0c0c20"/>
+      <rect x="8" y="367" width="180" height="17" fill="#1a1a38"/>
+      <circle cx="50" cy="376" r="3" fill="#ef4444"/>
+      <circle cx="130" cy="376" r="3" fill="#ef4444"/>
+      <circle cx="210" cy="376" r="3" fill="#ef4444"/>
+      <circle cx="290" cy="376" r="3" fill="#ef4444"/>
+      <rect x="178" y="367" width="3" height="17" fill="#f59e0b"/>
+    </svg>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <p><strong>メニューセットが工程の切り替えスイッチ：</strong> メニューバー左端のドロップダウン（<kbd>F2</kbd>〜<kbd>F5</kbd>）で Modeling / Rigging / Animation / FX を切り替えると、メニューの内容が工程用に入れ替わります。「モデリングのメニューが見つからない」ときは、まずメニューセットが Modeling になっているかを確認してください。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — Maya インターフェース</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya 入門ムービー（UI解説）</a>
+      <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/" target="_blank" class="ext">📖 アニもぐCG: Mayaの基本操作【前編】（インターフェース〜ナビゲーション）</a>
+    </div>
+  </div>
+
+  <!-- ④ ナビゲーション -->
+  <h2 id="nav">④ ビューポートナビゲーション</h2>
+  <p>MBとほぼ同じ Alt+マウスの操作体系です。違いはSpaceキーの挙動のみ。</p>
+
+  <table>
+    <tr><th>操作</th><th>入力</th><th>MBとの違い</th></tr>
+    <tr><td>回転（オービット）</td><td><kbd>Alt</kbd> + 左ドラッグ</td><td>同じ</td></tr>
+    <tr><td>パン</td><td><kbd>Alt</kbd> + 中ドラッグ</td><td>同じ</td></tr>
+    <tr><td>ズーム</td><td>スクロール / <kbd>Alt</kbd> + 右ドラッグ</td><td>同じ</td></tr>
+    <tr><td>選択オブジェクトにフォーカス</td><td><kbd>F</kbd></td><td>同じ</td></tr>
+    <tr><td>シーン全体フィット</td><td><kbd>A</kbd></td><td>同じ</td></tr>
+    <tr><td>4分割ビュー切替</td><td><kbd>Space</kbd></td><td>⚠️ MBと異なる（MBのSpaceは再生）</td></tr>
+  </table>
+
+  <!-- ⑤ ツール -->
+  <h2 id="tools">⑤ 基本ツール（Q/W/E/R）</h2>
+  <p>この4つは体に染み込ませる最初のショートカットです。オブジェクトを動かすときも、モデリングで頂点やフェースを動かすときも、使うのは同じ W/E/R です。</p>
+
+  <div class="tool-row">
+    <div class="tool-btn"><div class="key">Q</div><div class="tool-name">Select</div></div>
+    <div class="tool-btn"><div class="key">W</div><div class="tool-name">Move（位置）</div></div>
+    <div class="tool-btn"><div class="key">E</div><div class="tool-name">Rotate（回転）</div></div>
+    <div class="tool-btn"><div class="key">R</div><div class="tool-name">Scale（拡縮）</div></div>
+  </div>
+
+  <table>
+    <tr><th>ショートカット</th><th>機能</th></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>アンドゥ</td></tr>
+    <tr><td><kbd>G</kbd></td><td>直前のツール・操作を繰り返す</td></tr>
+    <tr><td>右クリック長押し</td><td>マーキングメニュー（選択対象に応じた操作メニュー）</td></tr>
+  </table>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>キーフレーム系ショートカット（<kbd>S</kbd> など）は <a href="maya_animation.html#keyframe">アニメーション ②</a> で扱います。</strong> ここでは「選ぶ・動かす・回す・拡縮」の4つと、右クリック長押しのマーキングメニューだけ覚えれば先へ進めます。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 参考リンク — 基本操作</div>
+    <div class="ref-links">
+      <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/" target="_blank" class="ext">📖 アニもぐCG: Mayaの基本操作【前編】</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya 入門ムービー</a>
+    </div>
+  </div>
+
+  <!-- ⑥ Outliner -->
+  <h2 id="outliner">⑥ Outliner &amp; Channel Box</h2>
+
+  <div class="cards-2">
+    <div class="card">
+      <h3 style="margin-top:0;">Outliner</h3>
+      <ul>
+        <li>シーン内の全オブジェクトの一覧</li>
+        <li>親子関係がツリーで見える</li>
+        <li>FBX読み込み後にスケルトン構造を確認するのに使う</li>
+        <li><strong>Show → Joints</strong> などでフィルタリング可能</li>
+        <li><kbd>Ctrl</kbd>+クリックで複数選択</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0;">Channel Box</h3>
+      <ul>
+        <li>選択オブジェクトの Translate / Rotate / Scale が見える</li>
+        <li>数値を直接入力できる</li>
+        <li>キーがついているチャンネルは赤く表示される</li>
+        <li>下段の <strong>INPUTS</strong> には作成履歴（polyCube1 等）が並び、作成後でも分割数などを変更できる</li>
+      </ul>
+    </div>
+  </div>
+
+  <a href="maya_modeling.html" class="next-link">
+    <div><div class="next-label">次のページ</div><div class="next-title">🧱 Maya モデリング & UV — 形を作り、展開図を開く</div></div>
+    <span class="next-arrow">→</span>
+  </a>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>
