@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>リギング課題：箱人形に骨を入れて動かす | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--accent-2); }
+  .page-hero .tag { background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.3); color: var(--accent); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(139,92,246,0.1), transparent); }
+
+  .goal-box { background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(34,211,238,0.08)); border: 1px solid rgba(139,92,246,0.3); border-radius: var(--radius); padding: 1.3rem 1.5rem; margin-bottom: 2rem; }
+  .goal-box h3 { margin: 0 0 0.6rem; font-size: 0.95rem; }
+  .goal-box ul { margin: 0; padding-left: 1.2rem; font-size: 0.87rem; line-height: 1.9; }
+
+  .step { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.5rem; overflow: hidden; }
+  .step-head { display: flex; align-items: center; gap: 0.9rem; background: var(--surface); padding: 0.8rem 1.2rem; border-bottom: 1px solid var(--border); }
+  .step-num { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.35); color: var(--accent); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
+  .step-head h3 { margin: 0; font-size: 0.98rem; }
+  .step-head .step-ref { margin-left: auto; font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+  .step-body { padding: 1.1rem 1.3rem; }
+  .step-body ol { padding-left: 1.3rem; font-size: 0.87rem; line-height: 1.9; margin-bottom: 0.8rem; }
+  .step-done { font-size: 0.8rem; color: var(--green); background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.2); border-radius: 6px; padding: 0.45rem 0.8rem; margin-top: 0.6rem; }
+  .step-stuck { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; }
+  .step-stuck a { color: var(--accent-2); text-decoration: none; border-bottom: 1px dashed rgba(34,211,238,0.4); }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--accent-2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="mb_animation_basics.html">アニメ基本</a>
+  <a href="mb_animation_workflows.html">アニメ実践</a>
+  <a href="maya_overview.html">Maya 概要</a>
+  <a href="maya_modeling.html">モデリング</a>
+  <a href="maya_animation.html">Maya アニメ</a>
+  <a href="maya_tutorial.html">通し課題</a>
+  <a href="maya_tutorial_rigging.html" class="active">リギング課題</a>
+  <a href="maya_roadmap_character.html">発展ロードマップ</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+  <a href="glossary.html">用語集</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">Maya · 実践</div>
+  <h1><span>リギング課題</span> — 箱人形に骨を入れて動かす</h1>
+  <p>超簡易な人型モデルを自作し、スケルトンを入れて、ポーズを付けて動かすまでの作業指示書。作り込みはしません——「メッシュが骨で動く」の仕組みを最短で一周して、リトポやエッジループの意味を先に体感するのが目的です。</p>
+  <div class="session-info">🪙 対応セッション：MY-S7〜S8（MY-S3 完了後ならいつでも。アニメーションフェーズ MY-S4〜S6 と並行可）</div>
+</div>
+
+<div class="content">
+
+  <div class="prereq">
+    <div class="prereq-title">📋 このページの前提</div>
+    <div class="prereq-pages">
+      <a href="maya_modeling.html">モデリング &amp; UV（②〜④の基本ツール）</a>
+      <a href="maya_roadmap_character.html#rigging">発展ロードマップ ③ リギングの中身（読み物）</a>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin:0.6rem 0 0;">UV・テクスチャはこの課題では使いません。操作の手つきは各 STEP の Start@Maya リギング編（16〜21）を横に置いて進めてください。</p>
+  </div>
+
+  <div class="goal-box">
+    <h3>🏁 完成条件（3つ揃ったらこの課題はクリア）</h3>
+    <ul>
+      <li><strong>モデル：</strong>頭・胴・腕・脚のある箱人形が1体ある（作り込みなし・左右対称）</li>
+      <li><strong>リグ：</strong>ジョイントで肘・膝・肩・股関節が曲がり、メッシュが追従する</li>
+      <li><strong>動き：</strong>ポーズを付けてキーを打ち、短いアニメーション（手を振る等）が再生できる</li>
+    </ul>
+  </div>
+
+  <div class="toc">
+    <h4>STEP 一覧</h4>
+    <ol start="0">
+      <li><a href="#step0">準備 — プロジェクトとメニューセット</a></li>
+      <li><a href="#step1">箱人形モデリング — 関節に分割を入れておく</a></li>
+      <li><a href="#step2">スケルトン作成 — ジョイントを中に組む</a></li>
+      <li><a href="#step3">バインド &amp; ウェイト最小調整</a></li>
+      <li><a href="#step4">ポーズ → キー → 再生（潰れを観察する）</a></li>
+      <li><a href="#step5">発展（任意）— HumanIK で MB に持ち込む</a></li>
+    </ol>
+  </div>
+
+  <!-- STEP 0 -->
+  <div class="step" id="step0">
+    <div class="step-head"><div class="step-num">0</div><h3>準備 — プロジェクトとメニューセット</h3><span class="step-ref">目安 10分</span></div>
+    <div class="step-body">
+      <ol>
+        <li><strong>File → Project Window</strong> で課題用プロジェクトを作成（例：<code>boxman_project</code>）</li>
+        <li>メニューセットを <strong>Rigging</strong>（<kbd>F3</kbd>）に切り替えられることを確認（モデリング中は <kbd>F2</kbd> と行き来する）</li>
+        <li><code>boxman_v01.mb</code> として保存</li>
+      </ol>
+      <div class="step-done">✔ 完了条件：プロジェクトが作られ、F2 / F3 のメニュー切り替えを確認した</div>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step" id="step1">
+    <div class="step-head"><div class="step-num">1</div><h3>箱人形モデリング — 関節に分割を入れておく</h3><span class="step-ref">目安 1〜2h</span></div>
+    <div class="step-body">
+      <ol>
+        <li>Cube で胴体を作り、上面・側面・底面のフェースから <kbd>Ctrl</kbd>+<kbd>E</kbd>（Extrude）で頭・腕・脚を伸ばす（プリミティブを並べて組み合わせてもよい——1メッシュの方が後のバインドが素直）</li>
+        <li><strong>肘・膝・肩・股関節に当たる位置に、Insert Edge Loop で分割を1〜2本入れる</strong>——ここが本課題の核。分割のない場所は曲がれない</li>
+        <li>片側だけ作って <strong>Mesh → Mirror</strong> で左右対称にしてもよい</li>
+        <li>形が決まったら <strong>Edit → Delete by Type → History</strong> と <strong>Modify → Freeze Transformations</strong>（バインド前の掃除。忘れると後で困る）</li>
+      </ol>
+      <div class="fig-slot">📷 fig: 箱人形と関節位置のエッジループ（実機セッションで撮影）</div>
+      <div class="step-done">✔ 完了条件：箱人形が1体。関節位置に分割が入っていて、ヒストリーが空・トランスフォームがゼロ</div>
+      <div class="step-stuck">🤔 作り込みたくなったら：この課題では禁止よりの非推奨。顔も指も要らない——目的は「動く仕組み」の理解で、造形は<a href="maya_roadmap_character.html">発展ロードマップ</a>の領域</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step" id="step2">
+    <div class="step-head"><div class="step-num">2</div><h3>スケルトン作成 — ジョイントを中に組む</h3><span class="step-ref">目安 1h</span></div>
+    <div class="step-body">
+      <ol>
+        <li>メニューセット Rigging（<kbd>F3</kbd>）→ <strong>Skeleton → Create Joints</strong></li>
+        <li>サイドビュー（<kbd>Space</kbd> で4分割 → Side）で腰 → 背骨 → 首 → 頭 の順にクリックして背骨の連鎖を作る</li>
+        <li>腰から脚（股関節 → 膝 → 足首）、胸から腕（肩 → 肘 → 手首）をそれぞれ作り、Outliner で親子階層を確認する</li>
+        <li>ジョイントに名前を付ける（<code>hips</code> / <code>spine</code> / <code>l_shoulder</code> …）。左側を作って <strong>Skeleton → Mirror Joints</strong> で右側を生成</li>
+        <li>ジョイントの位置がメッシュの関節（STEP 1 で分割を入れた場所）の内側に来ているかをビューで確認する</li>
+      </ol>
+      <div class="step-done">✔ 完了条件：Outliner で hips をルートとする1本の階層になっていて、全関節位置にジョイントがある</div>
+      <div class="step-stuck">🔗 手つき：<a href="https://area.autodesk.jp/movie/start-at-maya/16.html" target="_blank">Start@Maya 16. スケルトン作成</a>（補助ジョイントの <a href="https://area.autodesk.jp/movie/start-at-maya/17.html" target="_blank">17</a> はこの課題ではスキップでOK）</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step" id="step3">
+    <div class="step-head"><div class="step-num">3</div><h3>バインド &amp; ウェイト最小調整</h3><span class="step-ref">目安 1〜2h</span></div>
+    <div class="step-body">
+      <ol>
+        <li>メッシュとルートジョイント（hips）を選択 → <strong>Skin → Bind Skin</strong>（設定は既定でOK）</li>
+        <li>肩や膝のジョイントを <kbd>E</kbd> で回してみて、メッシュが追従することを確認 → 確認したら <kbd>Ctrl</kbd>+<kbd>Z</kbd> で戻す</li>
+        <li>曲げたときの食い込み・引っ張られが目立つ場所だけ、<strong>Skin → Paint Skin Weights</strong> で塗り直す（白＝そのジョイントに強く追従。ウェイトは合計1に自動正規化される）</li>
+        <li>全部を綺麗にしようとしない——「肩を曲げても腰が動かない」程度で合格</li>
+      </ol>
+      <div class="fig-slot">📷 fig: バインド直後の食い込みとウェイトペイント画面（実機セッションで撮影）</div>
+      <div class="step-done">✔ 完了条件：肘・膝・肩・股関節を曲げてもメッシュが破綻せず付いてくる</div>
+      <div class="step-stuck">🤔 詰まったら：バインド後に動かすと全体がズレる → STEP 1 の Freeze / Delete History を飛ばしている。<strong>Skin → Unbind Skin</strong> して掃除からやり直す。🔗 手つき：<a href="https://area.autodesk.jp/movie/start-at-maya/18.html" target="_blank">Start@Maya 18. スキニング</a></div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step" id="step4">
+    <div class="step-head"><div class="step-num">4</div><h3>ポーズ → キー → 再生（潰れを観察する）</h3><span class="step-ref">目安 1h</span></div>
+    <div class="step-body">
+      <ol>
+        <li>フレーム1で全ジョイントを選択して <kbd>S</kbd>（初期ポーズのキー）</li>
+        <li>フレーム15で腕のジョイントを回して「手を挙げる」ポーズ → <kbd>S</kbd>、フレーム30で戻して <kbd>S</kbd></li>
+        <li>再生して、箱人形が手を振ることを確認する</li>
+        <li><strong>観察：</strong>腕を大きく上げたとき、脇のメッシュがどう潰れる・伸びるかをよく見る</li>
+      </ol>
+      <div class="fig-slot">📷 fig: 手を挙げたポーズと脇の潰れ（実機セッションで撮影）</div>
+      <div class="step-done">✔ 完了条件：短いアニメが再生できる＝<strong>この課題クリア</strong></div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <p><strong>ここで見た「脇の潰れ」が、リトポロジーの存在理由：</strong> 分割が足りない・エッジの流れが関節に沿っていないメッシュは、どうウェイトを塗っても綺麗に曲がりません。<a href="maya_roadmap_character.html">発展ロードマップ</a>のリトポ工程で「変形に耐えるエッジループ」を整えるのは、今日この箱人形で見た潰れを防ぐためです。</p>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step" id="step5">
+    <div class="step-head"><div class="step-num">5</div><h3>発展（任意）— HumanIK で MB に持ち込む</h3><span class="step-ref">目安 1〜2h ⚠️ MB も使うため2トークン日</span></div>
+    <div class="step-body">
+      <ol>
+        <li>Maya で <strong>Skeleton → HumanIK</strong> を開き、自作スケルトンをキャラクタライズする（各ジョイントを HumanIK の定義にマッピング。MB の Characterize と同じ作業）</li>
+        <li>FBX で書き出して MB で開く</li>
+        <li>手持ちの Mocap データをリターゲットして、<strong>自作の箱人形が Mocap で歩き出す</strong>のを確認する</li>
+      </ol>
+      <div class="step-done">✔ 完了条件（任意）：自作モデルが既習の MB パイプラインに乗って動いた——ロードマップの出口を先取りで体験</div>
+      <div class="step-stuck">🔗 手つき：<a href="https://area.autodesk.jp/movie/start-at-maya/21.html" target="_blank">Start@Maya 21. HumanIK</a> ／ 既習：<a href="mb_overview.html">MB 概要（Characterize・Retarget）</a></div>
+    </div>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 この課題で使う参考リンク（Start@Maya リギング編）</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/movie/start-at-maya/16.html" target="_blank" class="doc">▶ Start@Maya 16. スケルトン作成</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/18.html" target="_blank" class="doc">▶ Start@Maya 18. スキニング</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/21.html" target="_blank" class="doc">▶ Start@Maya 21. HumanIK（STEP 5 用）</a>
+      <a href="maya_roadmap_character.html#rigging" class="doc">📖 発展ロードマップ ③ リギングの中身（19 IK・20 ブレンドシェイプは次の段階）</a>
+    </div>
+  </div>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>

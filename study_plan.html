@@ -84,6 +84,8 @@
   <a href="maya_modeling.html">モデリング</a>
   <a href="maya_animation.html">Maya アニメ</a>
   <a href="maya_tutorial.html">通し課題</a>
+  <a href="maya_tutorial_rigging.html">リギング課題</a>
+  <a href="maya_roadmap_character.html">発展ロードマップ</a>
   <a href="industry.html">業界</a>
   <a href="study_plan.html" class="active">学習プラン</a>
   <a href="glossary.html">用語集</a>
@@ -92,7 +94,7 @@
 <div class="page-hero">
   <div class="tag">Session Planning</div>
   <h1><span>MB / Maya</span><br>2トラック学習プラン</h1>
-  <p>MB トラック（10）と Maya トラック（6）＋共通バッファ（1）の2トラック構成。1セッション = 4〜6時間の想定で、各回のゴールと作業内容を明確にしています。トラックは独立して進められます。</p>
+  <p>MB トラック（10）と Maya トラック（8）＋共通バッファ（1）の2トラック構成。1セッション = 4〜6時間の想定で、各回のゴールと作業内容を明確にしています。トラックは独立して進められます。</p>
 </div>
 
 <div class="content">
@@ -103,7 +105,7 @@
       <div class="t-label">MotionBuilder セッション</div>
     </div>
     <div class="token-card maya">
-      <div class="t-num">6</div>
+      <div class="t-num">8</div>
       <div class="t-label">Maya セッション</div>
     </div>
     <div class="token-card buf">
@@ -119,7 +121,7 @@
 
   <div class="callout info">
     <span class="callout-icon">🪙</span>
-    <p><strong>計17トークンについて：</strong> モデリング（MY-S2）と UV（MY-S3）の追加で、旧構成の計15から +2 になっています。トークン残量が15のままの場合は、MY-S2 と MY-S3 を1セッションに圧縮（モデリングは小物1個・UV は展開〜チェッカー確認まで）すれば計15に収まります。逆に言えば、残量が17以上あるならこのプランのまま進めて問題ありません。</p>
+    <p><strong>計19トークンについて：</strong> 旧構成の計15に対し、モデリング・UV（MY-S2〜S3）で +2、リギング基礎（MY-S7〜S8）で +2 の計19になっています。残量が足りない場合の圧縮順：① MY-S7〜S8 を1セッションに圧縮（箱人形を粗くする）で18、② さらに MY-S2〜S3 も1セッションに圧縮で17、③ リギング基礎を後回しにすれば17のまま。逆に言えば、残量が19以上あるならこのプランのまま進めて問題ありません。</p>
   </div>
 
   <!-- PHASE 1 -->
@@ -491,6 +493,58 @@
         <a href="https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html" target="_blank" class="doc">▶ AREA JAPAN: Maya Graph Editor ムービー</a>
         <a href="https://area.autodesk.jp/column/tutorial/motionbuilder/cooperate_with_maya/" target="_blank" class="doc">📖 AREA JAPAN: MotionBuilder で Maya と連携する</a>
       </div>
+    </div>
+  </div>
+
+  <!-- MAYA TRACK PHASE 3 -->
+  <h2>📅 Maya トラック — フェーズ 3：リギング基礎（Maya × 2・並行可）</h2>
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-badge maya">Maya</span>
+      <div>
+        <div class="phase-title">箱人形を作って、骨を入れて、動かす</div>
+        <div class="phase-desc">「メッシュが骨で動く仕組み」を超簡易モデルで一周する。MY-S3 完了後ならいつでも——フェーズ2（アニメーション）と並行して差し込んでよい</div>
+        <div class="phase-read">📖 事前読み：<a href="maya_roadmap_character.html#rigging">発展ロードマップ ③ リギングの中身</a>（作業中は <a href="maya_tutorial_rigging.html">リギング課題</a> を横に置く）</div>
+      </div>
+    </div>
+
+    <div class="session-list">
+
+      <div class="session maya">
+        <div class="session-num maya"><div class="sn">MY-S7</div><div class="st">Maya</div></div>
+        <div class="session-body">
+          <h4>箱人形モデリング &amp; スケルトン作成</h4>
+          <div class="goal">🎯 ゴール：超簡易な人型メッシュに、階層の通ったスケルトンを仕込める</div>
+          <div class="session-check">✅ 達成チェック：<a href="maya_tutorial_rigging.html">リギング課題</a>の STEP 0〜2 を完了（関節位置に分割の入った箱人形＋hips をルートとするジョイント階層）でクリア</div>
+          <div class="phase-read">▶ 実践チュートリアル：<a href="maya_tutorial_rigging.html#step0">リギング課題 STEP 0〜2</a>（手つきは <a href="https://area.autodesk.jp/movie/start-at-maya/16.html" target="_blank">Start@Maya 16. スケルトン作成</a>）</div>
+          <ul class="session-todo">
+            <li>Cube + Extrude で箱人形を作る（作り込まない・関節位置に Insert Edge Loop）</li>
+            <li>Delete History / Freeze Transformations でバインド前の掃除</li>
+            <li>Create Joints で背骨 → 腕・脚のスケルトンを組み、Mirror Joints で左右対称に</li>
+            <li>ジョイントに命名して Outliner で階層を確認</li>
+          </ul>
+        </div>
+        <div class="session-hours">4〜5h</div>
+      </div>
+
+      <div class="session maya">
+        <div class="session-num maya"><div class="sn">MY-S8</div><div class="st">Maya</div></div>
+        <div class="session-body">
+          <h4>スキニング &amp; 動作確認</h4>
+          <div class="goal">🎯 ゴール：バインドとウェイトの最小調整で、箱人形をポーズ・アニメーションさせられる</div>
+          <div class="session-check">✅ 達成チェック：<a href="maya_tutorial_rigging.html">リギング課題</a>の STEP 3〜4 を完了（関節が破綻なく曲がり、手を振る短いアニメが再生できる）でクリア</div>
+          <div class="phase-read">▶ 実践チュートリアル：<a href="maya_tutorial_rigging.html#step3">リギング課題 STEP 3〜4</a>（手つきは <a href="https://area.autodesk.jp/movie/start-at-maya/18.html" target="_blank">Start@Maya 18. スキニング</a>）</div>
+          <ul class="session-todo">
+            <li>Bind Skin してジョイントを回し、メッシュの追従を確認</li>
+            <li>食い込みの目立つ場所だけ Paint Skin Weights で調整</li>
+            <li>ポーズ → S キーで短いアニメを作って再生</li>
+            <li>腕を上げたときの脇の潰れを観察する（リトポの意味の体感）</li>
+            <li>余力があれば STEP 5（HumanIK → MB で Mocap 流し・⚠️ 2トークン日）に挑戦</li>
+          </ul>
+        </div>
+        <div class="session-hours">4〜6h</div>
+      </div>
+
     </div>
   </div>
 

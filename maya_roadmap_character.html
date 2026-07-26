@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>発展ロードマップ — キャラクターモデリングへの道 | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--accent-2); }
+  .page-hero .tag { background: rgba(34,211,238,0.15); border-color: rgba(34,211,238,0.3); color: var(--accent-2); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(34,211,238,0.1), transparent); }
+
+  .road { display: flex; flex-direction: column; gap: 0; margin-bottom: 2.5rem; }
+  .road-item { display: flex; gap: 1.2rem; position: relative; }
+  .road-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 36px; }
+  .road-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0; background: rgba(34,211,238,0.15); border: 2px solid var(--accent-2); color: var(--accent-2); z-index: 1; }
+  .road-dot.done { background: rgba(16,185,129,0.15); border-color: var(--green); color: var(--green); }
+  .road-dot.rig { background: rgba(139,92,246,0.15); border-color: var(--accent); color: var(--accent); }
+  .road-line { flex: 1; width: 2px; background: var(--border); margin: 4px 0; min-height: 24px; }
+  .road-body { flex: 1; margin-bottom: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.3rem; }
+  .road-body h3 { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.4rem; }
+  .road-body p { font-size: 0.83rem; color: var(--muted); margin: 0 0 0.5rem; }
+  .road-meta { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.78rem; }
+  .road-meta .kw { color: var(--accent-2); }
+  .road-meta .tool { color: var(--amber); }
+  .road-meta .ref a { color: var(--accent-2); text-decoration: none; border-bottom: 1px dashed rgba(34,211,238,0.4); }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--accent-2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="mb_animation_basics.html">アニメ基本</a>
+  <a href="mb_animation_workflows.html">アニメ実践</a>
+  <a href="maya_overview.html">Maya 概要</a>
+  <a href="maya_modeling.html">モデリング</a>
+  <a href="maya_animation.html">Maya アニメ</a>
+  <a href="maya_tutorial.html">通し課題</a>
+  <a href="maya_tutorial_rigging.html">リギング課題</a>
+  <a href="maya_roadmap_character.html" class="active">発展ロードマップ</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+  <a href="glossary.html">用語集</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">Maya · 展望</div>
+  <h1><span>発展ロードマップ</span> — キャラクターモデリングへの道</h1>
+  <p>基礎のその先。キャラクター・モンスターを1体作れるようになるまでに、どんな工程が存在するかを見渡す地図です。実践手順ではなく「ステップの存在と意味」を知るための読み物——トークンを使わずに読めます。</p>
+  <div class="session-info">📖 読み物（セッション消費なし・学習プランのトークン計画には含まれない）</div>
+</div>
+
+<div class="content">
+
+  <div class="prereq">
+    <div class="prereq-title">📋 このページの前提</div>
+    <div class="prereq-pages">
+      <a href="maya_modeling.html">モデリング &amp; UV（基礎）</a>
+      <a href="maya_tutorial.html">通し課題（プロップ1個の完走）</a>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin:0.6rem 0 0;">「プロップ（小物）を作って UV を貼れる」が出発点です。各工程の深さはここでは扱わず、参考リンクの連載・動画に委ねます。</p>
+  </div>
+
+  <div class="toc">
+    <h4>このページの内容</h4>
+    <ol>
+      <li><a href="#road">全体ロードマップ — プロップからキャラクターまで</a></li>
+      <li><a href="#stages">工程カード（何をする工程か・Maya と専用ツールの分業）</a></li>
+      <li><a href="#rigging">リギングの中身 — Start@Maya 16〜21 が1本の道</a></li>
+      <li><a href="#order">学習順序の目安 — どの順で挑むか</a></li>
+    </ol>
+  </div>
+
+  <!-- ① 全体ロードマップ -->
+  <h2 id="road">① 全体ロードマップ — プロップからキャラクターまで</h2>
+  <p>キャラクター制作は「モデリングが上手くなる」の一本道ではなく、性質の違う工程の連なりです。出口（アニメーション）は既習の MB パイプラインに合流します。</p>
+
+  <div class="road">
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot done">今</div><div class="road-line"></div></div>
+      <div class="road-body"><h3>基礎（この教材の範囲）</h3><p>ポリゴン編集・UV 展開・テクスチャ確認・FBX 書き出し。プロップ1個を Unity まで届けられる状態。</p></div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">1</div><div class="road-line"></div></div>
+      <div class="road-body"><h3>リファレンス収集・事前計画</h3><p>作るものを決め、資料を集め、工程の時間配分を決める。手を動かす前の工程。</p></div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">2</div><div class="road-line"></div></div>
+      <div class="road-body"><h3>ベースメッシュ／ブロックアウト</h3><p>プリミティブでシルエットを取る。既習のモデリング操作の延長。</p></div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">3</div><div class="road-line"></div></div>
+      <div class="road-body"><h3>ハイポリ造形（スカルプト）</h3><p>粘土のように盛って削って、しわ・筋肉などのディテールを作る。ポリゴン数は気にしない。</p></div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">4</div><div class="road-line"></div></div>
+      <div class="road-body"><h3>リトポロジー</h3><p>ハイポリの上に、変形に耐える綺麗な低ポリメッシュを張り直す。</p></div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">5</div><div class="road-line"></div></div>
+      <div class="road-body"><h3>UV 展開 → ベイク → テクスチャリング</h3><p>既習の UV の発展形。ハイポリのディテールをテクスチャ（ノーマルマップ等）に焼き付けて低ポリで再現する。</p></div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">6</div><div class="road-line"></div></div>
+      <div class="road-body"><h3>ルックデブ（髪・衣装・ライティング）</h3><p>髪の毛・衣装・質感・光で「絵」として仕上がるかを確認する。</p></div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot rig">7</div><div class="road-line"></div></div>
+      <div class="road-body"><h3>リギング（スケルトン → スキニング → コントローラ）</h3><p>動かすための骨と仕組みを仕込む。詳細は<a href="#rigging">③</a>へ。</p></div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot rig">8</div></div>
+      <div class="road-body"><h3>アニメーション — 既習領域に合流 🎉</h3><p>HumanIK でキャラクタライズすれば、MB のリターゲット・Control Rig・Plot という<strong>すでに知っている世界</strong>に乗る。ロードマップの出口は既習の入り口。</p></div>
+    </div>
+  </div>
+
+  <!-- ② 工程カード -->
+  <h2 id="stages">② 工程カード — 何をする工程か・Maya と専用ツールの分業</h2>
+  <p>各工程の「意味」と「業界ではどのツールに分業されるか」。Maya だけでも一通り可能ですが、工程ごとに専用ツールが強い領域があります。</p>
+
+  <div class="road">
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">1</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>リファレンス収集・事前計画</h3>
+        <p>参考画像を集めてイメージボードを作り、ラフを描き、各工程の時間配分を決める。「何を作るか」が曖昧なまま造形に入るのが最大の手戻り要因。</p>
+        <div class="road-meta">
+          <span class="kw">🔑 リファレンスボード／三面図／ブロックアウト計画</span>
+          <span class="tool">🛠 Maya 外の工程（PureRef・Pinterest・ArtStation 等）</span>
+          <span class="ref">🔗 <a href="https://area.autodesk.jp/column/tutorial/cg-character-workflow/01-planning-block-out/" target="_blank">AREA JAPAN: CGキャラクター制作ワークフロー 第1回（事前計画とモデリングの基本）</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">2</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>ベースメッシュ／ブロックアウト</h3>
+        <p>プリミティブを並べてキャラクターのシルエットと比率を取る。手法には BOX MODELING（トポロジー重視）・PLANE MODELING・PRIMITIVE MODELING（スピード重視）などの型がある。<strong>使う操作は既習の Extrude / Bevel / Multi-Cut そのもの。</strong></p>
+        <div class="road-meta">
+          <span class="kw">🔑 シルエット／プロポーション／ボックスモデリング</span>
+          <span class="tool">🛠 Maya で完結（既習範囲の延長）</span>
+          <span class="ref">🔗 <a href="https://area.autodesk.jp/column/tutorial/cg-character-workflow/02-modeling/" target="_blank">AREA JAPAN: 同連載 第2回（ラフモデルから作り込みまで）</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">3</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>ハイポリ造形（スカルプト）</h3>
+        <p>ブラシで盛る・削る・なでる、粘土造形のデジタル版。しわ・筋肉・鱗などの有機的ディテールはポリゴンを1枚ずつ編集するより圧倒的に速い。この段階ではポリゴン数を気にせず数百万ポリゴンまで盛る。</p>
+        <div class="road-meta">
+          <span class="kw">🔑 ブラシ／サブディビジョンレベル／有機的ディテール</span>
+          <span class="tool">🛠 業界標準は ZBrush。Maya にもスカルプトツールあり（入門はここからで十分）</span>
+          <span class="ref">🔗 <a href="https://area.autodesk.jp/movie/start-at-maya/10.html" target="_blank">Start@Maya 10. スカルプトツールとスムージング</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">4</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>リトポロジー</h3>
+        <p>ハイポリは重すぎて動かせないので、その表面に沿って<strong>変形に耐える綺麗な低ポリメッシュを張り直す</strong>。関節・顔には「曲がる場所に沿ったエッジループ」が必要で、ここの品質が後のスキニングの苦労を決める。手動（精密）と自動（高速・要調整）の使い分けがある。</p>
+        <div class="road-meta">
+          <span class="kw">🔑 エッジフロー／ポリゴン予算／手動 vs 自動リトポ</span>
+          <span class="tool">🛠 Maya は Quad Draw。自動系は ZBrush の ZRemesher が代表</span>
+          <span class="ref">🔗 <a href="https://garagefarm.net/jp-blog/retopology-a-comprehensive-guide-to-3d-model-optimization" target="_blank">GarageFarm: リトポロジー総合ガイド（日本語）</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">5</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>UV 展開（発展）→ ベイク → テクスチャリング</h3>
+        <p>UV は既習の型（投影 → Cut/Sew → Unfold → Layout）のまま、シェル数と解像度管理（テクセル密度）が増える。<strong>ベイク</strong>はハイポリの凹凸をノーマルマップ等のテクスチャに焼き付けて低ポリで再現する工程——「ハイポリを作った意味」はここで回収される。テクスチャは PBR（ベースカラー／ラフネス／メタルネス）で作る——<strong>Unity の PBR マテリアルと同じ概念</strong>なので、出口の想像はつきやすいはず。</p>
+        <div class="road-meta">
+          <span class="kw">🔑 ノーマルマップ／AO／テクセル密度／PBR</span>
+          <span class="tool">🛠 テクスチャリングの業界標準は Substance Painter（ベイクも兼ねる）。Maya + 手描きでも可</span>
+          <span class="ref">🔗 理屈の基礎は <a href="maya_modeling.html#uv">モデリング & UV ⑤</a> の延長</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot">6</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>ルックデブ（髪・衣装・ライティング）</h3>
+        <p>髪の毛（カード方式や XGen）・衣装・ライティングを組んで「絵として成立するか」を確認する仕上げ工程。キャラクターの印象の大部分は実はここで決まる。</p>
+        <div class="road-meta">
+          <span class="kw">🔑 ヘアカード／XGen／ライティング／ポージング</span>
+          <span class="tool">🛠 Maya（XGen・Arnold）。衣装のシミュレーション造形は Marvelous Designer が代表</span>
+          <span class="ref">🔗 <a href="https://area.autodesk.jp/column/tutorial/cg-character-workflow/03-uv-hair-lighting-rendering/" target="_blank">AREA JAPAN: 同連載 第3回（UV展開・髪の毛・ライティング・絵作り）</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ リギング -->
+  <h2 id="rigging">③ リギングの中身 — Start@Maya 16〜21 が1本の道</h2>
+  <p>「動かせるキャラクター」にする工程。中身は段階に分かれていて、公式の Start@Maya がちょうどこの順で1本の連載になっています。</p>
+
+  <div class="road">
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot rig">a</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>スケルトン作成</h3>
+        <p>メッシュの中にジョイント（骨）の階層を組む。骨の位置＝曲がる場所の定義。</p>
+        <div class="road-meta"><span class="ref">🔗 <a href="https://area.autodesk.jp/movie/start-at-maya/16.html" target="_blank">Start@Maya 16. スケルトン作成</a> ／ <a href="https://area.autodesk.jp/movie/start-at-maya/17.html" target="_blank">17. 補助ジョイントの作成</a></span></div>
+      </div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot rig">b</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>スキニング（バインド &amp; ウェイトペイント）</h3>
+        <p>メッシュを骨に結びつけ、「各頂点がどの骨にどれだけ追従するか」（ウェイト）を塗って調整する。リトポの品質がここで効いてくる。<strong>Unity で見た SkinnedMeshRenderer のボーンウェイトを、作る側から触る工程。</strong></p>
+        <div class="road-meta"><span class="kw">🔑 バインド／ウェイト正規化／ウェイトペイント</span><span class="ref">🔗 <a href="https://area.autodesk.jp/movie/start-at-maya/18.html" target="_blank">Start@Maya 18. スキニング</a></span></div>
+      </div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot rig">c</div><div class="road-line"></div></div>
+      <div class="road-body">
+        <h3>コントローラ・IK・表情</h3>
+        <p>アニメーターが触りやすい操作系（コントローラ・コンストレイント・IK）を組み、表情はブレンドシェイプ（メッシュの変形ターゲット）で作る。</p>
+        <div class="road-meta"><span class="kw">🔑 コンストレイント／IK／ブレンドシェイプ</span><span class="ref">🔗 <a href="https://area.autodesk.jp/movie/start-at-maya/19.html" target="_blank">Start@Maya 19. コンストレイントとIK</a> ／ <a href="https://area.autodesk.jp/movie/start-at-maya/20.html" target="_blank">20. ブレンドシェイプ</a></span></div>
+      </div>
+    </div>
+    <div class="road-item">
+      <div class="road-left"><div class="road-dot rig">d</div></div>
+      <div class="road-body">
+        <h3>HumanIK — MB への接続点</h3>
+        <p>人型ならスケルトンを HumanIK でキャラクタライズする。<strong>これは MB で既にやっている Characterize と同じ仕組み</strong>——ここまで来れば、自作キャラに Mocap を流し込んで Control Rig で直す、という既習のパイプラインが自分のキャラクターで回る。</p>
+        <div class="road-meta"><span class="ref">🔗 <a href="https://area.autodesk.jp/movie/start-at-maya/21.html" target="_blank">Start@Maya 21. HumanIK</a> ／ 既習：<a href="mb_overview.html">MB 概要（Characterize）</a></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <p><strong>リギングはモデリング完成を待たなくていい：</strong> 「箱人形に骨を入れて動かす」体験を先にしておくと、リトポ工程で「何のためにエッジループを整えるのか」が腹落ちします。この体験は<strong>学習プランの MY-S7〜S8（<a href="maya_tutorial_rigging.html">リギング課題</a>）として基礎に組み込み済み</strong>——このページの中で唯一、いま実践する工程です。</p>
+  </div>
+
+  <!-- ④ 学習順序 -->
+  <h2 id="order">④ 学習順序の目安 — どの順で挑むか</h2>
+  <p>いきなり人型に挑まず、難度の階段を上る順序が定石です。人型（特に顔）は「見る側の目が肥えている」ため破綻が最も目立ちます。</p>
+
+  <table>
+    <tr><th>段階</th><th>作るもの</th><th>新しく学ぶこと</th></tr>
+    <tr><td><strong>A</strong>（既習の延長）</td><td>複雑めのプロップ（武器・家具・機械）</td><td>追加なし。既習ツールの習熟とトポロジー管理</td></tr>
+    <tr><td><strong>B</strong></td><td>有機物の小物（食べ物・植物・岩）</td><td>スカルプト入門（Maya スカルプトツールで可）</td></tr>
+    <tr><td><strong>C</strong></td><td>シンプルなモンスター・クリーチャー1体</td><td>スカルプト → リトポ → ベイク → テクスチャの1周通し。人型より自由度が高く、多少の崩れが「個性」で済む</td></tr>
+    <tr><td><strong>D</strong></td><td>C のモンスターにリギング</td><td>スケルトン → スキニング → コントローラ。動かして初めてリトポの良し悪しが見える（骨入れの基本は <a href="maya_tutorial_rigging.html">リギング課題</a>＝MY-S7〜S8 で既習）</td></tr>
+    <tr><td><strong>E</strong>（最難関）</td><td>人型キャラクター</td><td>顔のトポロジー規約・表情ブレンドシェイプ・髪と衣装。HumanIK で MB パイプラインに接続</td></tr>
+  </table>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>このページの位置づけ：</strong> 各工程の中身は1工程ごとに教材1冊分の深さがあります。ここは「ステップの存在と順序」を知るための地図に留め、実際に挑む段階になったら該当工程の連載・動画（各カードのリンク）から入ってください。トークン計画（学習プラン）にこの範囲は含めていません——基礎15〜17トークンの完走が先です。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 このページの参考リンク（日本語・公式中心）</div>
+    <div class="ref-links">
+      <a href="https://area.autodesk.jp/column/tutorial/cg-character-workflow/01-planning-block-out/" target="_blank" class="doc">📖 AREA JAPAN: CGキャラクター制作ワークフロー（全3回連載・工程全体の実例）</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya シリーズ目次（10 スカルプト／16〜21 リギング編）</a>
+      <a href="https://garagefarm.net/jp-blog/retopology-a-comprehensive-guide-to-3d-model-optimization" target="_blank" class="ext">📖 GarageFarm: リトポロジー総合ガイド</a>
+    </div>
+  </div>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>

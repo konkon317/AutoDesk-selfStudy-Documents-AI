@@ -136,6 +136,8 @@
   <a href="maya_modeling.html">モデリング</a>
   <a href="maya_animation.html">Maya アニメ</a>
   <a href="maya_tutorial.html">通し課題</a>
+  <a href="maya_tutorial_rigging.html">リギング課題</a>
+  <a href="maya_roadmap_character.html">発展ロードマップ</a>
   <a href="industry.html">業界</a>
   <a href="study_plan.html">学習プラン</a>
   <a href="glossary.html">用語集</a>
@@ -147,7 +149,7 @@
   <p>Autodesk Flex トークンを最大限に活かすための、ゴール逆算型スタディマップ。<br>MB と Maya の2トラック構成。1セッション = 4〜6時間 の想定で設計されています。</p>
   <div class="hero-stats">
     <div class="stat"><div class="stat-num">10</div><div class="stat-label">MB トラック</div></div>
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Maya トラック</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Maya トラック</div></div>
     <div class="stat"><div class="stat-num">1</div><div class="stat-label">共通バッファ</div></div>
   </div>
 </div>
@@ -156,15 +158,16 @@
   <div class="token-banner">
     <div class="token-icon">🪙</div>
     <div class="token-text">
-      <h3>トークン計画イメージ（計17トークン = MB 10 + Maya 6 + バッファ 1）</h3>
-      <p>1マス = 1トークン（1日分）。MotionBuilder と Maya は別カウント。モデリング・UV の追加で旧15構成から +2 — 残量が15のままなら、Maya トラックのモデリングと UV を1セッションに圧縮して15に収める。</p>
+      <h3>トークン計画イメージ（計19トークン = MB 10 + Maya 8 + バッファ 1）</h3>
+      <p>1マス = 1トークン（1日分）。MotionBuilder と Maya は別カウント。モデリング・UV（+2）とリギング基礎（+2）で旧15構成から +4 — 残量が足りない場合の圧縮案は<a href="study_plan.html" style="color:var(--accent-2);">学習プラン</a>冒頭を参照。</p>
       <div class="token-meter">
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
-        <div class="token-pip avail"></div><div class="token-pip avail"></div>
+        <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
+        <div class="token-pip avail"></div>
       </div>
     </div>
   </div>
@@ -198,6 +201,10 @@
     <div class="check-item unknown">
       <span class="check-icon">📚</span>
       <div class="check-text"><strong>Maya モデリング・UV</strong><span>今回新規に学ぶ領域。UV の概念は Unity 文脈で把握済み — 編集操作をここで身につける</span></div>
+    </div>
+    <div class="check-item unknown">
+      <span class="check-icon">📚</span>
+      <div class="check-text"><strong>Maya リギング基礎</strong><span>今回新規に学ぶ領域。箱人形で「メッシュが骨で動く仕組み」を一周する — キャラクター制作の先取り体験</span></div>
     </div>
   </div>
 
@@ -234,7 +241,7 @@
   </div>
 
   <div class="section-title" style="margin-top:3rem;">📖 学習パス B — Maya トラック</div>
-  <p style="font-size:0.85rem; color:var(--muted); margin:-0.5rem 0 1.25rem;">MB トラックと独立して進められます。ただし FBX 持ち込みを扱う「アニメーション」は、MB トラックで書き出した FBX があると実データで練習できます。</p>
+  <p style="font-size:0.85rem; color:var(--muted); margin:-0.5rem 0 1.25rem;">MB トラックと独立して進められます。FBX 持ち込みを扱う「アニメーション」は、MB トラックで書き出した FBX があると実データで練習できます。リギング基礎（<a href="maya_tutorial_rigging.html" style="color:var(--accent-2);">リギング課題</a>・MY-S7〜S8）はモデリング基礎の後ならいつでも並行で差し込めます。</p>
   <div class="cards">
     <a href="maya_overview.html" class="card-nav">
       <div class="card-icon">🖥️</div>
@@ -257,6 +264,20 @@
       <p>キーフレーム・Graph Editor・MB から FBX で持ち込む流れ。MB 側の経験を Maya の道具立てに読み替える。</p>
       <span class="card-tag">Maya × 3（MY-S4〜S6）</span>
     </a>
+    <a href="maya_tutorial.html" class="card-nav">
+      <div class="card-icon">🖐</div>
+      <div class="card-num">実践 · Maya</div>
+      <h3>通し課題 — マグカップを Unity まで</h3>
+      <p>STEP 02（モデリング &amp; UV）の実践パート。作業指示書の STEP 0〜7 で、小物1個をモデリングから Unity 表示確認まで完走する。</p>
+      <span class="card-tag">MY-S2〜S3 の実践</span>
+    </a>
+    <a href="maya_tutorial_rigging.html" class="card-nav">
+      <div class="card-icon">🦴</div>
+      <div class="card-num">実践 · Maya</div>
+      <h3>リギング課題 — 箱人形を動かす</h3>
+      <p>超簡易人型を作って骨入れ → スキニング → 動作確認の一周。モデリング基礎の後ならいつでも、アニメーションと並行して差し込める。</p>
+      <span class="card-tag">MY-S7〜S8 の実践</span>
+    </a>
   </div>
 
   <div class="section-title" style="margin-top:3rem;">📚 参考・計画 — いつでも開く</div>
@@ -274,6 +295,13 @@
       <h3>2トラック学習プラン</h3>
       <p>MB トラック・Maya トラックそれぞれのセッション目標・やること・達成チェックを一覧化。トークンの使い方もここで確認。</p>
       <span class="card-tag">セッション設計図</span>
+    </a>
+    <a href="maya_roadmap_character.html" class="card-nav">
+      <div class="card-icon">🗺️</div>
+      <div class="card-num">展望</div>
+      <h3>発展ロードマップ</h3>
+      <p>基礎のその先——キャラクター・モンスターを作れるようになるまでの工程地図。スカルプト・リトポ・ベイク・リギングの「存在と順序」を知る。</p>
+      <span class="card-tag">読み物・トークン消費なし</span>
     </a>
     <a href="glossary.html" class="card-nav">
       <div class="card-icon">📖</div>
@@ -345,11 +373,19 @@
       </div>
     </div>
     <div class="roadmap-item">
-      <div class="roadmap-left"><div class="roadmap-dot joint">8</div></div>
+      <div class="roadmap-left"><div class="roadmap-dot joint">8</div><div class="roadmap-line"></div></div>
       <div class="roadmap-content">
         <h4>MB → Maya FBX パイプライン</h4>
         <p>MBで仕上げたアニメーションをMayaで開き、レンダリング・最終調整まで繋げる。</p>
         <span class="session-badge maya">Maya × 1（+ MB）</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot maya">9</div></div>
+      <div class="roadmap-content">
+        <h4>リギング基礎 — 箱人形に骨を入れて動かす（並行可）</h4>
+        <p>超簡易人型を自作してスケルトン・スキニングを一周。6 以降（アニメーション）と並行して差し込んでよい。</p>
+        <span class="session-badge maya">Maya × 2</span>
       </div>
     </div>
   </div>
