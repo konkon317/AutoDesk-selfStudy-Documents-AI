@@ -246,10 +246,22 @@
       <td>実践ワークフロー編。Animation Layer・Plot 3方向・Mocap×手付けの部分上書き3アプローチ・人型以外。</td>
     </tr>
     <tr>
-      <td><code>maya_basics.html</code></td>
+      <td><code>maya_overview.html</code></td>
       <td><span class="tag tag-maya">Maya · 01</span></td>
       <td>スカイブルー (#38bdf8)</td>
-      <td>Maya 入門。UI・キーフレーム・Graph Editor・FBX パイプライン。MB 経験者向け差分比較あり。</td>
+      <td>Maya パスの入口。工程マップ（ハブ）・位置づけ・UI・ナビゲーション・Q/W/E/R・Outliner &amp; Channel Box。MB 経験者向け差分比較あり。</td>
+    </tr>
+    <tr>
+      <td><code>maya_modeling.html</code></td>
+      <td><span class="tag tag-maya">Maya · 02</span></td>
+      <td>スカイブルー (#38bdf8)</td>
+      <td>モデリング &amp; UV。ポリゴン構造・プリミティブ・Extrude 系ツール・UV Editor（投影→Cut/Sew→Unfold→Layout→チェッカー確認の型）・マテリアル入り口。Unity 経験（UV 概念既知）前提の差分構成。</td>
+    </tr>
+    <tr>
+      <td><code>maya_animation.html</code></td>
+      <td><span class="tag tag-maya">Maya · 03</span></td>
+      <td>スカイブルー (#38bdf8)</td>
+      <td>Maya アニメーション。キーフレーム・Graph Editor・タンジェント・MB→Maya FBX パイプライン（旧 maya_basics.html の⑦〜⑨を継承）。</td>
     </tr>
     <tr>
       <td><code>industry.html</code></td>
@@ -261,13 +273,13 @@
       <td><code>study_plan.html</code></td>
       <td><span class="tag tag-plan">PLAN</span></td>
       <td>パープル (#a78bfa)</td>
-      <td>15 セッション学習プラン。フェーズ別セッション一覧・ゴール・作業リスト・参考リンク。</td>
+      <td>2トラック学習プラン（MB-S1〜S10 / MY-S1〜S6 / 共通バッファ B1・計17トークン）。フェーズ別セッション一覧・ゴール・達成チェック・参考リンク。</td>
     </tr>
     <tr>
       <td><code>glossary.html</code></td>
       <td><span class="tag tag-idx">参考</span></td>
       <td>—（デフォルトのパープル）</td>
-      <td>用語集。40語・5カテゴリ・1行定義＋詳細セクションへのリンク。本文の <code>a.term</code> リンクの飛び先。</td>
+      <td>用語集。44語・5カテゴリ・1行定義＋詳細セクションへのリンク。本文の <code>a.term</code> リンクの飛び先。</td>
     </tr>
     <tr>
       <td><code>common.css</code></td>
@@ -358,7 +370,9 @@
     <tr><td><code>study_plan.html</code></td><td><code>.session-check</code>, <code>.phase-read</code></td><td>セッションの達成チェック行・フェーズの事前読みリンク。</td></tr>
     <tr><td><code>industry.html</code></td><td><code>.position-box</code></td><td>MB のパイプライン上の立ち位置フロー図。</td></tr>
     <tr><td><code>industry.html</code></td><td><code>.industry-grid</code>, <code>.industry-card</code></td><td>4業界カードグリッド（ゲーム/映像/バーチャル/広告）。</td></tr>
-    <tr><td><code>maya_basics.html</code></td><td><code>.tool-row</code>, <code>.tool-btn</code></td><td>Q/W/E/R ツールボタン表示。</td></tr>
+    <tr><td><code>maya_overview.html</code></td><td><code>.tool-row</code>, <code>.tool-btn</code>, <code>.ui-diagram</code></td><td>Q/W/E/R ツールボタン表示・UI 図解枠。</td></tr>
+    <tr><td><code>maya_modeling.html</code></td><td><code>.comp-grid</code>, <code>.comp-card</code>, <code>.uv-diagram</code>, <code>.flow-steps</code>, <code>.flow-step</code></td><td>Vertex/Edge/Face 3枚カード・UV 展開図解枠・番号付き手順（CSS カウンター）。</td></tr>
+    <tr><td><code>maya_animation.html</code></td><td><code>.graph-box</code>, <code>.tangent-grid</code>, <code>.tangent-card</code>, <code>.pipeline</code></td><td>Graph Editor 図解枠・タンジェント3種カード・FBX パイプラインフロー。</td></tr>
     <tr><td><code>study_plan.html</code></td><td><code>.session</code>, <code>.phase</code></td><td>セッションカード・フェーズコンテナ。<code>.session-num</code> で MB/Maya/合同を色分け。</td></tr>
   </table>
 
@@ -398,6 +412,7 @@
   <div class="res-group">
     <h4>AREA JAPAN — Maya</h4>
     <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank" class="res-name">Start@Maya 入門ムービー</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/22.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/" target="_blank" class="res-name">Start@Maya シリーズトップ（モデリング・UV 回を含む）</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/</span></div>
     <div class="res-item"><a href="https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html" target="_blank" class="res-name">Maya Graph Editor ムービー</a><span class="res-url">https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html</span></div>
   </div>
 
@@ -406,6 +421,7 @@
     <div class="res-item"><a href="https://help.autodesk.com/cloudhelp/2024/JPN/MotionBuilder/files/GUID-17E2AD49-708B-4E99-84A0-210890B09948.htm" target="_blank" class="res-name">MB ヘルプ日本語版 チュートリアル目次（2024）</a><span class="res-url">https://help.autodesk.com/cloudhelp/2024/JPN/MotionBuilder/files/GUID-17E2AD49-708B-4E99-84A0-210890B09948.htm</span></div>
     <div class="res-item"><span class="res-name">MB Plot（KN JPN）</span><span class="res-url">https://knowledge.autodesk.com/ja/support/motionbuilder/.../GUID-FFC123CA-62D6-440E-93F8-D9027C0D1B42-htm.html</span></div>
     <div class="res-item"><a href="https://knowledge.autodesk.com/ja/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2020/JPN/Maya-Animation/files/GUID-6D38EAEA-6032-471E-BD0E-54A74D4443C0-htm.html" target="_blank" class="res-name">Maya Graph Editor（KN JPN）</a><span class="res-url">https://knowledge.autodesk.com/ja/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2020/JPN/Maya-Animation/files/GUID-6D38EAEA-6032-471E-BD0E-54A74D4443C0-htm.html</span></div>
+    <div class="res-item"><a href="https://help.autodesk.com/view/MAYAUL/2024/JPN/" target="_blank" class="res-name">Maya ヘルプ日本語版トップ（2024）— モデリング / UV の一次資料</a><span class="res-url">https://help.autodesk.com/view/MAYAUL/2024/JPN/</span></div>
   </div>
 
   <div class="res-group">
@@ -449,14 +465,14 @@
 
   <div class="warn">
     注意：common.css に nav の <em>スタイル</em> は含まれているが、nav の <em>HTML</em> は各ファイルにコピーで持つ（SSI・JSなし）。
-    ページを追加・削除したら 9 ファイル全ての nav を手動更新すること。
+    ページを追加・削除したら 11 ファイル全ての nav を手動更新すること。
   </div>
 
-  <h3>現在のナビゲーションリンク順（2026-07-25 再構成後）</h3>
-  <pre><code>🏠 ホーム → MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya基礎 → 業界 → 学習プラン → 用語集</code></pre>
+  <h3>現在のナビゲーションリンク順（2026-07-26 Maya 3分割後）</h3>
+  <pre><code>🏠 ホーム → MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya概要 → モデリング → Mayaアニメ → 業界 → 学習プラン → 用語集</code></pre>
 
   <h3>next-link チェーン（ページ末尾の「次のページ」導線）</h3>
-  <pre><code>MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya基礎 → 業界 → 学習プラン
+  <pre><code>MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya概要 → モデリング → Mayaアニメ → 業界 → 学習プラン
 （glossary は参照ページのためチェーン外・next-link なし）</code></pre>
   <p>nav 順と next-link チェーンは<strong>常に同じ順序を保つ</strong>こと。順序を変えるときは両方セットで更新する。</p>
 
@@ -468,9 +484,10 @@
   <ul>
     <li><strong>mb_overview.html</strong> — Story ウィンドウのセクションは現状簡易。実際に使い始めたらより詳しい解説を追加可能。（参考: <a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/04-how-to-use-story/" target="_blank">AREA JAPAN カットシーン第4回</a> / <a href="https://zenn.dev/guncys/articles/349c159d34062a" target="_blank">GUNCY'S 第4回</a>）</li>
     <li><strong>mb_control_rig.html</strong> — Auxiliary Effectors（膝・肘の補正）の説明が薄め。実務で使ったタイミングで補完できる。（参考: <a href="https://win-graphic.com/home/motionbuilder-no13" target="_blank">スプリングギルド No.13</a>）</li>
-    <li><strong>maya_basics.html</strong> — Playblast（プレビュー動画の書き出し）はタスクリストに記載のみ。実践後に専用セクション追加の余地あり。（参考: <a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank">AREA JAPAN Start@Maya</a>）</li>
+    <li><strong>maya_animation.html</strong> — Playblast（プレビュー動画の書き出し）はタスクリストに記載のみ。実践後に専用セクション追加の余地あり。（参考: <a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank">AREA JAPAN Start@Maya</a>）</li>
+    <li><strong>maya_modeling.html</strong> — モデリング・UV は入門レベル（小物1個・UV0 のみ）。リトポロジー・法線・複数マテリアルはスコープ外。深堀りが必要になったら拡張する。</li>
     <li><strong>industry.html</strong> — バーチャル制作（Vtuber 等）のセクションは概要のみ。業界詳細が必要なら拡張する。（参考: <a href="https://area.autodesk.jp/column/trend_tech/nextmedia_m_and_e/pipeline/" target="_blank">AREA JAPAN HumanIK パイプライン解説</a>）</li>
-    <li><strong>study_plan.html</strong> — フェーズ3以降（S11〜S15）の Maya セッションは入門レベルで止めている。深堀りが必要になったら Maya 専用ページを追加。（参考: <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%BE%8C%E7%B7%A8/" target="_blank">アニもぐCG 後編</a> / <a href="https://3dcg.comaroku.com/maya-grapheditor/" target="_blank">アニログ</a>）</li>
+    <li><strong>study_plan.html</strong> — Maya トラック（MY-S1〜S6）は入門レベルで止めている。深堀りが必要になったらセッションを追加。（参考: <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%BE%8C%E7%B7%A8/" target="_blank">アニもぐCG 後編</a> / <a href="https://3dcg.comaroku.com/maya-grapheditor/" target="_blank">アニログ</a>）</li>
   </ul>
 
   <h3>構造・スタイル面</h3>
@@ -493,7 +510,7 @@
       <li><code>study_plan.html</code> のみ ref-box 内のインデントが <strong>4 スペース</strong>（他ファイルは 2 スペース）。Edit ツール使用時は既存インデントに合わせること。</li>
       <li>参考リンクのクラスは <code>class="doc"</code>（公式・青）/ <code>class="ext"</code>（外部・グリーン）/ <code>class="yt"</code>（YouTube・赤）の 3 種。アイコン絵文字もセットで使う（📄 / 📖 / ▶）。</li>
       <li>日本語を含む URL は <strong>パーセントエンコーディング済みの形</strong>で href に書くこと（ブラウザが解釈できるが、確実性のため）。</li>
-      <li>nav は全ファイルを更新する必要があるため、ページ追加・削除時は 9 ファイル全部を確認すること（next-link チェーンもセットで）。</li>
+      <li>nav は全ファイルを更新する必要があるため、ページ追加・削除時は 11 ファイル全部を確認すること（next-link チェーンもセットで）。</li>
       <li><strong>用語の初出管理：</strong>新しい専門用語を本文に書くときは、glossary.html に1行定義を追加し、初出箇所に <code>&lt;a class="term" href="glossary.html#用語id"&gt;</code> でリンクする。ページ内で説明済みの用語にリンクは不要。</li>
       <li><strong>新ページの型：</strong>ページを追加するときは「冒頭に <code>.prereq</code>（前提ブロック）・区切りに <code>.checkpoint</code>・スクショ予定地に <code>.fig-slot</code>」の3点セットを踏襲する。</li>
     </ul>
@@ -544,6 +561,39 @@
     <li>index の「全体ロードマップ」セクション — study_plan のフェーズ構成の鏡なので、study_plan 側の構成を変えるときにセットで見直す</li>
     <li>参考リンクの選定・配置 — 今回のスコープ外（5章の基準は従来どおり有効）</li>
     <li>スクリーンショット — 実機起動が必要なため <code>.fig-slot</code> の枠だけ用意（7章の TODO 参照）</li>
+  </ul>
+
+
+  <!-- ========== 10. 2026-07-26 Maya 工程分割・2トラック化の記録 ========== -->
+  <h2>10. Maya 工程分割・2トラック化の記録（2026-07-26）</h2>
+
+  <h3>診断（当時の課題）</h3>
+  <ol>
+    <li><strong>Maya ページのアニメーション偏重</strong> — 旧 maya_basics.html は MB 連携の経緯からアニメーション周辺（キーフレーム・Graph Editor・FBX）に寄っており、モデリング・UV の工程が丸ごと存在しなかった。「Maya の基本」としては片翼</li>
+    <li><strong>学習パスの一本道と文脈の混在</strong> — 旧構成は S1〜S15 の通し番号で MB → Maya が一本に繋がっており、ツール（＝トークン・学習文脈）の区切りが構造に表れていなかった</li>
+  </ol>
+
+  <h3>設計判断</h3>
+  <div class="card">
+    <ul>
+      <li><strong>工程による3分割</strong> — maya_overview（共通基礎）/ maya_modeling（モデリング &amp; UV・新規）/ maya_animation（旧⑦〜⑨継承）。MB 側の4ページ構成（overview → 各工程）と対称にした。overview ①の「工程マップ」が3ページのハブを兼ねる</li>
+      <li><strong>UV は差分構成</strong> — ユーザーは UV の概念を Unity 文脈で把握済み・編集方法が未知。よって概念説明を最小化し、UV Editor の操作の型（投影 → Cut/Sew → Unfold → Layout → チェッカー確認）を主内容にした。Unity への接続（<code>Mesh.uv</code>・Generate Lightmap UVs）を注記で明示</li>
+      <li><strong>学習パスの2トラック化</strong> — index を「学習パス A（MB）/ B（Maya）」に、study_plan を MB トラック（フェーズ1〜2）+ Maya トラック（フェーズ1〜2）+ 共通バッファに再編。セッション番号はトラック別（MB-S1〜S10 / MY-S1〜S6 / B1）——通し番号は「一本道」の意味を引きずるため採用しない</li>
+      <li><strong>トークン計 15 → 17</strong> — モデリング（MY-S2）・UV（MY-S3）追加による +2。<strong>セーフライン</strong>：残量が15のままなら MY-S2 と MY-S3 を1セッションに圧縮すれば旧枠に収まる（study_plan 冒頭の callout に明記済み）</li>
+    </ul>
+  </div>
+
+  <h3>意図的に変えなかったもの</h3>
+  <ul>
+    <li>MB トラックの中身 — MB-S1〜S10 は旧 S1〜S10 の内容そのまま（番号表記のみ変更）</li>
+    <li>maya_animation の本文 — 旧 maya_basics ⑦〜⑨を移設（キーフレーム系ショートカット表は⑤から合流）。内容の書き換えはしていない</li>
+    <li>glossary の構造 — トポロジー・コンストラクションヒストリー・UV・シームの4語追加のみ（40 → 44語）</li>
+  </ul>
+
+  <h3>未確認・限界</h3>
+  <ul>
+    <li>新規参考リンク2件（Start@Maya シリーズトップ・Maya ヘルプ日本語版トップ）は URL の実在をブラウザで未確認。リンク切れなら5章の基準で差し替えること</li>
+    <li>トークンの実残量は未確認。計17前提の妥当性（vs MY-S2/S3 圧縮）はユーザーの残量確認待ち</li>
   </ul>
 
 </div>
