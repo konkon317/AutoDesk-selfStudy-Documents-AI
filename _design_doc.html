@@ -264,6 +264,12 @@
       <td>Maya アニメーション。キーフレーム・Graph Editor・タンジェント・MB→Maya FBX パイプライン（旧 maya_basics.html の⑦〜⑨を継承）。</td>
     </tr>
     <tr>
+      <td><code>maya_tutorial.html</code></td>
+      <td><span class="tag tag-maya">Maya · 実践</span></td>
+      <td>スカイブルー (#38bdf8)</td>
+      <td>通し課題（マグカップ → UV → テクスチャ → FBX → Unity 表示確認）。STEP 0〜7 の作業指示書形式・各 STEP に完了条件と fig-slot。next-link チェーン外（glossary と同じ参照ページ扱い）。MY-S2〜S3 の達成チェックの参照先。</td>
+    </tr>
+    <tr>
       <td><code>industry.html</code></td>
       <td><span class="tag tag-col">コラム</span></td>
       <td>アンバー (#fbbf24)</td>
@@ -373,6 +379,7 @@
     <tr><td><code>maya_overview.html</code></td><td><code>.tool-row</code>, <code>.tool-btn</code>, <code>.ui-diagram</code></td><td>Q/W/E/R ツールボタン表示・UI 図解枠。</td></tr>
     <tr><td><code>maya_modeling.html</code></td><td><code>.comp-grid</code>, <code>.comp-card</code>, <code>.uv-diagram</code>, <code>.flow-steps</code>, <code>.flow-step</code></td><td>Vertex/Edge/Face 3枚カード・UV 展開図解枠・番号付き手順（CSS カウンター）。</td></tr>
     <tr><td><code>maya_animation.html</code></td><td><code>.graph-box</code>, <code>.tangent-grid</code>, <code>.tangent-card</code>, <code>.pipeline</code></td><td>Graph Editor 図解枠・タンジェント3種カード・FBX パイプラインフロー。</td></tr>
+    <tr><td><code>maya_tutorial.html</code></td><td><code>.step</code>, <code>.step-head</code>, <code>.step-done</code>, <code>.goal-box</code></td><td>通し課題の STEP カード（番号・完了条件・詰まったら行）と完成条件ボックス。</td></tr>
     <tr><td><code>study_plan.html</code></td><td><code>.session</code>, <code>.phase</code></td><td>セッションカード・フェーズコンテナ。<code>.session-num</code> で MB/Maya/合同を色分け。</td></tr>
   </table>
 
@@ -410,9 +417,13 @@
   </div>
 
   <div class="res-group">
-    <h4>AREA JAPAN — Maya</h4>
-    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank" class="res-name">Start@Maya 入門ムービー</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/22.html</span></div>
-    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/" target="_blank" class="res-name">Start@Maya シリーズトップ（モデリング・UV 回を含む）</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/</span></div>
+    <h4>AREA JAPAN — Maya（Start@Maya は URL 番号＝表示番号・2桁ゼロ埋め。例：08.html）</h4>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/" target="_blank" class="res-name">Start@Maya シリーズ目次（全30回）</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/01.html" target="_blank" class="res-name">Start@Maya 1. インタフェース概要（2. カメラ操作 / 4. マニピュレータも採用）</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/01.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/07.html" target="_blank" class="res-name">Start@Maya 7. プロジェクト設定とプリミティブ / 8〜9. ポリゴンモデリング①②</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/07.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/13.html" target="_blank" class="res-name">Start@Maya 13〜14. UV展開の基本・便利な機能</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/13.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank" class="res-name">Start@Maya 22. アニメーションの基本（旧ラベル「入門ムービー（UI）」は誤り・C13 で修正）</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/22.html</span></div>
+    <div class="res-item"><a href="https://area.autodesk.jp/movie/start-at-maya/25.html" target="_blank" class="res-name">Start@Maya 25. キャッシュ再生とプレイブラスト</a><span class="res-url">https://area.autodesk.jp/movie/start-at-maya/25.html</span></div>
     <div class="res-item"><a href="https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html" target="_blank" class="res-name">Maya Graph Editor ムービー</a><span class="res-url">https://area.autodesk.jp/movie/maya-lt-learning-channel/20.html</span></div>
   </div>
 
@@ -454,6 +465,8 @@
     <div class="res-item"><a href="https://3dcg.comaroku.com/maya-grapheditor/" target="_blank" class="res-name">アニログ — Maya Graph Editor 基礎</a><span class="res-url">https://3dcg.comaroku.com/maya-grapheditor/</span></div>
     <div class="res-item"><a href="https://thankstotoday.com/maya-animation-grapheditor-basic1/" target="_blank" class="res-name">ThanksToToday — Graph Editor 基礎1</a><span class="res-url">https://thankstotoday.com/maya-animation-grapheditor-basic1/</span></div>
     <div class="res-item"><a href="https://akamarupro.com/maya-fbx-export-guide-error-fix-settings/" target="_blank" class="res-name">akamarupro — Maya FBX エクスポートガイド</a><span class="res-url">https://akamarupro.com/maya-fbx-export-guide-error-fix-settings/</span></div>
+    <div class="res-item"><a href="https://modelinghappy.com/archives/11800" target="_blank" class="res-name">MODELING HAPPY — コーヒーカップモデリング 16工程（GIF付き・通し課題の手つきの正）</a><span class="res-url">https://modelinghappy.com/archives/11800</span></div>
+    <div class="res-item"><a href="https://modelinghappy.com/archives/8471" target="_blank" class="res-name">MODELING HAPPY — UV展開で主に使う3機能</a><span class="res-url">https://modelinghappy.com/archives/8471</span></div>
   </div>
 
 
@@ -465,15 +478,15 @@
 
   <div class="warn">
     注意：common.css に nav の <em>スタイル</em> は含まれているが、nav の <em>HTML</em> は各ファイルにコピーで持つ（SSI・JSなし）。
-    ページを追加・削除したら 11 ファイル全ての nav を手動更新すること。
+    ページを追加・削除したら 12 ファイル全ての nav を手動更新すること。
   </div>
 
-  <h3>現在のナビゲーションリンク順（2026-07-26 Maya 3分割後）</h3>
-  <pre><code>🏠 ホーム → MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya概要 → モデリング → Mayaアニメ → 業界 → 学習プラン → 用語集</code></pre>
+  <h3>現在のナビゲーションリンク順（2026-07-26 通し課題追加後）</h3>
+  <pre><code>🏠 ホーム → MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya概要 → モデリング → Mayaアニメ → 通し課題 → 業界 → 学習プラン → 用語集</code></pre>
 
   <h3>next-link チェーン（ページ末尾の「次のページ」導線）</h3>
   <pre><code>MB概要 → Control Rig → アニメ基本 → アニメ実践 → Maya概要 → モデリング → Mayaアニメ → 業界 → 学習プラン
-（glossary は参照ページのためチェーン外・next-link なし）</code></pre>
+（glossary / maya_tutorial は参照ページのためチェーン外・next-link なし）</code></pre>
   <p>nav 順と next-link チェーンは<strong>常に同じ順序を保つ</strong>こと。順序を変えるときは両方セットで更新する。</p>
 
 
@@ -493,7 +506,7 @@
   <h3>構造・スタイル面</h3>
   <ul>
     <li><s>現状 MB ページが3つあり index のカードが増えている。ページ数が増えるなら index にカテゴリ別グルーピングを入れると見やすくなる。</s>（2026-07-25 対応済み：index は「学習パス STEP 01〜05」＋「参考・計画」の2グループ構成になった）</li>
-    <li>各ページの <code>.fig-slot</code>（スクリーンショット差し込み枠）が空のまま。実機セッションで撮影したら差し込む（FCurve エディタ・Character Controls・Animation Layer Editor・Plot ダイアログの4枚）。</li>
+    <li>各ページの <code>.fig-slot</code>（スクリーンショット差し込み枠）が空のまま。実機セッションで撮影したら差し込む（MB 側：FCurve エディタ・Character Controls・Animation Layer Editor・Plot ダイアログの4枚 ＋ 通し課題：STEP 1 断面・STEP 2 持ち手・STEP 5 UV シェル・STEP 7 Unity 表示の4枚）。</li>
     <li>参考リンクはセクション直下の <code>.ref-box</code> に配置しているが、将来的に「リソース一覧ページ」として切り出すことも可能。</li>
     <li><code>common.css</code> のコンポーネントは現状 MB/Maya 寄りに作られている。まったく別ソフト（例：Houdini）を追加するなら変数の色セットを増やすだけで対応できる。</li>
   </ul>
@@ -510,7 +523,7 @@
       <li><code>study_plan.html</code> のみ ref-box 内のインデントが <strong>4 スペース</strong>（他ファイルは 2 スペース）。Edit ツール使用時は既存インデントに合わせること。</li>
       <li>参考リンクのクラスは <code>class="doc"</code>（公式・青）/ <code>class="ext"</code>（外部・グリーン）/ <code>class="yt"</code>（YouTube・赤）の 3 種。アイコン絵文字もセットで使う（📄 / 📖 / ▶）。</li>
       <li>日本語を含む URL は <strong>パーセントエンコーディング済みの形</strong>で href に書くこと（ブラウザが解釈できるが、確実性のため）。</li>
-      <li>nav は全ファイルを更新する必要があるため、ページ追加・削除時は 11 ファイル全部を確認すること（next-link チェーンもセットで）。</li>
+      <li>nav は全ファイルを更新する必要があるため、ページ追加・削除時は 12 ファイル全部を確認すること（next-link チェーンもセットで）。</li>
       <li><strong>用語の初出管理：</strong>新しい専門用語を本文に書くときは、glossary.html に1行定義を追加し、初出箇所に <code>&lt;a class="term" href="glossary.html#用語id"&gt;</code> でリンクする。ページ内で説明済みの用語にリンクは不要。</li>
       <li><strong>新ページの型：</strong>ページを追加するときは「冒頭に <code>.prereq</code>（前提ブロック）・区切りに <code>.checkpoint</code>・スクショ予定地に <code>.fig-slot</code>」の3点セットを踏襲する。</li>
     </ul>
@@ -592,8 +605,32 @@
 
   <h3>未確認・限界</h3>
   <ul>
-    <li>新規参考リンク2件（Start@Maya シリーズトップ・Maya ヘルプ日本語版トップ）は URL の実在をブラウザで未確認。リンク切れなら5章の基準で差し替えること</li>
+    <li><s>新規参考リンク2件（Start@Maya シリーズトップ・Maya ヘルプ日本語版トップ）は URL の実在をブラウザで未確認。リンク切れなら5章の基準で差し替えること</s>（C13 で WebFetch により確認済み。ヘルプトップは JS シェルのため弱い確認）</li>
     <li>トークンの実残量は未確認。計17前提の妥当性（vs MY-S2/S3 圧縮）はユーザーの残量確認待ち</li>
+  </ul>
+
+
+  <!-- ========== 11. 2026-07-26 通し課題・実践リンク整備の記録（C13） ========== -->
+  <h2>11. 通し課題・実践リンク整備の記録（2026-07-26 / C13）</h2>
+
+  <h3>背景</h3>
+  <p>「実践的なチュートリアルが欲しい」という要望に対し、A（自作の通し課題ページ）と B（外部実践チュートリアルのセッション紐付け）の複合で対応した。</p>
+
+  <h3>設計判断</h3>
+  <div class="card">
+    <ul>
+      <li><strong>通し課題は「作業指示書」型</strong> — 既存ページが「機能別リファレンス（理屈が先）」なのに対し、maya_tutorial.html は手順だけに絞り、理屈は各 STEP からモデリングページへ、手つきの詳細は外部 GIF・動画へポインタする3層分担。スクショ未撮影のため、細かい手つきを自前で書かず実在確認済みの外部資料（GIF 付き）に委ねた</li>
+      <li><strong>チェーン外配置</strong> — nav には「通し課題」として載せるが、next-link の読み順チェーンには入れない（glossary と同じ参照ページ扱い）。読み順は「読む教材」の依存順であり、作業指示書は読み順を持たないため</li>
+      <li><strong>達成チェックの参照化</strong> — MY-S2/S3 の達成チェックを「通し課題 STEP N まで完了」の形式に置き換え。判定基準の実体を通し課題ページ側に一本化し、study_plan 側は参照だけ持つ</li>
+      <li><strong>実践行の形式</strong> — セッションカード内に <code>.phase-read</code> を流用した「▶ 実践チュートリアル」行を追加（MY-S1〜S4・S6）。新クラスは作らない</li>
+    </ul>
+  </div>
+
+  <h3>調査で判明した事実（リンク運用に影響）</h3>
+  <ul>
+    <li><strong>Start@Maya の URL は「表示番号・2桁ゼロ埋め」</strong>（08.html は存在・8.html は 404）</li>
+    <li><strong>既存の 22.html は「22. アニメーションの基本」</strong> — 従来「入門ムービー（UI・基本操作）」とラベルしていたのは誤り。UI 回の正体は 01.html。C13 で全箇所のラベル・リンク先を修正した</li>
+    <li>実在確認の強度に差がある：01 / 08 / 13 / 14 / シリーズ目次 / MODELING HAPPY 2記事は直接フェッチで確認。02 / 04 / 07 / 09 / 12 / 25 は公式目次ページのリンク一覧から取得（個別フェッチ未実施）。リンク切れ報告があったらまず後者を疑うこと</li>
   </ul>
 
 </div>
