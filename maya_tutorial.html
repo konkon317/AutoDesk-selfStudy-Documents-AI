@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>通し課題：マグカップを Unity まで | Autodesk 学習ガイド</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  nav a.active { color: var(--accent-2); }
+  .page-hero .tag { background: rgba(34,211,238,0.15); border-color: rgba(34,211,238,0.3); color: var(--accent-2); }
+  .page-hero::before { background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(34,211,238,0.1), transparent); }
+
+  .goal-box { background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(139,92,246,0.08)); border: 1px solid rgba(34,211,238,0.3); border-radius: var(--radius); padding: 1.3rem 1.5rem; margin-bottom: 2rem; }
+  .goal-box h3 { margin: 0 0 0.6rem; font-size: 0.95rem; }
+  .goal-box ul { margin: 0; padding-left: 1.2rem; font-size: 0.87rem; line-height: 1.9; }
+
+  .step { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.5rem; overflow: hidden; }
+  .step-head { display: flex; align-items: center; gap: 0.9rem; background: var(--surface); padding: 0.8rem 1.2rem; border-bottom: 1px solid var(--border); }
+  .step-num { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: rgba(34,211,238,0.15); border: 1px solid rgba(34,211,238,0.35); color: var(--accent-2); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
+  .step-head h3 { margin: 0; font-size: 0.98rem; }
+  .step-head .step-ref { margin-left: auto; font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+  .step-body { padding: 1.1rem 1.3rem; }
+  .step-body ol { padding-left: 1.3rem; font-size: 0.87rem; line-height: 1.9; margin-bottom: 0.8rem; }
+  .step-done { font-size: 0.8rem; color: var(--green); background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.2); border-radius: 6px; padding: 0.45rem 0.8rem; margin-top: 0.6rem; }
+  .step-stuck { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; }
+  .step-stuck a { color: var(--accent-2); text-decoration: none; border-bottom: 1px dashed rgba(34,211,238,0.4); }
+
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+  .toc h4 { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 1.2rem; font-size: 0.87rem; line-height: 2.2; }
+  .toc a { color: var(--text); text-decoration: none; }
+  .toc a:hover { color: var(--accent-2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Autodesk Study</span>
+  <a href="index.html">ホーム</a>
+  <a href="mb_overview.html">MB 概要</a>
+  <a href="mb_control_rig.html">Control Rig</a>
+  <a href="mb_animation_basics.html">アニメ基本</a>
+  <a href="mb_animation_workflows.html">アニメ実践</a>
+  <a href="maya_overview.html">Maya 概要</a>
+  <a href="maya_modeling.html">モデリング</a>
+  <a href="maya_animation.html">Maya アニメ</a>
+  <a href="maya_tutorial.html" class="active">通し課題</a>
+  <a href="industry.html">業界</a>
+  <a href="study_plan.html">学習プラン</a>
+  <a href="glossary.html">用語集</a>
+</nav>
+
+<div class="page-hero">
+  <div class="tag">Maya · 実践</div>
+  <h1><span>通し課題</span> — マグカップを Unity まで届ける</h1>
+  <p>モデリング → UV → テクスチャ → FBX 書き出し → Unity 表示確認までを1個の成果物で通す作業指示書。読み物ではなく、Maya を起動した状態で横に置いて使います。</p>
+  <div class="session-info">🪙 対応セッション：MY-S2〜S3（の実践パート）</div>
+</div>
+
+<div class="content">
+
+  <div class="prereq">
+    <div class="prereq-title">📋 このページの前提</div>
+    <div class="prereq-pages">
+      <a href="maya_overview.html">Maya 概要と基本操作</a>
+      <a href="maya_modeling.html">モデリング &amp; UV（機能の理屈はこちら）</a>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin:0.6rem 0 0;">このページは「手順」だけに絞っています。<strong>なぜそうするか</strong>はモデリング &amp; UV ページ、<strong>操作の詳しい手つき</strong>は各 STEP の参考リンク（GIF・動画）で補ってください。</p>
+  </div>
+
+  <div class="goal-box">
+    <h3>🏁 完成条件（3つ揃ったらこの課題はクリア）</h3>
+    <ul>
+      <li><strong>形状：</strong>持ち手つきのマグカップが、Smooth プレビュー（<kbd>3</kbd> キー）で破綻しない</li>
+      <li><strong>UV：</strong>チェッカーマップの正方形が全面でほぼ正方形に見える</li>
+      <li><strong>受け渡し：</strong>Unity のシーンにテクスチャ付きで表示される</li>
+    </ul>
+  </div>
+
+  <div class="toc">
+    <h4>STEP 一覧</h4>
+    <ol start="0">
+      <li><a href="#step0">準備 — プロジェクトと単位</a></li>
+      <li><a href="#step1">ベース形状 — Cylinder を器にする</a></li>
+      <li><a href="#step2">持ち手 — Extrude と Bridge</a></li>
+      <li><a href="#step3">面取りとスムーズ確認</a></li>
+      <li><a href="#step4">クリーンアップ — 履歴とトランスフォーム</a></li>
+      <li><a href="#step5">UV 展開</a></li>
+      <li><a href="#step6">チェッカー確認とテクスチャ</a></li>
+      <li><a href="#step7">FBX 書き出し → Unity 表示確認</a></li>
+    </ol>
+  </div>
+
+  <!-- STEP 0 -->
+  <div class="step" id="step0">
+    <div class="step-head"><div class="step-num">0</div><h3>準備 — プロジェクトと単位</h3><span class="step-ref">目安 15分</span></div>
+    <div class="step-body">
+      <ol>
+        <li><strong>File → Project Window</strong> で課題用プロジェクトを新規作成（例：<code>mug_project</code>）</li>
+        <li><strong>Windows → Settings/Preferences → Preferences → Settings</strong> で Working Units の Linear が <strong>cm</strong>（既定）であることを確認</li>
+        <li>空のシーンを <code>mug_v01.mb</code> として保存（以降 STEP ごとに v02, v03… と保存を分ける）</li>
+      </ol>
+      <div class="step-done">✔ 完了条件：プロジェクトフォルダが作られ、v01 が保存されている</div>
+      <div class="step-stuck">🔗 参考：<a href="https://area.autodesk.jp/movie/start-at-maya/07.html" target="_blank">Start@Maya 7. プロジェクト設定とプリミティブオブジェクト</a></div>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step" id="step1">
+    <div class="step-head"><div class="step-num">1</div><h3>ベース形状 — Cylinder を器にする</h3><span class="step-ref">目安 30分</span></div>
+    <div class="step-body">
+      <ol>
+        <li><strong>Create → Polygon Primitives → Cylinder</strong> を作成。Channel Box の INPUTS（polyCylinder1）で <strong>Subdivisions Axis = 16</strong> 程度に</li>
+        <li>右クリック長押し → <strong>Face</strong> で上面フェースを選択</li>
+        <li><kbd>Ctrl</kbd>+<kbd>E</kbd>（Extrude）→ マニピュレータの <strong>Offset</strong> で内側に縮める（縁の厚み分を残す）</li>
+        <li>もう一度 <kbd>Ctrl</kbd>+<kbd>E</kbd> → 下方向に押し込んで器の内側を作る（底の厚みを残して止める）</li>
+      </ol>
+      <div class="fig-slot">📷 fig: 2段 Extrude 後の断面（実機セッションで撮影）</div>
+      <div class="step-done">✔ 完了条件：横から見て、縁と底に厚みのある「器」の断面になっている</div>
+      <div class="step-stuck">🤔 詰まったら：Extrude 直後に面が二重になる → <a href="maya_modeling.html#troubleshoot">モデリング ⑦ よくある詰まり</a></div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step" id="step2">
+    <div class="step-head"><div class="step-num">2</div><h3>持ち手 — Extrude と Bridge</h3><span class="step-ref">目安 60分</span></div>
+    <div class="step-body">
+      <ol>
+        <li>側面の上寄りのフェースを1枚選び、<kbd>Ctrl</kbd>+<kbd>E</kbd> → 外側へ少し押し出す</li>
+        <li>Extrude を数回繰り返し、フェースを回転（<kbd>E</kbd>）させながら弧を描いて下へ曲げていく</li>
+        <li>持ち手の先端フェースと、本体側の接続先フェースを削除する</li>
+        <li>両方の開口部の縁を選択し、<strong>Edit Mesh → Bridge</strong> で繋ぐ</li>
+      </ol>
+      <div class="fig-slot">📷 fig: 持ち手の Extrude 経過と Bridge 前後（実機セッションで撮影）</div>
+      <div class="step-done">✔ 完了条件：持ち手が本体と一体で繋がっていて、穴・浮いた面がない</div>
+      <div class="step-stuck">🔗 手つきの詳細（GIF）：<a href="https://modelinghappy.com/archives/11800" target="_blank">MODELING HAPPY — コーヒーカップモデリング（16工程）</a>。持ち手・Bridge の操作はこの記事の GIF を見ながら進めるのが確実です</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step" id="step3">
+    <div class="step-head"><div class="step-num">3</div><h3>面取りとスムーズ確認</h3><span class="step-ref">目安 30分</span></div>
+    <div class="step-body">
+      <ol>
+        <li>縁（飲み口）のエッジをダブルクリックでループ選択 → <kbd>Ctrl</kbd>+<kbd>B</kbd>（Bevel）で面取り</li>
+        <li><kbd>3</kbd> キーで Smooth プレビュー。形の破綻（へこみ・つまみ跡）がないか一周確認</li>
+        <li>崩れる場所があれば <kbd>1</kbd> で戻し、Multi-Cut / Insert Edge Loop でエッジを足して四角形主体に整える</li>
+      </ol>
+      <div class="step-done">✔ 完了条件：<kbd>3</kbd> キーの状態で全周見ても破綻がない</div>
+      <div class="step-stuck">🤔 詰まったら：Smooth で崩れる → <a href="maya_modeling.html#troubleshoot">モデリング ⑦</a>（ngon 混在が典型）</div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step" id="step4">
+    <div class="step-head"><div class="step-num">4</div><h3>クリーンアップ — 履歴とトランスフォーム</h3><span class="step-ref">目安 15分</span></div>
+    <div class="step-body">
+      <ol>
+        <li><strong>Edit → Delete by Type → History</strong> でコンストラクションヒストリーを確定</li>
+        <li><strong>Modify → Freeze Transformations</strong> で Translate/Rotate をゼロ基準に</li>
+        <li>Outliner でオブジェクト名を <code>mug_body</code> など意味のある名前に変更</li>
+      </ol>
+      <div class="step-done">✔ 完了条件：Channel Box の INPUTS が空で、Translate/Rotate が 0・Scale が 1 になっている</div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step" id="step5">
+    <div class="step-head"><div class="step-num">5</div><h3>UV 展開</h3><span class="step-ref">目安 60分</span></div>
+    <div class="step-body">
+      <ol>
+        <li><strong>Windows → Modeling Editors → UV Editor</strong> を開く</li>
+        <li>本体を選択し、UV → <strong>Cylindrical</strong> 投影でリセット（持ち手は Automatic でも可）</li>
+        <li>シームを切る：内側の底・持ち手の内側など目立たないエッジを選んで UV Toolkit の <strong>Cut</strong></li>
+        <li>UV シェルを選択して <strong>Unfold</strong> → <strong>Layout</strong> で 0〜1 に敷き詰める</li>
+      </ol>
+      <div class="fig-slot">📷 fig: シーム位置と Unfold 後の UV シェル（実機セッションで撮影）</div>
+      <div class="step-done">✔ 完了条件：UV シェルが 0〜1 空間に重なりなく収まっている</div>
+      <div class="step-stuck">🔗 参考：<a href="https://area.autodesk.jp/movie/start-at-maya/13.html" target="_blank">Start@Maya 13. UV展開の基本</a> ／ <a href="https://area.autodesk.jp/movie/start-at-maya/14.html" target="_blank">14. UV展開に便利な機能</a> ／ <a href="https://modelinghappy.com/archives/8471" target="_blank">MODELING HAPPY — UV展開で主に使う3機能</a>。理屈は <a href="maya_modeling.html#uv">モデリング ⑤</a></div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step" id="step6">
+    <div class="step-head"><div class="step-num">6</div><h3>チェッカー確認とテクスチャ</h3><span class="step-ref">目安 30分</span></div>
+    <div class="step-body">
+      <ol>
+        <li>UV Editor のチェッカーマップ表示をオンにして、ビューポートで歪みを確認</li>
+        <li>伸びている場所があれば Cut を足して Unfold し直す</li>
+        <li>右クリック長押し → <strong>Assign New Material → Lambert</strong>、Color に File テクスチャ（好きな画像でOK）を繋ぐ</li>
+        <li><kbd>6</kbd> キーで貼り付き具合を確認</li>
+      </ol>
+      <div class="step-done">✔ 完了条件：チェッカーの正方形が全面でほぼ正方形。テクスチャの流れ・切れ目が意図どおり</div>
+      <div class="step-stuck">🤔 詰まったら：テクスチャが出ない（6キー）・歪む（シーム不足）→ <a href="maya_modeling.html#troubleshoot">モデリング ⑦</a></div>
+    </div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step" id="step7">
+    <div class="step-head"><div class="step-num">7</div><h3>FBX 書き出し → Unity 表示確認</h3><span class="step-ref">目安 30分</span></div>
+    <div class="step-body">
+      <ol>
+        <li>マグカップを選択して <strong>File → Export Selection</strong>、ファイルタイプ FBX（オプションは既定でOK。テクスチャは Embed Media か、画像ファイルを一緒に渡す）</li>
+        <li>Unity プロジェクトの Assets にドラッグ＆ドロップ</li>
+        <li>モデルのインポート設定 → Materials で <strong>Extract Textures / Extract Materials</strong>（Embed した場合）</li>
+        <li>シーンに配置してテクスチャ付きで表示されるか確認</li>
+      </ol>
+      <div class="fig-slot">📷 fig: Unity シーンでの表示結果（実機セッションで撮影）</div>
+      <div class="step-done">✔ 完了条件：Unity のシーンでテクスチャ付きマグカップが表示されている＝<strong>この通し課題クリア</strong></div>
+      <div class="step-stuck">🤔 詰まったら：Unity で面が裏返って見える → Maya 側で <strong>Mesh Display → Reverse</strong>（法線の向き）。大きさがおかしい → STEP 0 の単位設定と FBX Export の Scale を確認</div>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <span class="callout-icon">📌</span>
+    <p><strong>アニメーション側の通し課題は？</strong> MB 修正 → FBX → Maya → Playblast の通しは <a href="study_plan.html">学習プラン</a>の <strong>MY-S6</strong>（卒業制作）がその位置づけです。このページはモデリング側の通しを担当します。</p>
+  </div>
+
+  <div class="ref-box">
+    <div class="ref-title">🔗 この課題で使う参考リンク（すべて日本語・実在確認済み）</div>
+    <div class="ref-links">
+      <a href="https://modelinghappy.com/archives/11800" target="_blank" class="ext">📖 MODELING HAPPY: コーヒーカップモデリング 16工程（GIF付き・手つきの正）</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/07.html" target="_blank" class="doc">▶ Start@Maya 7. プロジェクト設定とプリミティブ</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/08.html" target="_blank" class="doc">▶ Start@Maya 8〜9. ポリゴンモデリング①②</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/13.html" target="_blank" class="doc">▶ Start@Maya 13〜14. UV展開の基本・便利な機能</a>
+      <a href="https://modelinghappy.com/archives/8471" target="_blank" class="ext">📖 MODELING HAPPY: UV展開で主に使う3機能</a>
+    </div>
+  </div>
+
+</div>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門</footer>
+</body>
+</html>

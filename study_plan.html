@@ -83,6 +83,7 @@
   <a href="maya_overview.html">Maya 概要</a>
   <a href="maya_modeling.html">モデリング</a>
   <a href="maya_animation.html">Maya アニメ</a>
+  <a href="maya_tutorial.html">通し課題</a>
   <a href="industry.html">業界</a>
   <a href="study_plan.html" class="active">学習プラン</a>
   <a href="glossary.html">用語集</a>
@@ -357,6 +358,7 @@
           <h4>Maya UI &amp; 基本操作</h4>
           <div class="goal">🎯 ゴール：Mayaを迷わず動かせる。Outliner・Channel Boxを使いこなせる</div>
           <div class="session-check">✅ 達成チェック：FBX のスケルトンを Outliner で辿り、任意ボーンの数値を Channel Box で変更→元に戻す、が自力でできたらクリア</div>
+          <div class="phase-read">▶ 実践チュートリアル：<a href="https://area.autodesk.jp/movie/start-at-maya/01.html" target="_blank">Start@Maya 1. インタフェース概要</a> ／ <a href="https://area.autodesk.jp/movie/start-at-maya/02.html" target="_blank">2. ビューポートカメラの操作</a> ／ <a href="https://area.autodesk.jp/movie/start-at-maya/04.html" target="_blank">4. 選択モードとマニピュレータ</a></div>
           <ul class="session-todo">
             <li>ビューポート操作（Alt+マウス）を確認</li>
             <li>Q/W/E/R ツールで基本操作</li>
@@ -373,7 +375,8 @@
         <div class="session-body">
           <h4>ポリゴンモデリング基礎</h4>
           <div class="goal">🎯 ゴール：プリミティブから彫り始めて、小物を1個自分で作れる</div>
-          <div class="session-check">✅ 達成チェック：マグカップ等の小物を1個完成させ、Smooth プレビュー（3キー）で形が破綻しないことを確認できたらクリア</div>
+          <div class="session-check">✅ 達成チェック：<a href="maya_tutorial.html">通し課題</a>の STEP 0〜4 を完了（マグカップが Smooth プレビューで破綻せず、履歴・トランスフォームがクリーン）でクリア</div>
+          <div class="phase-read">▶ 実践チュートリアル：<a href="maya_tutorial.html#step0">通し課題 STEP 0〜4</a>（手つきの詳細は <a href="https://modelinghappy.com/archives/11800" target="_blank">MODELING HAPPY コーヒーカップ 16工程</a>）</div>
           <ul class="session-todo">
             <li>右クリック長押しでのコンポーネントモード切替（Vertex / Edge / Face）に慣れる</li>
             <li>Cube・Cylinder から Extrude で形を彫る（縮める → 押し込むの2段押し出し）</li>
@@ -388,13 +391,15 @@
         <div class="session-num maya"><div class="sn">MY-S3</div><div class="st">Maya</div></div>
         <div class="session-body">
           <h4>UV 展開とテクスチャ確認</h4>
-          <div class="goal">🎯 ゴール：MY-S2 で作ったモデルの UV を展開し、歪みなくテクスチャを貼れる</div>
-          <div class="session-check">✅ 達成チェック：チェッカーマップの正方形が全面でほぼ正方形に見えること、Layout 後の UV シェルが 0〜1 に重なりなく収まっていることの2点でクリア</div>
+          <div class="goal">🎯 ゴール：MY-S2 で作ったモデルの UV を展開し、歪みなくテクスチャを貼って Unity まで届ける</div>
+          <div class="session-check">✅ 達成チェック：<a href="maya_tutorial.html">通し課題</a>の STEP 5〜7 を完了（チェッカー歪みなし・Unity のシーンにテクスチャ付きで表示）でクリア＝通し課題ゴール</div>
+          <div class="phase-read">▶ 実践チュートリアル：<a href="maya_tutorial.html#step5">通し課題 STEP 5〜7</a>（UV の操作は <a href="https://area.autodesk.jp/movie/start-at-maya/13.html" target="_blank">Start@Maya 13</a>・<a href="https://area.autodesk.jp/movie/start-at-maya/14.html" target="_blank">14</a>）</div>
           <ul class="session-todo">
             <li>UV Editor を開き、投影（Planar / Cylindrical / Automatic）で UV をリセットする</li>
             <li>シームを Cut / Sew で決めて Unfold → Layout の型を1周する</li>
             <li>チェッカーマップで歪みを確認し、シームを調整してもう1周する</li>
             <li>File テクスチャを割り当てて 6 キー表示で確認する</li>
+            <li>FBX で書き出して Unity のシーンで表示確認する（通し課題 STEP 7）</li>
           </ul>
         </div>
         <div class="session-hours">5〜6h</div>
@@ -432,6 +437,7 @@
           <h4>キーフレームアニメーション入門</h4>
           <div class="goal">🎯 ゴール：Sキーでキーを打ち、タイムラインを使ったポーズ to ポーズができる</div>
           <div class="session-check">✅ 達成チェック：Sphere の 30 フレームアニメを自作して再生できたこと、キーの移動・削除を自力で行えたことの2点でクリア</div>
+          <div class="phase-read">▶ 実践チュートリアル：<a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank">Start@Maya 22. アニメーションの基本</a></div>
           <ul class="session-todo">
             <li>シンプルなオブジェクト（Sphere等）でキーフレームを打つ練習</li>
             <li>タイムラインでキーを移動・削除する</li>
@@ -464,6 +470,7 @@
           <h4>MBからMayaへの完全パイプライン実践</h4>
           <div class="goal">🎯 ゴール：MB修正 → FBX書き出し → Maya読み込み → Graph Editor微調整 → 確認 を1本通せる</div>
           <div class="session-check">✅ 達成チェック：Playblast の動画ファイルが実際に書き出され、再生して動きを確認できたらクリア（これが本プランの卒業制作）</div>
+          <div class="phase-read">▶ 実践チュートリアル：<a href="https://area.autodesk.jp/movie/start-at-maya/25.html" target="_blank">Start@Maya 25. キャッシュ再生とプレイブラスト</a></div>
           <ul class="session-todo">
             <li>MBでControl Rig修正 → Plot → FBX書き出し</li>
             <li>MayaにFBX読み込み・スケール確認</li>
@@ -558,7 +565,7 @@
   <div class="ref-box">
     <div class="ref-title">Maya 公式ドキュメント・外部リソース</div>
     <div class="ref-links">
-      <a href="https://area.autodesk.jp/movie/start-at-maya/22.html" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya 入門ムービー</a>
+      <a href="https://area.autodesk.jp/movie/start-at-maya/" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya シリーズ目次（全30回・基本操作〜レンダリングまで）</a>
       <a href="https://knowledge.autodesk.com/ja/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2020/JPN/Maya-Animation/files/GUID-6D38EAEA-6032-471E-BD0E-54A74D4443C0-htm.html" target="_blank" class="doc">📄 Autodesk KN JPN: Graph Editor リファレンス</a>
       <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/" target="_blank" class="ext">📖 アニもぐCG: Mayaの基本操作【前編】</a>
       <a href="https://3dcg.comaroku.com/maya-grapheditor/" target="_blank" class="ext">📖 アニログ: Maya Graph Editor の基礎</a>
