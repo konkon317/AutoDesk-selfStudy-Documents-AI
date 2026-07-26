@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>15セッション学習プラン | Autodesk 学習ガイド</title>
+<title>2トラック学習プラン | Autodesk 学習ガイド</title>
 <link rel="stylesheet" href="common.css">
 <style>
   nav a.active { color: var(--amber); }
@@ -33,7 +33,7 @@
   .session {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 1.2rem 1.5rem;
-    display: grid; grid-template-columns: 56px 1fr auto;
+    display: grid; grid-template-columns: 72px 1fr auto;
     gap: 1rem; align-items: start;
   }
   .session.mb { border-left: 3px solid var(--accent); }
@@ -41,7 +41,7 @@
   .session.joint { border-left: 3px solid var(--amber); }
   .session.buf { border-left: 3px solid var(--border); }
   .session-num { text-align: center; }
-  .session-num .sn { font-size: 1.4rem; font-weight: 800; }
+  .session-num .sn { font-size: 1.15rem; font-weight: 800; white-space: nowrap; }
   .session-num .st { font-size: 0.68rem; color: var(--muted); }
   .session-num.mb .sn { color: var(--accent); }
   .session-num.maya .sn { color: var(--accent-2); }
@@ -80,7 +80,9 @@
   <a href="mb_control_rig.html">Control Rig</a>
   <a href="mb_animation_basics.html">アニメ基本</a>
   <a href="mb_animation_workflows.html">アニメ実践</a>
-  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="maya_overview.html">Maya 概要</a>
+  <a href="maya_modeling.html">モデリング</a>
+  <a href="maya_animation.html">Maya アニメ</a>
   <a href="industry.html">業界</a>
   <a href="study_plan.html" class="active">学習プラン</a>
   <a href="glossary.html">用語集</a>
@@ -88,8 +90,8 @@
 
 <div class="page-hero">
   <div class="tag">Session Planning</div>
-  <h1><span>15セッション</span><br>学習プラン</h1>
-  <p>トークン残量 15 × 1日を最大限活かすセッション設計。1セッション = 4〜6時間の想定で、各回のゴールと作業内容を明確にしています。</p>
+  <h1><span>MB / Maya</span><br>2トラック学習プラン</h1>
+  <p>MB トラック（10）と Maya トラック（6）＋共通バッファ（1）の2トラック構成。1セッション = 4〜6時間の想定で、各回のゴールと作業内容を明確にしています。トラックは独立して進められます。</p>
 </div>
 
 <div class="content">
@@ -100,7 +102,7 @@
       <div class="t-label">MotionBuilder セッション</div>
     </div>
     <div class="token-card maya">
-      <div class="t-num">4</div>
+      <div class="t-num">6</div>
       <div class="t-label">Maya セッション</div>
     </div>
     <div class="token-card buf">
@@ -114,8 +116,13 @@
     <p><strong>トークンの使い方：</strong> MBとMayaは別ソフトなので別トークンです。同じ日に両方使うと2トークン消費します。セッションをまたいで同じソフトを使い続ける場合は日をまたいでも1セッションに収められます（1日使い切りが理想ですが）。</p>
   </div>
 
+  <div class="callout info">
+    <span class="callout-icon">🪙</span>
+    <p><strong>計17トークンについて：</strong> モデリング（MY-S2）と UV（MY-S3）の追加で、旧構成の計15から +2 になっています。トークン残量が15のままの場合は、MY-S2 と MY-S3 を1セッションに圧縮（モデリングは小物1個・UV は展開〜チェッカー確認まで）すれば計15に収まります。逆に言えば、残量が17以上あるならこのプランのまま進めて問題ありません。</p>
+  </div>
+
   <!-- PHASE 1 -->
-  <h2>📅 フェーズ 1 — MotionBuilder 深化（MB × 7）</h2>
+  <h2>📅 MB トラック — フェーズ 1：基礎と Control Rig（MB × 7）</h2>
   <div class="phase">
     <div class="phase-header">
       <span class="phase-badge mb">MotionBuilder</span>
@@ -129,7 +136,7 @@
     <div class="session-list">
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S1</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S1</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>UI再確認 &amp; 既知ワークフローの言語化</h4>
           <div class="goal">🎯 ゴール：Characterize → Retarget → Bake の流れを自分の手で通しで実行できる</div>
@@ -145,7 +152,7 @@
       </div>
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S2</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S2</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>Control Rig の作成とエフェクター把握</h4>
           <div class="goal">🎯 ゴール：Control Rigを自分で作り、各エフェクターを選んで動かせる</div>
@@ -162,7 +169,7 @@
       </div>
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S3</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S3</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>IK / FK の感覚をつかむ</h4>
           <div class="goal">🎯 ゴール：IKとFKの操作の違いを体感として理解できる</div>
@@ -178,7 +185,7 @@
       </div>
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S4</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S4</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>ピン留め（Pinning）でフットプラントを直す</h4>
           <div class="goal">🎯 ゴール：足のスライドをピン留めで修正できる</div>
@@ -195,7 +202,7 @@
       </div>
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S5</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S5</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>Reach 設定と部分修正</h4>
           <div class="goal">🎯 ゴール：修正したい部位だけ Reach を上げて局所的に直せる</div>
@@ -211,7 +218,7 @@
       </div>
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S6</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S6</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>Floor Contact &amp; 総合Mocap修正</h4>
           <div class="goal">🎯 ゴール：Floor Contact を設定し、Pinning と組み合わせた修正ができる</div>
@@ -227,7 +234,7 @@
       </div>
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S7</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S7</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>Story ウィンドウ &amp; FBX 書き出し</h4>
           <div class="goal">🎯 ゴール：複数テイクをStoryでつなぎ、Maya向けFBXを書き出せる</div>
@@ -246,7 +253,7 @@
     </div>
 
     <div class="ref-box">
-      <div class="ref-title">🔗 S1〜S7 参考リンク — MotionBuilder 基礎・Control Rig</div>
+      <div class="ref-title">🔗 MB-S1〜S7 参考リンク — MotionBuilder 基礎・Control Rig</div>
       <div class="ref-links">
         <a href="https://zenn.dev/guncys_blog/articles/69f219d4ca77f6" target="_blank" class="ext">📖 GUNCY'S: MotionBuilder超入門 第0回 — MBってどんなソフト？</a>
         <a href="https://area.autodesk.jp/movie/motionbuilder/02-characterize-control-rig.html" target="_blank" class="doc">▶ AREA JAPAN: Characterize ＆ Control Rig ムービー</a>
@@ -258,7 +265,7 @@
   </div>
 
   <!-- PHASE 2 -->
-  <h2>📅 フェーズ 2 — MotionBuilder 応用（MB × 3）</h2>
+  <h2>📅 MB トラック — フェーズ 2：応用（MB × 3）</h2>
   <div class="phase">
     <div class="phase-header">
       <span class="phase-badge mb">MotionBuilder</span>
@@ -272,7 +279,7 @@
     <div class="session-list">
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S8</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S8</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>上半身だけ差し替え（Upper Body Layering）</h4>
           <div class="goal">🎯 ゴール：下半身の歩行に別のクリップの上半身の腕振りを合成する</div>
@@ -288,7 +295,7 @@
       </div>
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S9</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S9</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>Auxiliary Effector（肘・膝の補正）</h4>
           <div class="goal">🎯 ゴール：補助エフェクターで関節の向きを修正できる</div>
@@ -303,7 +310,7 @@
       </div>
 
       <div class="session mb">
-        <div class="session-num mb"><div class="sn">S10</div><div class="st">MB</div></div>
+        <div class="session-num mb"><div class="sn">MB-S10</div><div class="st">MB</div></div>
         <div class="session-body">
           <h4>総復習 &amp; 自由課題</h4>
           <div class="goal">🎯 ゴール：フェーズ1〜2で学んだ内容を使って1本のアニメーションを仕上げる</div>
@@ -321,7 +328,7 @@
     </div>
 
     <div class="ref-box">
-      <div class="ref-title">🔗 S8〜S10 参考リンク — MotionBuilder 応用</div>
+      <div class="ref-title">🔗 MB-S8〜S10 参考リンク — MotionBuilder 応用</div>
       <div class="ref-links">
         <a href="https://area.autodesk.jp/column/tutorial/motionbuilder-cutscene/06-character-animation/" target="_blank" class="doc">📖 AREA JAPAN: カットシーン第6回 — キャラクターアニメーション応用</a>
         <a href="https://zenn.dev/guncys/articles/31d4510faefa3a" target="_blank" class="ext">📖 GUNCY'S: MotionBuilder超入門 第6回 — FCurve とアニメーション調整</a>
@@ -330,22 +337,22 @@
     </div>
   </div>
 
-  <!-- PHASE 3 -->
-  <h2>📅 フェーズ 3 — Maya 入門（Maya × 4）</h2>
+  <!-- MAYA TRACK PHASE 1 -->
+  <h2>📅 Maya トラック — フェーズ 1：基本操作とモデリング（Maya × 3）</h2>
   <div class="phase">
     <div class="phase-header">
       <span class="phase-badge maya">Maya</span>
       <div>
-        <div class="phase-title">UI → アニメーション → FBXパイプライン</div>
-        <div class="phase-desc">MBユーザーとして「Mayaでどこまでできるか」を把握する</div>
-        <div class="phase-read">📖 事前読み：<a href="maya_basics.html">Maya 基礎</a>（FBX で詰まったら <a href="maya_basics.html#fbx">⑨ よくある問題と対処</a>）</div>
+        <div class="phase-title">UI → モデリング → UV 展開</div>
+        <div class="phase-desc">共通基礎を押さえてから「作る側」の工程に入る。MB トラックと独立して進められる</div>
+        <div class="phase-read">📖 事前読み：<a href="maya_overview.html">Maya 概要と基本操作</a> ／ <a href="maya_modeling.html">モデリング &amp; UV</a>（詰まったら <a href="maya_modeling.html#troubleshoot">⑦ よくある詰まりと対処</a>）</div>
       </div>
     </div>
 
     <div class="session-list">
 
       <div class="session maya">
-        <div class="session-num maya"><div class="sn">S11</div><div class="st">Maya</div></div>
+        <div class="session-num maya"><div class="sn">MY-S1</div><div class="st">Maya</div></div>
         <div class="session-body">
           <h4>Maya UI &amp; 基本操作</h4>
           <div class="goal">🎯 ゴール：Mayaを迷わず動かせる。Outliner・Channel Boxを使いこなせる</div>
@@ -362,7 +369,65 @@
       </div>
 
       <div class="session maya">
-        <div class="session-num maya"><div class="sn">S12</div><div class="st">Maya</div></div>
+        <div class="session-num maya"><div class="sn">MY-S2</div><div class="st">Maya</div></div>
+        <div class="session-body">
+          <h4>ポリゴンモデリング基礎</h4>
+          <div class="goal">🎯 ゴール：プリミティブから彫り始めて、小物を1個自分で作れる</div>
+          <div class="session-check">✅ 達成チェック：マグカップ等の小物を1個完成させ、Smooth プレビュー（3キー）で形が破綻しないことを確認できたらクリア</div>
+          <ul class="session-todo">
+            <li>右クリック長押しでのコンポーネントモード切替（Vertex / Edge / Face）に慣れる</li>
+            <li>Cube・Cylinder から Extrude で形を彫る（縮める → 押し込むの2段押し出し）</li>
+            <li>Bevel・Insert Edge Loop を各1回以上使う</li>
+            <li>形が確定したら Delete History で履歴を確定する</li>
+          </ul>
+        </div>
+        <div class="session-hours">5〜6h</div>
+      </div>
+
+      <div class="session maya">
+        <div class="session-num maya"><div class="sn">MY-S3</div><div class="st">Maya</div></div>
+        <div class="session-body">
+          <h4>UV 展開とテクスチャ確認</h4>
+          <div class="goal">🎯 ゴール：MY-S2 で作ったモデルの UV を展開し、歪みなくテクスチャを貼れる</div>
+          <div class="session-check">✅ 達成チェック：チェッカーマップの正方形が全面でほぼ正方形に見えること、Layout 後の UV シェルが 0〜1 に重なりなく収まっていることの2点でクリア</div>
+          <ul class="session-todo">
+            <li>UV Editor を開き、投影（Planar / Cylindrical / Automatic）で UV をリセットする</li>
+            <li>シームを Cut / Sew で決めて Unfold → Layout の型を1周する</li>
+            <li>チェッカーマップで歪みを確認し、シームを調整してもう1周する</li>
+            <li>File テクスチャを割り当てて 6 キー表示で確認する</li>
+          </ul>
+        </div>
+        <div class="session-hours">5〜6h</div>
+      </div>
+
+    </div>
+
+    <div class="ref-box">
+      <div class="ref-title">🔗 MY-S1〜S3 参考リンク — Maya 基本操作・モデリング・UV</div>
+      <div class="ref-links">
+        <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%89%8D%E7%B7%A8/" target="_blank" class="ext">📖 アニもぐCG: Mayaの基本操作【前編】（インターフェース〜ナビゲーション）</a>
+        <a href="https://area.autodesk.jp/movie/start-at-maya/" target="_blank" class="doc">▶ AREA JAPAN: Start@Maya シリーズ（モデリング・UV 回を含む入門ムービー集）</a>
+        <a href="https://help.autodesk.com/view/MAYAUL/2024/JPN/" target="_blank" class="doc">📄 Maya 公式ヘルプ（日本語）— モデリング / UV の一次資料</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAYA TRACK PHASE 2 -->
+  <h2>📅 Maya トラック — フェーズ 2：アニメーションとパイプライン（Maya × 3）</h2>
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-badge maya">Maya</span>
+      <div>
+        <div class="phase-title">キーフレーム → Graph Editor → FBX パイプライン</div>
+        <div class="phase-desc">MB 側の経験を Maya の道具立てに読み替える。MY-S6 は MB トラックの成果（FBX）を使う</div>
+        <div class="phase-read">📖 事前読み：<a href="maya_animation.html">Maya アニメーション</a>（FBX で詰まったら <a href="maya_animation.html#fbx">④ よくある問題と対処</a>）</div>
+      </div>
+    </div>
+
+    <div class="session-list">
+
+      <div class="session maya">
+        <div class="session-num maya"><div class="sn">MY-S4</div><div class="st">Maya</div></div>
         <div class="session-body">
           <h4>キーフレームアニメーション入門</h4>
           <div class="goal">🎯 ゴール：Sキーでキーを打ち、タイムラインを使ったポーズ to ポーズができる</div>
@@ -378,7 +443,7 @@
       </div>
 
       <div class="session maya">
-        <div class="session-num maya"><div class="sn">S13</div><div class="st">Maya</div></div>
+        <div class="session-num maya"><div class="sn">MY-S5</div><div class="st">Maya</div></div>
         <div class="session-body">
           <h4>Graph Editor でカーブを編集する</h4>
           <div class="goal">🎯 ゴール：Graph Editorでカーブを読み、タンジェントを調整してモーションを滑らかにできる</div>
@@ -394,7 +459,7 @@
       </div>
 
       <div class="session joint">
-        <div class="session-num joint"><div class="sn">S14</div><div class="st">MB+Maya</div></div>
+        <div class="session-num joint"><div class="sn">MY-S6</div><div class="st">MB+Maya</div></div>
         <div class="session-body">
           <h4>MBからMayaへの完全パイプライン実践</h4>
           <div class="goal">🎯 ゴール：MB修正 → FBX書き出し → Maya読み込み → Graph Editor微調整 → 確認 を1本通せる</div>
@@ -412,7 +477,7 @@
     </div>
 
     <div class="ref-box">
-      <div class="ref-title">🔗 S11〜S14 参考リンク — Maya &amp; パイプライン</div>
+      <div class="ref-title">🔗 MY-S4〜S6 参考リンク — Maya アニメーション &amp; パイプライン</div>
       <div class="ref-links">
         <a href="https://animog-cg.com/cg%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%8C%E8%A6%9A%E3%81%88%E3%82%8B%E3%81%B9%E3%81%8Dmaya%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%BE%8C%E7%B7%A8/" target="_blank" class="ext">📖 アニもぐCG: Mayaの基本操作【後編】（キーフレーム〜Graph Editor）</a>
         <a href="https://3dcg.comaroku.com/maya-grapheditor/" target="_blank" class="ext">📖 アニログ: Maya Graph Editor の基礎</a>
@@ -423,15 +488,16 @@
   </div>
 
   <!-- バッファ -->
-  <h2>🔄 フェーズ 4 — バッファ（× 1）</h2>
+  <h2>🔄 共通バッファ（× 1）</h2>
   <div class="session buf" style="margin-bottom:2rem;">
-    <div class="session-num buf"><div class="sn">S15</div><div class="st">自由</div></div>
+    <div class="session-num buf"><div class="sn">B1</div><div class="st">自由</div></div>
     <div class="session-body">
       <h4>自由枠 / 気になるところの追加探索</h4>
-      <div class="goal">🎯 S1〜S14で詰まったこと・深掘りしたいことに使う</div>
+      <div class="goal">🎯 両トラックで詰まったこと・深掘りしたいことに使う</div>
       <div class="session-check">✅ 達成チェック：起動前に「今日のゴール1行」を書いてから始めていればOK（自由枠は運用ルールの遵守だけ判定する）</div>
       <ul class="session-todo">
         <li>Control Rigで解決できなかった問題を再挑戦する</li>
+        <li>MY-S2 で作った小物のディテールアップ・別の小物に挑戦する</li>
         <li>Mayaのリグ構造をもう少し深く見る</li>
         <li>MBのMotion Blending（Storyのブレンド）を試す</li>
         <li>または完全自由：好きなMocapデータで遊ぶ</li>
@@ -468,7 +534,7 @@
 
   <div class="callout note">
     <span class="callout-icon">🚨</span>
-    <p><strong>セッション中に詰まったら：</strong> Control Rig 系（動かない・変になる）は <a href="mb_control_rig.html#troubleshoot">Control Rig ⑨ よくある失敗と対処</a>、FBX の受け渡し系（スケール・ジッター・アニメが来ない）は <a href="maya_basics.html#fbx">Maya 基礎 ⑨ よくある問題と対処</a> を先に確認する。原因調査に時間を溶かすのが一番のトークン浪費。</p>
+    <p><strong>セッション中に詰まったら：</strong> Control Rig 系（動かない・変になる）は <a href="mb_control_rig.html#troubleshoot">Control Rig ⑨ よくある失敗と対処</a>、FBX の受け渡し系（スケール・ジッター・アニメが来ない）は <a href="maya_animation.html#fbx">Maya アニメ ④ よくある問題と対処</a> を先に確認する。原因調査に時間を溶かすのが一番のトークン浪費。</p>
   </div>
 
   <h2>📚 参考資料・公式リソース</h2>
@@ -500,6 +566,6 @@
   </div>
 
 </div>
-<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門 | 15セッション完走マップ</footer>
+<footer>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門 | MB / Maya 2トラック学習マップ</footer>
 </body>
 </html>

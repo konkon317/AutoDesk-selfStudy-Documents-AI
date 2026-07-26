@@ -132,20 +132,22 @@
   <a href="mb_control_rig.html">Control Rig</a>
   <a href="mb_animation_basics.html">アニメ基本</a>
   <a href="mb_animation_workflows.html">アニメ実践</a>
-  <a href="maya_basics.html">Maya 基礎</a>
+  <a href="maya_overview.html">Maya 概要</a>
+  <a href="maya_modeling.html">モデリング</a>
+  <a href="maya_animation.html">Maya アニメ</a>
   <a href="industry.html">業界</a>
   <a href="study_plan.html">学習プラン</a>
   <a href="glossary.html">用語集</a>
 </nav>
 
 <div class="hero">
-  <div class="hero-badge">Autodesk Flex · 15セッション完走ガイド</div>
+  <div class="hero-badge">Autodesk Flex · MB / Maya 2トラック学習ガイド</div>
   <h1>MotionBuilder &amp; Maya<br>学習ガイド</h1>
-  <p>残り15トークンを最大限に活かすための、ゴール逆算型スタディマップ。<br>1セッション = 4〜6時間 の想定で設計されています。</p>
+  <p>Autodesk Flex トークンを最大限に活かすための、ゴール逆算型スタディマップ。<br>MB と Maya の2トラック構成。1セッション = 4〜6時間 の想定で設計されています。</p>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-num">15</div><div class="stat-label">残りセッション</div></div>
-    <div class="stat"><div class="stat-num">10</div><div class="stat-label">MB セッション</div></div>
-    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Maya セッション</div></div>
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label">MB トラック</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Maya トラック</div></div>
+    <div class="stat"><div class="stat-num">1</div><div class="stat-label">共通バッファ</div></div>
   </div>
 </div>
 
@@ -153,14 +155,15 @@
   <div class="token-banner">
     <div class="token-icon">🪙</div>
     <div class="token-text">
-      <h3>トークン残量イメージ（計15トークン）</h3>
-      <p>1マス = 1トークン（1日分）。MotionBuilder と Maya は別カウント。</p>
+      <h3>トークン計画イメージ（計17トークン = MB 10 + Maya 6 + バッファ 1）</h3>
+      <p>1マス = 1トークン（1日分）。MotionBuilder と Maya は別カウント。モデリング・UV の追加で旧15構成から +2 — 残量が15のままなら、Maya トラックのモデリングと UV を1セッションに圧縮して15に収める。</p>
       <div class="token-meter">
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
         <div class="token-pip avail"></div><div class="token-pip avail"></div><div class="token-pip avail"></div>
+        <div class="token-pip avail"></div><div class="token-pip avail"></div>
       </div>
     </div>
   </div>
@@ -191,9 +194,13 @@
       <span class="check-icon">📚</span>
       <div class="check-text"><strong>Maya 基礎操作・アニメーション</strong><span>今回新規に学ぶ領域</span></div>
     </div>
+    <div class="check-item unknown">
+      <span class="check-icon">📚</span>
+      <div class="check-text"><strong>Maya モデリング・UV</strong><span>今回新規に学ぶ領域。UV の概念は Unity 文脈で把握済み — 編集操作をここで身につける</span></div>
+    </div>
   </div>
 
-  <div class="section-title">📖 学習パス — この順に読む</div>
+  <div class="section-title">📖 学習パス A — MotionBuilder トラック</div>
   <div class="cards">
     <a href="mb_overview.html" class="card-nav">
       <div class="card-icon">🎬</div>
@@ -223,12 +230,31 @@
       <p>Animation Layer・Plotの3方向・Mocap×手付けの部分上書き3アプローチ・人型以外の扱い。現場の組み合わせ技。</p>
       <span class="card-tag">MB 応用・後半</span>
     </a>
-    <a href="maya_basics.html" class="card-nav">
+  </div>
+
+  <div class="section-title" style="margin-top:3rem;">📖 学習パス B — Maya トラック</div>
+  <p style="font-size:0.85rem; color:var(--muted); margin:-0.5rem 0 1.25rem;">MB トラックと独立して進められます。ただし FBX 持ち込みを扱う「アニメーション」は、MB トラックで書き出した FBX があると実データで練習できます。</p>
+  <div class="cards">
+    <a href="maya_overview.html" class="card-nav">
       <div class="card-icon">🖥️</div>
-      <div class="card-num">STEP 05 · Maya</div>
-      <h3>Maya 基礎</h3>
-      <p>UI・基本操作・キーフレームアニメーション・Graph Editor。MBからFBXで持ち込む流れも含む。</p>
-      <span class="card-tag">Maya 1〜5セッション</span>
+      <div class="card-num">STEP 01 · Maya</div>
+      <h3>Maya 概要と基本操作</h3>
+      <p>工程マップ・UI・ナビゲーション・Q/W/E/R・Outliner &amp; Channel Box。Maya パスの入口。</p>
+      <span class="card-tag">Maya × 1（MY-S1）</span>
+    </a>
+    <a href="maya_modeling.html" class="card-nav">
+      <div class="card-icon">🧱</div>
+      <div class="card-num">STEP 02 · Maya</div>
+      <h3>モデリング &amp; UV</h3>
+      <p>ポリゴンで形を作り、UV Editor で展開図を開く。Unity で「使う側」だったメッシュを「作る側」から学ぶ。</p>
+      <span class="card-tag">Maya × 2（MY-S2〜S3）</span>
+    </a>
+    <a href="maya_animation.html" class="card-nav">
+      <div class="card-icon">🎞️</div>
+      <div class="card-num">STEP 03 · Maya</div>
+      <h3>アニメーション</h3>
+      <p>キーフレーム・Graph Editor・MB から FBX で持ち込む流れ。MB 側の経験を Maya の道具立てに読み替える。</p>
+      <span class="card-tag">Maya × 3（MY-S4〜S6）</span>
     </a>
   </div>
 
@@ -244,15 +270,15 @@
     <a href="study_plan.html" class="card-nav">
       <div class="card-icon">📅</div>
       <div class="card-num">プランニング</div>
-      <h3>15セッション 学習プラン</h3>
-      <p>セッションごとの目標・やること・達成チェックを一覧化。トークンの使い方もここで確認。</p>
+      <h3>2トラック学習プラン</h3>
+      <p>MB トラック・Maya トラックそれぞれのセッション目標・やること・達成チェックを一覧化。トークンの使い方もここで確認。</p>
       <span class="card-tag">セッション設計図</span>
     </a>
     <a href="glossary.html" class="card-nav">
       <div class="card-icon">📖</div>
       <div class="card-num">リファレンス</div>
       <h3>用語集</h3>
-      <p>本文の用語40語を1行定義で。詰まったらまず「一言でいうと何か」をここで掴んで、詳細ページへ。</p>
+      <p>本文の重要用語を1行定義で。詰まったらまず「一言でいうと何か」をここで掴んで、詳細ページへ。</p>
       <span class="card-tag">いつでも参照</span>
     </a>
   </div>
@@ -298,30 +324,38 @@
       <div class="roadmap-content">
         <h4>Maya UI &amp; 基本操作入門</h4>
         <p>ビューポート・Outliner・Channel Box・基本ショートカット（Q/W/E/R）。</p>
-        <span class="session-badge maya">Maya × 1〜2</span>
+        <span class="session-badge maya">Maya × 1</span>
       </div>
     </div>
     <div class="roadmap-item">
       <div class="roadmap-left"><div class="roadmap-dot maya">6</div><div class="roadmap-line"></div></div>
       <div class="roadmap-content">
-        <h4>Maya でキーフレームアニメーション</h4>
-        <p>Graph Editor・Dope Sheet・キーフレームの打ち方と編集。</p>
-        <span class="session-badge maya">Maya × 2〜3</span>
+        <h4>モデリング &amp; UV の基礎</h4>
+        <p>プリミティブから小物を1個作り、UV Editor で展開してチェッカーで歪みを確認する。</p>
+        <span class="session-badge maya">Maya × 2</span>
       </div>
     </div>
     <div class="roadmap-item">
-      <div class="roadmap-left"><div class="roadmap-dot joint">7</div></div>
+      <div class="roadmap-left"><div class="roadmap-dot maya">7</div><div class="roadmap-line"></div></div>
+      <div class="roadmap-content">
+        <h4>Maya でキーフレームアニメーション</h4>
+        <p>Graph Editor・Dope Sheet・キーフレームの打ち方と編集。</p>
+        <span class="session-badge maya">Maya × 2</span>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-left"><div class="roadmap-dot joint">8</div></div>
       <div class="roadmap-content">
         <h4>MB → Maya FBX パイプライン</h4>
         <p>MBで仕上げたアニメーションをMayaで開き、レンダリング・最終調整まで繋げる。</p>
-        <span class="session-badge maya">Maya × 1〜2</span>
+        <span class="session-badge maya">Maya × 1（+ MB）</span>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門 | 15セッション完走マップ</p>
+  <p>Autodesk 学習ガイド — MotionBuilder &amp; Maya 入門 | MB / Maya 2トラック学習マップ</p>
 </footer>
 </body>
 </html>
